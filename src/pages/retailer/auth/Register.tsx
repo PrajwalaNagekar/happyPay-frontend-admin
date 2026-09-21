@@ -1,1193 +1,354 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
   ArrowRight,
   Check,
-  ShieldCheck,
+  Smartphone,
   Store,
   UserRound,
+  CreditCard,
   Fingerprint,
+  Cake,
+  FileText,
   Building2,
-  CircleCheck,
-  Smartphone,
-  Lock,
-  BadgeCheck,
-  Clock,
-  Sparkles,
 } from "lucide-react";
 
 import AccountStep from "./registerSteps/AccountSteps";
 import ShopDetailsStep from "./registerSteps/ShopDetailsStep";
 import AboutRetailerStep from "./registerSteps/AboutRetailerStep";
+import PanVerificationStep from "./registerSteps/PanVerificationStep";
 import AadhaarStep from "./registerSteps/AadhaarStep";
+import DobStep from "./registerSteps/DobStep";
+import BusinessProofStep from "./registerSteps/BusinessProofStep";
 import BankDetailsStep from "./registerSteps/BankDetailsStep";
-
-/* ============================================================
-   🎨 HAPPY PAY THEME — Purple + Navy
-============================================================ */
-const theme = {
-  // ============================================================
-  // CORE
-  // ============================================================
-
-  primary: "#172536",
-  primaryHover: "#0F1C2A",
-
-  accent: "#4A3E94",
-  accentHover: "#3B317A",
-  accentSoft: "#D9D5EF",
-
-  // ============================================================
-  // SEMANTIC
-  // ============================================================
-
-  success: "#4F8A68",
-  successSoft: "#EAF4EE",
-
-  warning: "#C58A32",
-  warningSoft: "#FBF4E5",
-
-  danger: "#B85C5C",
-
-  // ============================================================
-  // SURFACES
-  // ============================================================
-
-  bg: "#D8D6D1",
-  surface: "#FFFFFF",
-  surfaceAlt: "#E7E5E1",
-  surfaceMuted: "#F1F0EE",
-
-  // ============================================================
-  // BORDERS & TEXT
-  // ============================================================
-
-  border: "#E1E0DE",
-  borderStrong: "#CECDCA",
-
-  textPrimary: "#172536",
-  textSecondary: "#686C74",
-  textMuted: "#777A81",
-  textFaint: "#999BA0",
-};
 
 const steps = [
   {
     title: "Account",
-    description: "Mobile & email verification",
     icon: Smartphone,
-    cta: "Send OTP",
   },
   {
     title: "Shop Details",
-    description: "Business & address info",
     icon: Store,
-    cta: "Save & Continue",
   },
   {
-    title: "About Retailer",
-    description: "Personal KYC details",
+    title: "Retailer",
     icon: UserRound,
-    cta: "Save & Continue",
   },
   {
-    title: "Aadhaar KYC",
-    description: "UIDAI identity verification",
+    title: "PAN Verification",
+    icon: CreditCard,
+  },
+  {
+    title: "Aadhaar",
     icon: Fingerprint,
-    cta: "Verify Aadhaar",
   },
   {
-    title: "Bank Account",
-    description: "Settlement & payouts",
-    icon: Building2,
-    cta: "Submit for Review",
+    title: "DOB",
+    icon: Cake,
   },
+  {
+    title: "Business Proof",
+    icon: FileText,
+  },
+  {
+    title: "Bank Details",
+    icon: Building2,
+  },
+];
+
+const stepHeadings = [
+  "Let's get started",
+  "Your Business",
+  "About You",
+  "Verify your PAN",
+  "Verify Aadhaar",
+  "Date of Birth",
+  "Business Proof",
+  "Bank Details",
+];
+
+const stepDescriptions = [
+  "Create your HappyPay retailer account.",
+  "Tell us about your shop and business.",
+  "Tell us a little about yourself.",
+  "Enter your PAN details for verification.",
+  "Verify your Aadhaar information securely.",
+  "Enter your date of birth.",
+  "Upload your shop and business proof.",
+  "Add your bank account for payouts.",
 ];
 
 const RetailerRegister = () => {
   const navigate = useNavigate();
 
   const [currentStep, setCurrentStep] = useState(0);
-  const [direction, setDirection] = useState("next");
-  const [saving, setSaving] = useState(false);
-
-  // 💡 Wire real per-step validation here
-  const canContinue = true;
-
-  const totalSteps = steps.length;
-
-  const progressPct = useMemo(
-    () =>
-      Math.round(((currentStep + 1) / totalSteps) * 100),
-    [currentStep, totalSteps]
-  );
-
-  /* ============================================================
-     NEXT STEP
-  ============================================================ */
 
   const nextStep = () => {
-    if (
-      currentStep < totalSteps - 1 &&
-      canContinue
-    ) {
-      setDirection("next");
+    if (currentStep < steps.length - 1) {
+      setCurrentStep((prev) => prev + 1);
 
-      setCurrentStep((p) => p + 1);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+
+      return;
     }
-  };
 
-  /* ============================================================
-     PREVIOUS STEP
-  ============================================================ */
+    /*
+     * ==========================================================
+     * REGISTRATION COMPLETED
+     * ==========================================================
+     *
+     * AccountSteps.tsx stores the mobile entered by the
+     * retailer in "pendingRetailerMobile".
+     *
+     * When Step 8 is submitted, move that number to
+     * "registeredRetailerMobile".
+     *
+     * This is frontend-only for now.
+     */
 
-  const previousStep = () => {
-    if (currentStep > 0) {
-      setDirection("previous");
+    const pendingMobile =
+      localStorage.getItem("pendingRetailerMobile");
 
-      setCurrentStep((p) => p - 1);
+    if (pendingMobile) {
+      localStorage.setItem(
+        "registeredRetailerMobile",
+        pendingMobile,
+      );
+
+      // Remove temporary registration value.
+      localStorage.removeItem("pendingRetailerMobile");
+
+      // Make sure an old logged-in retailer value does
+      // not remain after a new registration.
+      localStorage.removeItem("retailerMobile");
     }
-  };
-
-  /* ============================================================
-     SUBMIT REGISTRATION
-  ============================================================ */
-
-  const handleSubmit = async () => {
-    setSaving(true);
-
-    // 💡 Persist payload here before navigating
 
     navigate("/retailer/kyc-pending", {
       replace: true,
     });
   };
 
+  const previousStep = () => {
+    if (currentStep > 0) {
+      setCurrentStep((prev) => prev - 1);
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    } else {
+      navigate("/retailer/login");
+    }
+  };
+
+  const CurrentStepIcon = steps[currentStep].icon;
+
   return (
-    <div
-      className="min-h-screen p-3 sm:p-5 lg:p-6"
-      style={{
-        backgroundColor: theme.bg,
-      }}
-    >
-      {/* ==========================================================
-          MAIN CONTAINER
-      ========================================================== */}
+    <div className="min-h-screen bg-[#f4f6fa] text-[#172033]">
 
-      <div
-        className="
-          mx-auto
-          flex
-          min-h-[calc(100vh-24px)]
-          max-w-[1380px]
-          overflow-hidden
-          rounded-2xl
-          border
-          shadow-[0_20px_60px_rgba(23,37,54,0.12)]
-          sm:min-h-[calc(100vh-40px)]
-          lg:min-h-[calc(100vh-48px)]
-        "
-        style={{
-          backgroundColor: theme.surface,
-          borderColor: theme.border,
-        }}
-      >
-        {/* ========================================================
-            LEFT PANEL — ONBOARDING RAIL
-        ========================================================= */}
+      {/* HEADER */}
+      <header className="border-b border-[#e2e6ed] bg-white">
+        <div className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between px-5">
 
-        <aside
-          className="
-            relative
-            hidden
-            w-[340px]
-            shrink-0
-            flex-col
-            border-r
-            p-7
-            lg:flex
-            xl:w-[380px]
-            xl:p-9
-          "
-          style={{
-            backgroundColor: theme.surfaceAlt,
-            borderColor: theme.border,
-          }}
-        >
-          {/* ======================================================
-              SUBTLE GRID BACKGROUND
-          ====================================================== */}
-
-          <div
-            className="
-              pointer-events-none
-              absolute
-              inset-0
-              opacity-[0.35]
-            "
-            style={{
-              backgroundImage: `
-                linear-gradient(
-                  ${theme.border} 1px,
-                  transparent 1px
-                ),
-                linear-gradient(
-                  90deg,
-                  ${theme.border} 1px,
-                  transparent 1px
-                )
-              `,
-              backgroundSize: "28px 28px",
-              maskImage:
-                "radial-gradient(ellipse at top left, black 30%, transparent 75%)",
-              WebkitMaskImage:
-                "radial-gradient(ellipse at top left, black 30%, transparent 75%)",
-            }}
-          />
-
-          {/* ======================================================
-              LOGO
-          ====================================================== */}
-
-          <button
-            type="button"
-            onClick={() =>
-              navigate("/login/retailer")
-            }
-            className="
-              relative
-              flex
-              w-fit
-              items-center
-              gap-2.5
-            "
-          >
-            <div
-              className="
-                flex
-                h-9
-                w-9
-                items-center
-                justify-center
-                rounded-lg
-                shadow-sm
-              "
-              style={{
-                backgroundColor: theme.primary,
-              }}
-            >
-              <span
-                className="
-                  text-[15px]
-                  font-bold
-                  text-white
-                "
-              >
-                H
-              </span>
+          {/* LOGO */}
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-[#3156d9] to-[#10a88a] shadow-[0_4px_10px_rgba(49,91,209,0.18)]">
+              <span className="text-sm font-bold text-white">H</span>
             </div>
-
-            <div className="text-left">
-              <p
-                className="
-                  text-[15px]
-                  font-bold
-                  leading-none
-                  tracking-tight
-                "
-                style={{
-                  color: theme.textPrimary,
-                }}
-              >
-                HappyPay
-              </p>
-
-              <p
-                className="
-                  mt-1
-                  text-[9px]
-                  font-medium
-                  uppercase
-                  tracking-[0.18em]
-                "
-                style={{
-                  color: theme.textFaint,
-                }}
-              >
-                Retailer · KYC
-              </p>
+            <div>
+              <p className="text-[15px] font-bold tracking-tight text-[#172033]">HappyPay</p>
+              <p className="hidden text-[10px] text-[#8992a3] sm:block">Retailer Portal</p>
             </div>
-          </button>
-
-          {/* ======================================================
-              HEADING
-          ====================================================== */}
-
-          <div className="relative mt-12">
-            <div
-              className="
-                inline-flex
-                items-center
-                gap-1.5
-                rounded-full
-                px-2.5
-                py-1
-                text-[10px]
-                font-semibold
-                uppercase
-                tracking-wider
-              "
-              style={{
-                backgroundColor:
-                  theme.accentSoft,
-                color: theme.accent,
-              }}
-            >
-              <Sparkles className="h-3 w-3" />
-
-              Onboarding · ~5 min
-            </div>
-
-            <h1
-              className="
-                mt-4
-                text-[26px]
-                font-semibold
-                leading-[1.15]
-                tracking-[-0.02em]
-              "
-              style={{
-                color: theme.textPrimary,
-              }}
-            >
-              Set up your
-              <br />
-
-              <span
-                style={{
-                  color: theme.accent,
-                }}
-              >
-                payments account.
-              </span>
-            </h1>
-
-            <p
-              className="
-                mt-3
-                text-[13px]
-                leading-6
-              "
-              style={{
-                color: theme.textMuted,
-              }}
-            >
-              Complete KYC to activate
-              settlements. Your data is encrypted
-              and shared only with regulated
-              partners.
-            </p>
           </div>
 
-          {/* ======================================================
-              STEPS TIMELINE
-          ====================================================== */}
+          {/* PAGE TITLE */}
+          <div className="hidden text-center md:block">
+            <h1 className="text-sm font-bold text-[#172033]">New Retailer Registration</h1>
+            <p className="mt-0.5 text-[11px] text-[#7c8595]">Complete your registration to access HappyPay</p>
+          </div>
 
-          <nav className="relative mt-10">
+          {/* STEP COUNT */}
+          <div className="rounded-lg bg-[#f3f5fa] px-3 py-1.5">
+            <span className="text-xs font-semibold text-[#315bd1]">Step {currentStep + 1}</span>
+            <span className="mx-1 text-[#a2a8b3]">/</span>
+            <span className="text-xs font-medium text-[#687286]">{steps.length}</span>
+          </div>
+
+        </div>
+      </header>
+
+      {/* PROGRESS STEPS */}
+      <div className="border-b border-[#e4e7ed] bg-white">
+        <div className="mx-auto w-full max-w-5xl px-5">
+          <div className="flex h-14 items-center">
             {steps.map((step, index) => {
               const Icon = step.icon;
-
-              const isActive =
-                index === currentStep;
-
-              const isCompleted =
-                index < currentStep;
+              const isActive = index === currentStep;
+              const isCompleted = index < currentStep;
 
               return (
-                <div
-                  key={step.title}
-                  className="
-                    relative
-                    flex
-                    gap-3.5
-                  "
-                >
-                  {/* ==================================================
-                      VERTICAL RAIL
-                  ================================================== */}
-
+                <div key={step.title} className="flex min-w-0 flex-1 items-center">
+                  <div className="flex min-w-0 items-center gap-2">
+                    <div className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 transition ${
+                      isCompleted ? "border-transparent bg-[#315bd1] text-white"
+                        : isActive ? "border-[#315bd1] bg-[#eef2ff] text-[#315bd1]"
+                        : "border-[#d5d9e1] bg-white text-[#929aaa]"
+                    }`}>
+                      {isCompleted
+                        ? <Check className="h-3 w-3" strokeWidth={3} />
+                        : <Icon className="h-3 w-3" strokeWidth={2} />
+                      }
+                    </div>
+                    <div className="hidden min-w-0 xl:block">
+                      <p className={`truncate text-[12px] font-semibold ${isActive || isCompleted ? "text-[#315bd1]" : "text-[#747d8d]"}`}>
+                        {step.title}
+                      </p>
+                    </div>
+                  </div>
                   {index < steps.length - 1 && (
-                    <div
-                      className="
-                        absolute
-                        left-[15px]
-                        top-8
-                        h-[calc(100%-8px)]
-                        w-px
-                      "
-                      style={{
-                        backgroundColor:
-                          isCompleted
-                            ? theme.success
-                            : theme.border,
-                      }}
-                    />
+                    <div className={`mx-2 h-[2px] flex-1 ${index < currentStep ? "bg-gradient-to-r from-[#3156d9] to-[#10a88a]" : "bg-[#e0e3e9]"}`} />
                   )}
-
-                  {/* ==================================================
-                      STEP NODE
-                  ================================================== */}
-
-                  <div
-                    className="
-                      relative
-                      z-10
-                      mt-1
-                      flex
-                      h-8
-                      w-8
-                      shrink-0
-                      items-center
-                      justify-center
-                      rounded-lg
-                      border
-                      transition-all
-                    "
-                    style={{
-                      backgroundColor:
-                        isCompleted
-                          ? theme.success
-                          : isActive
-                          ? theme.accent
-                          : theme.surface,
-
-                      borderColor:
-                        isCompleted
-                          ? theme.success
-                          : isActive
-                          ? theme.accent
-                          : theme.borderStrong,
-
-                      color:
-                        isCompleted ||
-                        isActive
-                          ? "#FFFFFF"
-                          : theme.textFaint,
-
-                      boxShadow: isActive
-                        ? `0 0 0 4px ${theme.accentSoft}`
-                        : "none",
-                    }}
-                  >
-                    {isCompleted ? (
-                      <Check
-                        className="h-4 w-4"
-                        strokeWidth={3}
-                      />
-                    ) : (
-                      <Icon className="h-4 w-4" />
-                    )}
-                  </div>
-
-                  {/* ==================================================
-                      STEP TEXT
-                  ================================================== */}
-
-                  <div className="pb-6">
-                    <p
-                      className="
-                        text-[13px]
-                        font-semibold
-                        leading-tight
-                      "
-                      style={{
-                        color: isActive
-                          ? theme.textPrimary
-                          : isCompleted
-                          ? theme.textSecondary
-                          : theme.textFaint,
-                      }}
-                    >
-                      {step.title}
-                    </p>
-
-                    <p
-                      className="
-                        mt-0.5
-                        text-[11px]
-                        leading-snug
-                      "
-                      style={{
-                        color: theme.textFaint,
-                      }}
-                    >
-                      {step.description}
-                    </p>
-
-                    {/* ==================================================
-                        COMPLETED
-                    ================================================== */}
-
-                    {isCompleted && (
-                      <p
-                        className="
-                          mt-1
-                          inline-flex
-                          items-center
-                          gap-1
-                          text-[10px]
-                          font-semibold
-                        "
-                        style={{
-                          color: theme.success,
-                        }}
-                      >
-                        <BadgeCheck className="h-3 w-3" />
-
-                        Verified
-                      </p>
-                    )}
-
-                    {/* ==================================================
-                        ACTIVE
-                    ================================================== */}
-
-                    {isActive && (
-                      <p
-                        className="
-                          mt-1
-                          inline-flex
-                          items-center
-                          gap-1
-                          text-[10px]
-                          font-semibold
-                        "
-                        style={{
-                          color: theme.accent,
-                        }}
-                      >
-                        <Clock className="h-3 w-3" />
-
-                        In progress
-                      </p>
-                    )}
-                  </div>
                 </div>
               );
             })}
-          </nav>
+          </div>
+        </div>
+      </div>
 
-          {/* ======================================================
-              TRUST FOOTER
-          ====================================================== */}
+      {/* MAIN */}
+      <main className="mx-auto w-full max-w-5xl px-5 py-5">
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-[220px_minmax(0,1fr)]">
 
-          <div
-            className="
-              relative
-              mt-auto
-              pt-6
-            "
-          >
-            <div
-              className="
-                flex
-                items-center
-                gap-2
-                rounded-lg
-                border
-                px-3
-                py-2.5
-              "
-              style={{
-                backgroundColor: theme.surface,
-                borderColor: theme.border,
-              }}
-            >
-              <ShieldCheck
-                className="
-                  h-4
-                  w-4
-                  shrink-0
-                "
-                style={{
-                  color: theme.success,
-                }}
-              />
+          {/* LEFT SIDEBAR NAV */}
+          <aside className="hidden lg:block">
+            <div className="sticky top-5 rounded-xl border border-[#e1e5ec] bg-white p-4">
+              <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#9aa1ae]">Registration</p>
 
-              <div
-                className="
-                  text-[10px]
-                  leading-tight
-                "
-              >
-                <p
-                  className="font-semibold"
-                  style={{
-                    color: theme.textPrimary,
-                  }}
-                >
-                  256-bit AES · PCI-DSS
-                </p>
+              <div className="mt-3 space-y-0.5">
+                {steps.map((step, index) => {
+                  const Icon = step.icon;
+                  const isActive = index === currentStep;
+                  const isCompleted = index < currentStep;
 
-                <p
-                  style={{
-                    color: theme.textFaint,
-                  }}
-                >
-                  RBI-aligned KYC partner
+                  return (
+                    <button
+                      key={step.title}
+                      type="button"
+                      disabled={index > currentStep}
+                      onClick={() => {
+                        if (index <= currentStep) {
+                          setCurrentStep(index);
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }
+                      }}
+                      className={`flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left transition ${
+                        isActive ? "bg-[#eef2ff] text-[#315bd1]"
+                          : isCompleted ? "text-[#315bd1] hover:bg-[#f7f8fc]"
+                          : "text-[#a0a6b1]"
+                      }`}
+                    >
+                      <div className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ${
+                        isActive ? "bg-[#315bd1] text-white"
+                          : isCompleted ? "bg-[#e7edff] text-[#315bd1]"
+                          : "bg-[#f1f3f6] text-[#a0a6b1]"
+                      }`}>
+                        {isCompleted
+                          ? <Check className="h-3.5 w-3.5" strokeWidth={3} />
+                          : <Icon className="h-3.5 w-3.5" strokeWidth={2} />
+                        }
+                      </div>
+                      <div className="min-w-0">
+                        <p className="truncate text-xs font-semibold">{step.title}</p>
+                        <p className="text-[10px] text-[#9ba2ae]">Step {index + 1}</p>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="mt-4 rounded-lg bg-[#f7f9fd] p-3">
+                <p className="text-xs font-semibold text-[#172033]">Need help?</p>
+                <p className="mt-0.5 text-[11px] leading-4 text-[#7f8796]">
+                  Complete each section with your correct details and documents.
                 </p>
               </div>
             </div>
-          </div>
-        </aside>
+          </aside>
 
-        {/* ==========================================================
-            RIGHT PANEL — FORM
-        ========================================================== */}
+          {/* FORM */}
+          <section className="min-w-0">
 
-        <main
-          className="
-            relative
-            flex
-            flex-1
-            flex-col
-            bg-white
-          "
-        >
-          {/* ======================================================
-              TOP BAR
-          ====================================================== */}
-
-          <header
-            className="
-              relative
-              flex
-              items-center
-              justify-between
-              border-b
-              px-6
-              py-4
-              sm:px-8
-              lg:px-10
-            "
-            style={{
-              borderColor: theme.border,
-            }}
-          >
-            <button
-              type="button"
-              onClick={() =>
-                navigate("/login/retailer")
-              }
-              className="
-                group
-                flex
-                items-center
-                gap-2
-                text-[12px]
-                font-medium
-                transition
-                hover:opacity-70
-              "
-              style={{
-                color: theme.textMuted,
-              }}
-            >
-              <ArrowLeft
-                className="
-                  h-3.5
-                  w-3.5
-                  transition-transform
-                  group-hover:-translate-x-0.5
-                "
-              />
-
-              Back to login
-            </button>
-
-            <div className="flex items-center gap-3">
-              {/* ==================================================
-                  KYC STATUS
-              ================================================== */}
-
-              <span
-                className="
-                  hidden
-                  items-center
-                  gap-1.5
-                  rounded-full
-                  border
-                  px-2.5
-                  py-1
-                  text-[10px]
-                  font-semibold
-                  sm:inline-flex
-                "
-                style={{
-                  backgroundColor:
-                    theme.warningSoft,
-
-                  borderColor:
-                    "#E8D49C",
-
-                  color:
-                    theme.warning,
-                }}
-              >
-                <Clock className="h-3 w-3" />
-
-                KYC Pending
-              </span>
-
-              {/* ==================================================
-                  STEP COUNT
-              ================================================== */}
-
-              <span
-                className="
-                  inline-flex
-                  items-center
-                  gap-1.5
-                  rounded-full
-                  px-2.5
-                  py-1
-                  text-[10px]
-                  font-semibold
-                "
-                style={{
-                  backgroundColor:
-                    theme.surfaceMuted,
-
-                  color:
-                    theme.textSecondary,
-                }}
-              >
-                Step {currentStep + 1} /{" "}
-                {totalSteps}
-              </span>
-            </div>
-          </header>
-
-          {/* ======================================================
-              PROGRESS BAR
-          ====================================================== */}
-
-          <div
-            className="
-              relative
-              px-6
-              pt-5
-              sm:px-8
-              lg:px-10
-            "
-          >
-            <div
-              className="
-                mb-2
-                flex
-                items-center
-                justify-between
-              "
-            >
-              <p
-                className="
-                  text-[11px]
-                  font-medium
-                "
-                style={{
-                  color: theme.textMuted,
-                }}
-              >
-                Onboarding progress
-              </p>
-
-              <p
-                className="
-                  text-[11px]
-                  font-semibold
-                "
-                style={{
-                  color: theme.accent,
-                }}
-              >
-                {progressPct}%
-              </p>
-            </div>
-
-            <div
-              className="
-                h-1.5
-                w-full
-                overflow-hidden
-                rounded-full
-              "
-              style={{
-                backgroundColor:
-                  theme.surfaceMuted,
-              }}
-            >
-              <div
-                className="
-                  h-full
-                  rounded-full
-                  transition-all
-                  duration-500
-                "
-                style={{
-                  width: `${progressPct}%`,
-                  backgroundColor:
-                    theme.accent,
-                }}
-              />
-            </div>
-          </div>
-
-          {/* ======================================================
-              FORM CONTENT
-          ====================================================== */}
-
-          <div
-            className="
-              relative
-              flex-1
-              overflow-y-auto
-              px-6
-              py-7
-              sm:px-8
-              lg:px-10
-              xl:px-14
-            "
-          >
-            <div
-              key={currentStep}
-              className={
-                direction === "next"
-                  ? "animate-slide-in-right"
-                  : "animate-slide-in-left"
-              }
-            >
-              {/* ==================================================
-                  STEP HEADING
-              ================================================== */}
-
-              <div
-                className="
-                  mb-6
-                  flex
-                  items-start
-                  justify-between
-                  gap-4
-                "
-              >
+            {/* FORM HEADER */}
+            <div className="rounded-t-xl border border-b-0 border-[#e1e5ec] bg-white px-5 py-4 sm:px-6">
+              <div className="flex items-start gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#eef2ff] text-[#315bd1]">
+                  <CurrentStepIcon className="h-5 w-5" strokeWidth={2} />
+                </div>
                 <div>
-                  <div
-                    className="
-                      flex
-                      items-center
-                      gap-2.5
-                    "
-                  >
-                    {/* STEP ICON */}
-
-                    <div
-                      className="
-                        flex
-                        h-9
-                        w-9
-                        items-center
-                        justify-center
-                        rounded-lg
-                      "
-                      style={{
-                        backgroundColor:
-                          theme.accentSoft,
-                      }}
-                    >
-                      {(() => {
-                        const Icon =
-                          steps[currentStep]
-                            .icon;
-
-                        return (
-                          <Icon
-                            className="
-                              h-4.5
-                              w-4.5
-                            "
-                            style={{
-                              color:
-                                theme.accent,
-                            }}
-                          />
-                        );
-                      })()}
-                    </div>
-
-                    <div>
-                      <p
-                        className="
-                          text-[10px]
-                          font-semibold
-                          uppercase
-                          tracking-[0.14em]
-                        "
-                        style={{
-                          color:
-                            theme.textFaint,
-                        }}
-                      >
-                        Step {currentStep + 1}
-                      </p>
-
-                      <h2
-                        className="
-                          text-[19px]
-                          font-semibold
-                          tracking-[-0.01em]
-                        "
-                        style={{
-                          color:
-                            theme.textPrimary,
-                        }}
-                      >
-                        {
-                          steps[currentStep]
-                            .title
-                        }
-                      </h2>
-                    </div>
-                  </div>
-
-                  <p
-                    className="
-                      mt-2
-                      max-w-[560px]
-                      text-[13px]
-                      leading-5
-                    "
-                    style={{
-                      color:
-                        theme.textMuted,
-                    }}
-                  >
-                    {
-                      steps[currentStep]
-                        .description
-                    }
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[#315bd1]">
+                    {steps[currentStep].title}
+                  </p>
+                  <h2 className="mt-0.5 text-lg font-bold tracking-tight text-[#172033]">
+                    {stepHeadings[currentStep]}
+                  </h2>
+                  <p className="mt-1 text-xs leading-5 text-[#737c8c]">
+                    {stepDescriptions[currentStep]}
                   </p>
                 </div>
               </div>
-
-              {/* ==================================================
-                  ACTUAL STEP FORM
-              ================================================== */}
-
-              <div className="max-w-[640px]">
-                {currentStep === 0 && (
-                  <AccountStep />
-                )}
-
-                {currentStep === 1 && (
-                  <ShopDetailsStep />
-                )}
-
-                {currentStep === 2 && (
-                  <AboutRetailerStep />
-                )}
-
-                {currentStep === 3 && (
-                  <AadhaarStep />
-                )}
-
-                {currentStep === 4 && (
-                  <BankDetailsStep />
-                )}
-              </div>
             </div>
-          </div>
 
-          {/* ======================================================
-              BOTTOM NAVIGATION
-          ====================================================== */}
+            {/* FORM BODY */}
+            <div className="rounded-b-xl border border-[#e1e5ec] bg-white px-5 py-5 sm:px-6">
+              {currentStep === 0 ? <AccountStep />
+                : currentStep === 1 ? <ShopDetailsStep />
+                : currentStep === 2 ? <AboutRetailerStep />
+                : currentStep === 3 ? <PanVerificationStep />
+                : currentStep === 4 ? <AadhaarStep />
+                : currentStep === 5 ? <DobStep />
+                : currentStep === 6 ? <BusinessProofStep />
+                : <BankDetailsStep />}
+            </div>
 
-          <footer
-            className="
-              relative
-              flex
-              items-center
-              justify-between
-              border-t
-              px-6
-              py-4
-              sm:px-8
-              lg:px-10
-            "
-            style={{
-              borderColor: theme.border,
-            }}
-          >
-            {/* ==================================================
-                PREVIOUS
-            ================================================== */}
-
-            <button
-              type="button"
-              onClick={previousStep}
-              disabled={currentStep === 0}
-              className="
-                group
-                flex
-                items-center
-                gap-2
-                rounded-lg
-                px-3
-                py-2.5
-                text-[12px]
-                font-semibold
-                transition
-                hover:bg-[#F1F0EE]
-                disabled:pointer-events-none
-                disabled:opacity-30
-              "
-              style={{
-                color: theme.textMuted,
-              }}
-            >
-              <ArrowLeft
-                className="
-                  h-3.5
-                  w-3.5
-                  transition-transform
-                  group-hover:-translate-x-0.5
-                "
-              />
-
-              Previous
-            </button>
-
-            <div
-              className="
-                flex
-                items-center
-                gap-3
-              "
-            >
-              {/* ==================================================
-                  ENCRYPTION HINT
-              ================================================== */}
-
-              <span
-                className="
-                  hidden
-                  items-center
-                  gap-1.5
-                  text-[10px]
-                  md:inline-flex
-                "
-                style={{
-                  color: theme.textFaint,
-                }}
+            {/* ACTION BUTTONS */}
+            <div className="mt-3 flex items-center justify-between rounded-xl border border-[#e1e5ec] bg-white px-4 py-3">
+              <button
+                type="button"
+                onClick={previousStep}
+                className="flex h-9 items-center gap-2 rounded-lg border border-[#d4d9e2] bg-white px-4 text-xs font-semibold text-[#4e586a] transition hover:bg-[#f7f8fa]"
               >
-                <Lock className="h-3 w-3" />
+                <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} />
+                <span>{currentStep === 0 ? "Back to Login" : "Previous"}</span>
+              </button>
 
-                Encrypted end-to-end
-              </span>
-
-              {/* ==================================================
-                  NEXT BUTTON
-              ================================================== */}
-
-              {currentStep <
-              totalSteps - 1 ? (
-                <button
-                  type="button"
-                  onClick={nextStep}
-                  disabled={!canContinue}
-                  className="
-                    group
-                    flex
-                    items-center
-                    gap-2
-                    rounded-lg
-                    px-4
-                    py-2.5
-                    text-[12px]
-                    font-semibold
-                    text-white
-                    shadow-[0_4px_12px_rgba(23,37,54,0.20)]
-                    transition
-                    hover:brightness-110
-                    active:scale-[0.98]
-                    disabled:cursor-not-allowed
-                    disabled:opacity-50
-                    disabled:shadow-none
-                  "
-                  style={{
-                    backgroundColor:
-                      theme.primary,
-                  }}
-                >
-                  {steps[currentStep].cta}
-
-                  <ArrowRight
-                    className="
-                      h-3.5
-                      w-3.5
-                      transition-transform
-                      group-hover:translate-x-0.5
-                    "
-                  />
-                </button>
-              ) : (
-                /* ==================================================
-                   SUBMIT BUTTON
-                ================================================== */
-
-                <button
-                  type="button"
-                  onClick={handleSubmit}
-                  disabled={saving}
-                  className="
-                    group
-                    flex
-                    items-center
-                    gap-2
-                    rounded-lg
-                    px-4
-                    py-2.5
-                    text-[12px]
-                    font-semibold
-                    text-white
-                    shadow-[0_4px_12px_rgba(74,62,148,0.25)]
-                    transition
-                    hover:brightness-110
-                    active:scale-[0.98]
-                    disabled:opacity-60
-                  "
-                  style={{
-                    backgroundColor:
-                      theme.accent,
-                  }}
-                >
-                  <CircleCheck
-                    className="
-                      h-3.5
-                      w-3.5
-                    "
-                  />
-
-                  {saving
-                    ? "Submitting…"
-                    : "Submit for Verification"}
-                </button>
-              )}
+              <button
+                type="button"
+                onClick={nextStep}
+                className={`flex h-9 items-center gap-2 rounded-lg px-5 text-xs font-semibold text-white shadow-sm transition ${
+                  currentStep === steps.length - 1
+                    ? "bg-[#08ae82] hover:bg-[#079b74]"
+                    : "bg-gradient-to-r from-[#3156d9] to-[#10a88a] hover:opacity-90"
+                }`}
+              >
+                <span>{currentStep === steps.length - 1 ? "Submit Registration" : "Continue"}</span>
+                {currentStep === steps.length - 1
+                  ? <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
+                  : <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
+                }
+              </button>
             </div>
-          </footer>
-        </main>
-      </div>
+
+          </section>
+        </div>
+      </main>
     </div>
   );
 };
 
 export default RetailerRegister;
+

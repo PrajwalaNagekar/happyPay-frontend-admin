@@ -9,32 +9,37 @@ const RetailerKycPending = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-muted/40 px-4">
-      <div className="w-full max-w-md rounded-3xl bg-background p-8 text-center shadow-lg border">
+    <div className="min-h-screen flex items-center justify-center bg-[#f4f6fa] px-4">
+      <div className="w-full max-w-md rounded-3xl bg-white p-8 text-center shadow-lg border border-slate-200">
         <div className="flex justify-center mb-6">
-          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-yellow-100">
-            <Clock3 className="h-10 w-10 text-yellow-600" />
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-amber-50 ring-4 ring-amber-100">
+            <Clock3 className="h-10 w-10 text-amber-500" />
           </div>
         </div>
 
-        <h1 className="text-2xl font-bold">
+        <h1 className="text-2xl font-bold text-[#172033]">
           KYC Verification Pending
         </h1>
 
-        <p className="mt-3 text-muted-foreground">
+        <p className="mt-3 text-sm text-slate-500">
           Your registration has been submitted successfully.
         </p>
 
-        <p className="mt-2 text-sm text-muted-foreground">
-          Our admin team is currently reviewing your KYC details.
-          You will be notified once your account is approved.
+        <p className="mt-2 text-sm text-slate-500 leading-6">
+          Our admin team is reviewing your KYC details.
+          You'll be notified once your account is approved.
         </p>
 
-        {/* Temporary button for development */}
+        <div className="mt-6 rounded-2xl bg-amber-50 border border-amber-200 px-4 py-3">
+          <p className="text-xs font-medium text-amber-700">
+            Typical review time: 24–48 hours
+          </p>
+        </div>
+
         <button
           type="button"
           onClick={handleApproval}
-          className="mt-8 w-full rounded-xl bg-primary px-4 py-3 font-medium text-primary-foreground hover:opacity-90"
+          className="mt-7 w-full rounded-xl bg-[#315bd1] px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#274dbd] active:scale-[0.99]"
         >
           Simulate Admin Approval
         </button>
@@ -44,3 +49,5 @@ const RetailerKycPending = () => {
 };
 
 export default RetailerKycPending;
+
+

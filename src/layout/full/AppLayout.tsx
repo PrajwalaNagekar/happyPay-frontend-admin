@@ -18,30 +18,32 @@ const AppLayout = () => {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-muted/40 text-foreground">
+    <div className="flex h-screen overflow-hidden bg-[#f0f3f9] text-[#172033]">
 
-      <div className="hidden lg:flex p-4 lg:pr-6 h-full">
+      {/* Desktop Sidebar */}
+      <div className="hidden lg:flex h-full w-[272px] shrink-0 flex-col p-3 pr-0">
         <SidebarDesktop onLogout={handleLogout} />
       </div>
 
       <SidebarMobile
         open={sidebarOpen}
         onOpenChange={setSidebarOpen}
-        onLogout={handleLogout}
       />
 
-      <div className="flex flex-col flex-1 relative min-w-0">
+      {/* Main content */}
+      <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
 
-        <div className="p-4 pb-0 lg:p-4 lg:pl-0 z-20">
+        {/* Navbar */}
+        <div className="shrink-0 px-3 pt-3 pb-0 lg:px-4 lg:pt-3">
           <Navbar
             onMenuClick={() => setSidebarOpen(true)}
           />
         </div>
 
-        <main className="flex-1 overflow-auto p-4 lg:p-4 lg:pl-0 lg:pt-2">
+        {/* Page content */}
+        <main className="flex-1 overflow-y-auto overflow-x-hidden px-3 py-3 lg:px-4 lg:py-3">
           <Outlet />
         </main>
-
       </div>
     </div>
   );

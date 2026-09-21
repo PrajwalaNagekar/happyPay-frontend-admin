@@ -6,28 +6,30 @@ interface NavbarProps {
 
 const Navbar = ({ onMenuClick }: NavbarProps) => {
   return (
-    <header className="flex h-16 items-center justify-between rounded-2xl bg-background px-4 shadow-sm">
+    <header className="flex h-12 items-center justify-between rounded-xl border border-[#e3e7ee] bg-white px-4 shadow-sm">
 
       {/* Mobile hamburger */}
       <button
         type="button"
         onClick={onMenuClick}
-        className="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-muted lg:hidden"
+        className="flex h-8 w-8 items-center justify-center rounded-lg text-[#687286] transition hover:bg-[#f3f5fa] hover:text-[#315bd1] lg:hidden"
+        aria-label="Open menu"
       >
-        <Menu className="h-6 w-6" />
+        <Menu className="h-5 w-5" />
       </button>
 
-      {/* Desktop title */}
-      <div className="hidden lg:block">
-        <h1 className="text-lg font-semibold">
-          Retailer Dashboard
-        </h1>
+      {/* Desktop: Brand */}
+      <div className="hidden items-center gap-2.5 lg:flex">
+        <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-[#3156d9] via-[#218bbd] to-[#10a88a]">
+          <span className="text-xs font-bold text-white">H</span>
+        </div>
+        <span className="text-sm font-semibold text-[#172033]">HappyPay</span>
+        <span className="text-[#dde1e9]">/</span>
+        <span className="text-xs text-[#8992a3]">Retailer Portal</span>
       </div>
 
-      {/* Right side */}
-      <div className="ml-auto">
-        {/* Profile / notifications etc. */}
-      </div>
+      {/* Right — empty spacer on mobile so hamburger aligns left */}
+      <div className="ml-auto" />
 
     </header>
   );

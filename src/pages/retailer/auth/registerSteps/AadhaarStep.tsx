@@ -1,230 +1,241 @@
+import { useRef, useState } from "react";
 import {
   Fingerprint,
-  Camera,
-  FileCheck,
-  CalendarDays,
+  FileText,
+  ShieldCheck,
+  Upload,
+  Circle,
+  CheckCircle2,
 } from "lucide-react";
 
 const AadhaarStep = () => {
+  const aadhaarInputRef = useRef<HTMLInputElement | null>(null);
+
+  const [consent, setConsent] = useState(false);
+  const [linkedMobile, setLinkedMobile] = useState<"yes" | "no">("no");
+  const [aadhaarNumber, setAadhaarNumber] = useState("");
+  const [aadhaarFile, setAadhaarFile] = useState<File | null>(null);
+
+  const handleAadhaarUpload = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      setAadhaarFile(file);
+    }
+  };
+
+  const handleAadhaarChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const value = event.target.value
+      .replace(/\D/g, "")
+      .slice(0, 12);
+
+    setAadhaarNumber(value);
+  };
+
+  const formatAadhaar = (value: string) => {
+    return value.replace(/(.{4})/g, "$1 ").trim();
+  };
+
   return (
-    <div className="space-y-6">
-
-      {/* Consent */}
-      <div className="rounded-2xl border border-[#e5e1f1] bg-[#f8f7fc] p-5">
-
-        <div className="flex items-start gap-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white">
-            <Fingerprint className="h-5 w-5 text-[#7668aa]" />
-          </div>
-
-          <div>
-            <p className="text-xs font-semibold text-[#26384a]">
-              Aadhaar verification
-            </p>
-
-            <p className="mt-1 text-[11px] leading-5 text-gray-400">
-              Your Aadhaar details are used only for identity
-              verification.
-            </p>
-          </div>
+    <div className="space-y-5">
+      {/* HEADER INFORMATION */}
+      <div className="flex items-start gap-4">
+        <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-[22px] bg-gradient-to-br from-[#e9efff] to-[#e6f6f1]">
+          <Fingerprint
+            className="h-9 w-9 text-[#315bd1]"
+            strokeWidth={2}
+          />
         </div>
 
-        <div className="mt-5 space-y-3">
+        <div>
+          <h3 className="text-base font-bold text-[#172033]">
+            Aadhaar Verification
+          </h3>
 
-          <label className="flex cursor-pointer items-start gap-3">
-            <input
-              type="checkbox"
-              className="mt-0.5 h-4 w-4 accent-[#7668aa]"
-            />
-
-            <span className="text-xs leading-5 text-gray-500">
-              I provide consent for Aadhaar validation.
-            </span>
-          </label>
-
-          <label className="flex cursor-pointer items-start gap-3">
-            <input
-              type="checkbox"
-              className="mt-0.5 h-4 w-4 accent-[#7668aa]"
-            />
-
-            <span className="text-xs leading-5 text-gray-500">
-              My Aadhaar is linked with my mobile number.
-            </span>
-          </label>
-
+          <p className="mt-2 text-sm leading-7 text-[#697386]">
+            Verify your Aadhaar information
+            <br />
+            securely.
+          </p>
         </div>
-
       </div>
 
-      {/* Aadhaar Number */}
+      {/* CONSENT */}
+      <button
+        type="button"
+        onClick={() => setConsent((previous) => !previous)}
+        className={`flex w-full items-start gap-3 rounded-xl border-2 px-4 py-3 text-left transition ${
+          consent
+            ? "border-[#315bd1] bg-[#f0f3ff]"
+            : "border-[#c9c9ce] bg-[#fafafd]"
+        }`}
+      >
+        {consent ? (
+          <CheckCircle2
+            className="mt-0.5 h-5 w-5 shrink-0 text-[#315bd1]"
+            strokeWidth={2}
+          />
+        ) : (
+          <Circle
+            className="mt-0.5 h-5 w-5 shrink-0 text-[#8992a3]"
+            strokeWidth={1.8}
+          />
+        )}
+
+        <span className="pt-1 text-sm font-semibold leading-7 text-[#172033]">
+          I provide my consent for Aadhaar-based
+          <br />
+          identity verification.
+        </span>
+      </button>
+
+      {/* MOBILE LINK QUESTION */}
       <div>
-        <label className="mb-2 block text-xs font-semibold text-[#303947]">
+        <p className="mb-5 text-sm font-bold leading-7 text-[#172033]">
+          Is your Aadhaar linked with a mobile number?
+        </p>
+
+        <div className="grid grid-cols-2 gap-5">
+          {/* YES */}
+          <button
+            type="button"
+            onClick={() => setLinkedMobile("yes")}
+            className={`flex h-[48px] items-center justify-center gap-3 rounded-xl border-2 text-sm font-semibold transition ${
+              linkedMobile === "yes"
+                ? "border-[#315bd1] bg-[#f0f3ff] text-[#172033]"
+                : "border-[#d4d5da] bg-[#fafafd] text-[#172033]"
+            }`}
+          >
+            {linkedMobile === "yes" ? (
+              <CheckCircle2
+                className="h-4 w-4 text-[#315bd1]"
+                strokeWidth={2}
+              />
+            ) : (
+              <Circle
+                className="h-4 w-4 text-[#8992a3]"
+                strokeWidth={1.8}
+              />
+            )}
+
+            Yes
+          </button>
+
+          {/* NO */}
+          <button
+            type="button"
+            onClick={() => setLinkedMobile("no")}
+            className={`flex h-[48px] items-center justify-center gap-3 rounded-xl border-2 text-sm font-semibold transition ${
+              linkedMobile === "no"
+                ? "border-[#315bd1] bg-[#f0f3ff] text-[#172033]"
+                : "border-[#d4d5da] bg-[#fafafd] text-[#172033]"
+            }`}
+          >
+            {linkedMobile === "no" ? (
+              <CheckCircle2
+                className="h-4 w-4 text-[#315bd1]"
+                strokeWidth={2}
+              />
+            ) : (
+              <Circle
+                className="h-4 w-4 text-[#8992a3]"
+                strokeWidth={1.8}
+              />
+            )}
+
+            No
+          </button>
+        </div>
+      </div>
+
+      {/* AADHAAR NUMBER */}
+      <div>
+        <label className="mb-3 block text-sm font-bold text-[#172033]">
           Aadhaar Number
         </label>
 
         <div className="relative">
-          <Fingerprint className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+          <Fingerprint
+            className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#8992a3]"
+            strokeWidth={2}
+          />
 
           <input
             type="text"
             inputMode="numeric"
-            maxLength={12}
-            placeholder="Enter 12-digit Aadhaar number"
-            className="h-[50px] w-full rounded-xl border border-gray-200 bg-[#fafafa] pl-11 pr-4 text-sm tracking-wider text-[#26384a] outline-none focus:border-[#7668aa] focus:bg-white focus:ring-4 focus:ring-[#7668aa]/10"
+            value={formatAadhaar(aadhaarNumber)}
+            onChange={handleAadhaarChange}
+            placeholder="Enter Aadhaar number"
+            maxLength={14}
+            className="h-[48px] w-full rounded-xl border-2 border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-6 text-sm font-medium tracking-wide text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#315bd1]"
           />
         </div>
       </div>
 
-      {/* Aadhaar Document */}
-      <div>
-        <label className="mb-2 block text-xs font-semibold text-[#303947]">
-          Aadhaar Document
-        </label>
-
-        <label className="flex cursor-pointer items-center gap-4 rounded-xl border border-dashed border-gray-300 bg-[#fafafa] p-4 hover:border-[#7668aa]">
-
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white">
-            <FileCheck className="h-5 w-5 text-[#7668aa]" />
-          </div>
-
-          <div>
-            <p className="text-xs font-semibold text-[#26384a]">
-              Upload Aadhaar document
-            </p>
-
-            <p className="mt-1 text-[10px] text-gray-400">
-              JPG, PNG or PDF
-            </p>
-          </div>
-
-          <input
-            type="file"
-            accept="image/*,.pdf"
-            className="hidden"
-          />
-
-        </label>
-      </div>
-
-      {/* Date */}
-      <div>
-        <label className="mb-2 block text-xs font-semibold text-[#303947]">
-          Date of Birth
-        </label>
-
-        <div className="relative">
-          <CalendarDays className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-
-          <input
-            type="date"
-            className="h-[50px] w-full rounded-xl border border-gray-200 bg-[#fafafa] pl-11 pr-4 text-sm text-[#26384a] outline-none focus:border-[#7668aa] focus:bg-white focus:ring-4 focus:ring-[#7668aa]/10"
+      {/* AADHAAR DOCUMENT */}
+      <button
+        type="button"
+        onClick={() => aadhaarInputRef.current?.click()}
+        className="flex w-full items-center gap-6 rounded-xl border-2 border-[#c9c9ce] bg-[#fafafd] px-4 py-3 text-left transition hover:border-[#315bd1]"
+      >
+        <div className="flex h-[48px] w-[86px] shrink-0 items-center justify-center rounded-xl bg-[#e8ecfc]">
+          <FileText
+            className="h-5 w-5 text-[#315bd1]"
+            strokeWidth={2}
           />
         </div>
-      </div>
 
-      {/* Shop photos */}
-      <div>
+        <div className="min-w-0 flex-1">
+          <h3 className="text-sm font-semibold font-bold text-[#172033]">
+            Aadhaar Document
+          </h3>
 
-        <p className="mb-3 text-xs font-semibold text-[#303947]">
-          Shop Photos
+          <p className="mt-2 text-sm leading-6 text-[#9aa1af]">
+            {aadhaarFile
+              ? aadhaarFile.name
+              : "Upload Aadhaar front and back images."}
+          </p>
+        </div>
+
+        <Upload
+          className="h-5 w-5 shrink-0 text-[#315bd1]"
+          strokeWidth={2.4}
+        />
+      </button>
+
+      <input
+        ref={aadhaarInputRef}
+        type="file"
+        accept="image/*,.pdf"
+        multiple
+        onChange={handleAadhaarUpload}
+        className="hidden"
+      />
+
+      {/* SECURITY INFORMATION */}
+      <div className="flex items-start gap-3 rounded-xl border border-[#d9e0f5] bg-[#eef1ff] px-4 py-3">
+        <ShieldCheck
+          className="mt-1 h-5 w-5 shrink-0 text-[#315bd1]"
+          strokeWidth={2}
+        />
+
+        <p className="text-sm leading-7 text-[#3f4759]">
+          Sensitive Aadhaar information is securely
+          <br />
+          handled and masked where appropriate.
         </p>
-
-        <div className="grid gap-3 sm:grid-cols-3">
-
-          <PhotoUpload
-            title="Inside Shop"
-            capture="environment"
-          />
-
-          <PhotoUpload
-            title="Outside Shop"
-            capture="environment"
-          />
-
-          <PhotoUpload
-            title="Shop Location"
-            capture="environment"
-          />
-
-        </div>
-
       </div>
-
-      {/* Business Proof */}
-      <div>
-
-        <label className="mb-2 block text-xs font-semibold text-[#303947]">
-          Address / Business Proof
-        </label>
-
-        <select
-          className="h-[50px] w-full rounded-xl border border-gray-200 bg-[#fafafa] px-4 text-sm text-[#26384a] outline-none focus:border-[#7668aa] focus:bg-white focus:ring-4 focus:ring-[#7668aa]/10"
-        >
-          <option value="">
-            Select proof type
-          </option>
-          <option>Electricity Bill</option>
-          <option>Shop License</option>
-          <option>GST Certificate</option>
-          <option>Rental Agreement</option>
-        </select>
-
-        <label className="mt-3 flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-gray-300 bg-[#fafafa] p-4 hover:border-[#7668aa]">
-
-          <FileCheck className="h-5 w-5 text-[#7668aa]" />
-
-          <span className="text-xs font-medium text-gray-500">
-            Upload business proof
-          </span>
-
-          <input
-            type="file"
-            accept="image/*,.pdf"
-            className="hidden"
-          />
-
-        </label>
-
-      </div>
-
     </div>
   );
 };
 
-interface PhotoUploadProps {
-  title: string;
-  capture?: "environment" | "user";
-}
-
-const PhotoUpload = ({
-  title,
-  capture,
-}: PhotoUploadProps) => {
-  return (
-    <label className="flex cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-gray-300 bg-[#fafafa] px-3 py-5 text-center transition hover:border-[#7668aa] hover:bg-[#faf9fd]">
-
-      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white">
-        <Camera className="h-4 w-4 text-[#7668aa]" />
-      </div>
-
-      <p className="mt-2 text-[10px] font-semibold text-[#26384a]">
-        {title}
-      </p>
-
-      <p className="mt-1 text-[9px] text-gray-400">
-        Add photo
-      </p>
-
-      <input
-        type="file"
-        accept="image/*"
-        capture={capture}
-        className="hidden"
-      />
-
-    </label>
-  );
-};
-
 export default AadhaarStep;
+
+
+
+
+

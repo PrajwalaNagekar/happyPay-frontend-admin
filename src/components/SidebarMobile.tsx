@@ -14,23 +14,36 @@ const SidebarMobile = ({
 
   return (
     <>
-      {/* Overlay */}
+      {/* =========================================================
+          OVERLAY
+      ========================================================= */}
+
       <div
-        className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+        className="fixed inset-0 z-40 bg-[#172033]/45 backdrop-blur-[2px] lg:hidden"
         onClick={() => onOpenChange(false)}
       />
 
-      {/* Mobile Sidebar */}
-      <aside className="fixed left-0 top-0 z-50 h-screen w-[280px] bg-[#1f3043] shadow-2xl lg:hidden">
+      {/* =========================================================
+          MOBILE SIDEBAR
+      ========================================================= */}
 
-        {/* Close Button */}
+      <aside className="fixed left-0 top-0 z-50 h-screen w-[290px] overflow-hidden border-r border-[#e1e5ec] bg-white shadow-[10px_0_35px_rgba(23,32,51,0.14)] lg:hidden">
+        {/* =======================================================
+            CLOSE BUTTON
+        ======================================================= */}
+
         <button
           type="button"
           onClick={() => onOpenChange(false)}
-          className="absolute right-3 top-4 z-50 flex h-9 w-9 items-center justify-center rounded-lg text-white/70 hover:bg-white/10 hover:text-white"
+          aria-label="Close sidebar"
+          className="absolute right-4 top-4 z-50 flex h-9 w-9 items-center justify-center rounded-lg bg-[#f3f5f8] text-[#687286] transition hover:bg-[#eef2ff] hover:text-[#315bd1]"
         >
-          <X className="h-5 w-5" />
+          <X className="h-[18px] w-[18px]" strokeWidth={2} />
         </button>
+
+        {/* =======================================================
+            SIDEBAR CONTENT
+        ======================================================= */}
 
         <SidebarContent
           onLogout={() => {
@@ -40,7 +53,6 @@ const SidebarMobile = ({
             onOpenChange(false);
           }}
         />
-
       </aside>
     </>
   );
