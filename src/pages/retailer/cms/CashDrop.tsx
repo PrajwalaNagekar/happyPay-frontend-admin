@@ -224,8 +224,8 @@ export default function CashDrop() {
   };
 
   return (
-    <div className="bg-[#f5f7fb] p-4">
-      <div className="mx-auto max-w-7xl">
+    <div className="p-1">
+      <div className="mx-auto max-w-5xl">
 
         {/* ================= HOME ================= */}
         {screen === "home" && (
@@ -261,18 +261,18 @@ export default function CashDrop() {
             </div>
 
             {/* Available Balance */}
-            <div className="mb-6 rounded-2xl bg-gradient-to-r from-[#315bd1] via-[#287fbe] to-[#10a98b] p-5 text-white shadow-sm">
+            <div className="mb-6 rounded-2xl bg-[#172033] p-4 text-white shadow-sm">
               <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
                 <div>
-                  <p className="text-sm text-blue-100">
+                  <p className="text-sm text-slate-300">
                     Available Balance
                   </p>
 
-                  <h2 className="mt-1 text-3xl font-bold">
+                  <h2 className="mt-1 text-2xl font-bold">
                     ₹25,000
                   </h2>
 
-                  <p className="mt-1 text-xs text-blue-100">
+                  <p className="mt-1 text-xs text-slate-300">
                     Retailer wallet balance
                   </p>
                 </div>
@@ -283,7 +283,7 @@ export default function CashDrop() {
                   </div>
 
                   <div>
-                    <p className="text-xs text-blue-100">
+                    <p className="text-xs text-slate-300">
                       Cash Drop
                     </p>
 
@@ -296,10 +296,10 @@ export default function CashDrop() {
             </div>
 
             {/* Company Selection */}
-            <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <div className="rounded-2xl border border-slate-200 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.05)]">
               <div className="border-b border-slate-100 p-5">
                 <div className="flex items-start gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#eef2f7] text-[#172033]">
                     <WalletCards size={22} />
                   </div>
 
@@ -326,7 +326,7 @@ export default function CashDrop() {
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     placeholder="Search company..."
-                    className="h-11 w-full rounded-xl border border-slate-200 bg-slate-50 pl-10 pr-4 text-sm outline-none transition focus:border-blue-500 focus:bg-white"
+                    className="h-11 w-full rounded-xl border border-slate-200 bg-slate-50 pl-10 pr-4 text-sm outline-none transition focus:border-[#172033] focus:bg-white"
                   />
                 </div>
               </div>
@@ -343,13 +343,13 @@ export default function CashDrop() {
                       onClick={() => handleCompanySelect(company)}
                       className={`rounded-xl border p-4 text-left transition ${
                         selected
-                          ? "border-blue-500 bg-blue-50/60 shadow-sm"
-                          : "border-slate-200 bg-white hover:border-blue-300 hover:bg-slate-50"
+                          ? "border-[#172033] bg-[#eef2f7] shadow-sm"
+                          : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
                       }`}
                     >
                       <div className="flex items-start justify-between">
                         <div className="flex items-center gap-3">
-                          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-sm font-bold text-white">
+                          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#172033] text-sm font-bold text-white">
                             {company.icon}
                           </div>
 
@@ -367,7 +367,7 @@ export default function CashDrop() {
                         {selected && (
                           <CheckCircle2
                             size={19}
-                            className="text-blue-600"
+                            className="text-[#172033]"
                           />
                         )}
                       </div>
@@ -391,7 +391,7 @@ export default function CashDrop() {
                 <div className="rounded-2xl bg-slate-50 p-5">
                   <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 font-bold text-white">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#172033] font-bold text-white">
                         {selectedCompany.icon}
                       </div>
 
@@ -462,7 +462,7 @@ export default function CashDrop() {
                           key={feature.title}
                           className="flex gap-3 rounded-xl border border-slate-200 p-4"
                         >
-                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#eef2f7] text-[#172033]">
                             <Icon size={19} />
                           </div>
 
@@ -481,13 +481,13 @@ export default function CashDrop() {
                   </div>
                 </div>
 
-                <div className="mt-6 flex items-start gap-3 rounded-xl border border-blue-100 bg-blue-50 p-4">
+                <div className="mt-6 flex items-start gap-3 rounded-xl border border-slate-200 bg-[#eef2f7] p-4">
                   <Info
                     size={18}
-                    className="mt-0.5 shrink-0 text-blue-600"
+                    className="mt-0.5 shrink-0 text-[#172033]"
                   />
 
-                  <p className="text-sm leading-6 text-blue-800">
+                  <p className="text-sm leading-6 text-[#172033]">
                     Make sure the cash amount and denomination details
                     are correct before submitting the Cash Drop.
                   </p>
@@ -526,9 +526,9 @@ export default function CashDrop() {
               ]}
             />
 
-            <div className="grid gap-6 lg:grid-cols-3">
+            <div className="grid gap-4 lg:grid-cols-3">
               <div className="lg:col-span-2">
-                <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+                <div className="rounded-2xl border border-slate-200 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.05)]">
                   <div className="border-b border-slate-100 p-5">
                     <h2 className="font-semibold text-slate-900">
                       Depositor Details
@@ -547,7 +547,7 @@ export default function CashDrop() {
                       </label>
 
                       <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600 text-sm font-bold text-white">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#172033] text-sm font-bold text-white">
                           {selectedCompany.icon}
                         </div>
 
@@ -679,9 +679,9 @@ export default function CashDrop() {
               ]}
             />
 
-            <div className="grid gap-6 lg:grid-cols-3">
+            <div className="grid gap-4 lg:grid-cols-3">
               <div className="lg:col-span-2">
-                <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+                <div className="rounded-2xl border border-slate-200 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.05)]">
                   <div className="border-b border-slate-100 p-5">
                     <h2 className="font-semibold text-slate-900">
                       Cash Denominations
@@ -721,7 +721,7 @@ export default function CashDrop() {
                           className="flex items-center justify-between rounded-xl border border-slate-200 p-4"
                         >
                           <div className="flex items-center gap-3">
-                            <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-blue-600 text-sm font-bold text-white">
+                            <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[#172033] text-sm font-bold text-white">
                               ₹
                             </div>
 
@@ -760,7 +760,7 @@ export default function CashDrop() {
                                   Number(e.target.value) || 0
                                 )
                               }
-                              className="h-9 w-20 rounded-lg border border-slate-200 text-center text-sm font-semibold outline-none focus:border-blue-500"
+                              className="h-9 w-20 rounded-lg border border-slate-200 text-center text-sm font-semibold outline-none focus:border-[#172033]"
                             />
 
                             <button
@@ -813,7 +813,7 @@ export default function CashDrop() {
                                   Number(e.target.value) || 0
                                 )
                               }
-                              className="h-10 w-32 rounded-lg border border-slate-200 px-3 text-right text-sm font-semibold outline-none focus:border-blue-500"
+                              className="h-10 w-32 rounded-lg border border-slate-200 px-3 text-right text-sm font-semibold outline-none focus:border-[#172033]"
                             />
                           </div>
                         </div>
@@ -821,20 +821,20 @@ export default function CashDrop() {
                     </div>
 
                     {/* UPDATED TOTAL CASH AMOUNT */}
-                    <div className="mt-5 rounded-2xl bg-[#315bd1] p-5 text-white">
+                    <div className="mt-5 rounded-2xl bg-[#172033] p-5 text-white">
                       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                         <div>
-                          <p className="text-sm text-blue-100">
+                          <p className="text-sm text-slate-300">
                             Total Cash Amount
                           </p>
 
-                          <p className="mt-1 text-3xl font-bold">
+                          <p className="mt-1 text-2xl font-bold">
                             ₹{formatAmount(totalAmount)}
                           </p>
                         </div>
 
                         <div className="rounded-xl bg-white/10 px-4 py-3">
-                          <p className="text-xs text-blue-100">
+                          <p className="text-xs text-slate-300">
                             Retailer Commission
                           </p>
 
@@ -912,8 +912,8 @@ export default function CashDrop() {
             />
 
             <div className="mx-auto max-w-2xl">
-              <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
-                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+              <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-6">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#eef2f7] text-[#172033]">
                   <ShieldCheck size={30} />
                 </div>
 
@@ -932,7 +932,7 @@ export default function CashDrop() {
                   </p>
                 </div>
 
-                <div className="mt-7 rounded-xl bg-slate-50 p-4">
+                <div className="mt-5 rounded-xl bg-slate-50 p-4">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-xs text-slate-500">
@@ -982,7 +982,7 @@ export default function CashDrop() {
 
                 <button
                   type="button"
-                  className="mx-auto mt-3 block text-sm font-semibold text-blue-600 hover:text-blue-700"
+                  className="mx-auto mt-3 block text-sm font-semibold text-[#172033] hover:text-[#172033]"
                 >
                   Resend OTP
                 </button>
@@ -1012,7 +1012,7 @@ export default function CashDrop() {
                     type="button"
                     onClick={confirmDrop}
                     disabled={otp.length !== 6}
-                    className="rounded-xl bg-[#315bd1] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#274dbd] disabled:cursor-not-allowed disabled:opacity-50"
+                    className="rounded-xl bg-[#172033] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#0f172a] disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     Confirm & Submit Cash Drop
                   </button>
@@ -1032,13 +1032,13 @@ export default function CashDrop() {
             />
 
             <div className="mx-auto max-w-3xl">
-              <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+              <div className="rounded-2xl border border-slate-200 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.05)]">
                 <div className="border-b border-slate-100 p-6 text-center">
-                  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
+                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
                     <CheckCircle2 size={35} />
                   </div>
 
-                  <h2 className="mt-4 text-2xl font-bold text-slate-900">
+                  <h2 className="mt-4 text-xl font-bold text-slate-900">
                     Cash Drop Successful
                   </h2>
 
@@ -1051,7 +1051,7 @@ export default function CashDrop() {
                       Total Cash Dropped
                     </p>
 
-                    <p className="mt-1 text-3xl font-bold text-slate-900">
+                    <p className="mt-1 text-2xl font-bold text-slate-900">
                       ₹{formatAmount(totalAmount)}
                     </p>
                   </div>
@@ -1210,11 +1210,11 @@ export default function CashDrop() {
                   </div>
 
                   {/* Actions */}
-                  <div className="mt-7 grid gap-3 sm:grid-cols-2">
+                  <div className="mt-5 grid gap-3 sm:grid-cols-2">
                     <button
                       type="button"
                       onClick={resetFlow}
-                      className="flex items-center justify-center gap-2 rounded-xl bg-[#315bd1] px-5 py-3 text-sm font-semibold text-white hover:bg-[#274dbd]"
+                      className="flex items-center justify-center gap-2 rounded-xl bg-[#172033] px-5 py-3 text-sm font-semibold text-white hover:bg-[#0f172a]"
                     >
                       <RotateCcw size={17} />
                       New Cash Drop
@@ -1364,7 +1364,7 @@ function SummaryCard({
     <div className="space-y-4">
       <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 font-bold text-white">
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#172033] font-bold text-white">
             {company.icon}
           </div>
 
@@ -1392,7 +1392,7 @@ function SummaryCard({
 
       <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
         <div className="flex items-center gap-2">
-          <Landmark size={18} className="text-blue-600" />
+          <Landmark size={18} className="text-[#172033]" />
 
           <h3 className="font-semibold text-slate-900">
             Cash Drop Information
@@ -1435,7 +1435,7 @@ function CashSummary({
     <div className="space-y-4">
       <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 font-bold text-white">
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#172033] font-bold text-white">
             {company.icon}
           </div>
 
@@ -1472,19 +1472,19 @@ function CashSummary({
         </div>
       </div>
 
-      <div className="rounded-2xl border border-blue-100 bg-blue-50 p-5">
+      <div className="rounded-2xl border border-slate-200 bg-[#eef2f7] p-5">
         <div className="flex gap-3">
           <Info
             size={18}
-            className="mt-0.5 shrink-0 text-blue-600"
+            className="mt-0.5 shrink-0 text-[#172033]"
           />
 
           <div>
-            <p className="text-sm font-semibold text-blue-900">
+            <p className="text-sm font-semibold text-[#172033]">
               Verify Before Submission
             </p>
 
-            <p className="mt-1 text-xs leading-5 text-blue-700">
+            <p className="mt-1 text-xs leading-5 text-[#172033]">
               Check the cash amount and depositor information before
               requesting OTP verification.
             </p>
@@ -1504,7 +1504,7 @@ function InfoRow({
 }) {
   return (
     <div className="flex items-center gap-3 text-slate-600">
-      <span className="text-blue-600">{icon}</span>
+      <span className="text-[#172033]">{icon}</span>
       <span>{text}</span>
     </div>
   );
@@ -1526,7 +1526,7 @@ function AmountRow({
       <span
         className={`text-sm ${
           bold
-            ? "font-semibold text-blue-600"
+            ? "font-semibold text-[#172033]"
             : "text-slate-500"
         }`}
       >

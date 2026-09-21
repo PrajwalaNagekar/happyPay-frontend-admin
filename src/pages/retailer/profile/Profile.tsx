@@ -40,7 +40,7 @@ const Profile = () => {
   ];
 
   return (
-    <div className="bg-[#f5f7fb] px-4 py-4 sm:px-5">
+    <div className="px-1 py-1">
       <div className="mx-auto w-full max-w-5xl">
 
         {/* Header */}
@@ -56,7 +56,7 @@ const Profile = () => {
 
         {/* Profile Overview */}
         {/* Only the color/theme of this card is changed */}
-        <section className="mb-4 rounded-2xl bg-gradient-to-r from-[#3156d9] via-[#218bbd] to-[#10a88a] p-4 text-white shadow-md">
+        <section className="hp-brand mb-5 rounded-[22px] p-5 text-white shadow-[0_16px_36px_-16px_rgba(49,91,209,0.55)]">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
 
             {/* Avatar */}
@@ -114,10 +114,10 @@ const Profile = () => {
                   key={option.path}
                   type="button"
                   onClick={() => navigate(option.path)}
-                  className="group flex w-full items-center gap-3 rounded-xl border border-slate-200 bg-white p-4 text-left shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-[#315bd1]/30 hover:shadow-md"
+                  className="hp-card group flex w-full items-center gap-3 rounded-2xl p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-[#315bd1]/30 hover:shadow-[0_14px_28px_-18px_rgba(49,91,209,0.4)]"
                 >
                   {/* Icon */}
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-50 transition-colors duration-200 group-hover:bg-gradient-to-r from-[#3156d9] to-[#10a88a]">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#edf1fc] transition-colors duration-200 group-hover:bg-[#315bd1]">
                     <Icon className="h-4 w-4 text-[#315bd1] transition-colors duration-200 group-hover:text-white" />
                   </div>
 

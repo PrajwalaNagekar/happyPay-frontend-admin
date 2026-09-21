@@ -9,10 +9,10 @@ const DobStep = () => {
   const [dateOfBirth, setDateOfBirth] = useState("");
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       {/* DATE OF BIRTH */}
       <div>
-        <label className="mb-3 block text-sm font-bold text-[#172033]">
+        <label className="mb-3 block text-sm font-semibold text-[#172033]">
           Date of Birth
         </label>
 
@@ -30,21 +30,21 @@ const DobStep = () => {
             }
             placeholder="DD/MM/YYYY"
             inputMode="numeric"
-            className="h-[48px] w-full rounded-xl border-2 border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-6 text-sm font-medium text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#315bd1]"
+            className="h-[52px] w-full rounded-xl border border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-5 text-sm font-medium text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-2 focus:ring-[#315bd1]/10"
           />
         </div>
       </div>
 
       {/* DOB VERIFICATION WARNING */}
-      <div className="flex items-start gap-3 rounded-xl border-2 border-[#f3d6a5] bg-[#fff2df] px-4 py-3">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center">
+      <div className="flex items-start gap-3 rounded-xl border border-[#f3d6a5] bg-[#fff8ed] px-4 py-3.5">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#fff0d8]">
           <MoreHorizontal
-            className="h-9 w-9 text-[#e69a22]"
+            className="h-6 w-6 text-[#e69a22]"
             strokeWidth={2.4}
           />
         </div>
 
-        <p className="text-sm leading-7 text-[#3f3f46]">
+        <p className="text-sm leading-6 text-[#3f3f46]">
           DOB verification will compare PAN, Aadhaar
           <br />
           and retailer-entered information.
@@ -52,13 +52,15 @@ const DobStep = () => {
       </div>
 
       {/* INFORMATION MESSAGE */}
-      <div className="flex items-start gap-3 rounded-xl border border-[#d9e0f5] bg-[#eef1ff] px-4 py-3">
-        <ArrowLeftRight
-          className="mt-1 h-5 w-5 shrink-0 text-[#315bd1]"
-          strokeWidth={2}
-        />
+      <div className="flex items-start gap-3 rounded-xl border border-[#d9e0f5] bg-[#f1f4ff] px-4 py-3.5">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#e4e9ff]">
+          <ArrowLeftRight
+            className="h-5 w-5 text-[#315bd1]"
+            strokeWidth={2}
+          />
+        </div>
 
-        <p className="text-sm leading-7 text-[#4a5263]">
+        <p className="text-sm leading-6 text-[#4a5263]">
           Your date of birth will be compared with the
           <br />
           information from PAN and Aadhaar.
@@ -69,8 +71,3 @@ const DobStep = () => {
 };
 
 export default DobStep;
-
-
-
-
-

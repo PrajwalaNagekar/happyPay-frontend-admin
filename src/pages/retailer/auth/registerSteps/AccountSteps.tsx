@@ -125,7 +125,7 @@ const AccountStep = () => {
 
         <div className="relative">
           <CreditCard
-            className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[#8992a3]"
+            className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[#8992a3]"
             strokeWidth={2}
           />
 
@@ -137,7 +137,7 @@ const AccountStep = () => {
             placeholder="Enter PAN number"
             maxLength={10}
             autoComplete="off"
-            className={`h-[58px] w-full rounded-xl border bg-[#fafbfd] pl-10 pr-5 text-[15px] font-semibold uppercase tracking-[0.04em] text-[#172033] outline-none transition placeholder:normal-case placeholder:tracking-normal placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:ring-4 focus:ring-[#315bd1]/10 ${
+            className={`h-[58px] w-full rounded-xl border bg-[#fafbfd] pl-11 pr-5 text-[15px] font-semibold uppercase tracking-[0.04em] text-[#172033] outline-none transition-all placeholder:normal-case placeholder:tracking-normal placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-4 focus:ring-[#315bd1]/10 ${
               pan
                 ? "border-[#315bd1]"
                 : "border-[#dfe3e9]"
@@ -145,7 +145,7 @@ const AccountStep = () => {
           />
         </div>
 
-        <p className="mt-2 text-[12px] text-[#9299a7]">
+        <p className="mt-2 text-[12px] leading-5 text-[#9299a7]">
           Enter your 10-character PAN number as shown on
           your PAN card.
         </p>
@@ -165,11 +165,11 @@ const AccountStep = () => {
 
         <div className="relative">
           <Phone
-            className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[#8992a3]"
+            className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[#8992a3]"
             strokeWidth={2}
           />
 
-          <span className="pointer-events-none absolute left-[36px] top-1/2 flex -translate-y-1/2 items-center">
+          <span className="pointer-events-none absolute left-[39px] top-1/2 flex -translate-y-1/2 items-center">
             <span className="border-r border-[#d9dde5] pr-3 text-[14px] font-semibold text-[#687286]">
               +91
             </span>
@@ -185,7 +185,7 @@ const AccountStep = () => {
             inputMode="numeric"
             autoComplete="tel"
             disabled={otpVerified}
-            className={`h-[58px] w-full rounded-xl border bg-[#fafbfd] pl-[80px] pr-5 text-[15px] font-medium text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:ring-4 focus:ring-[#315bd1]/10 ${
+            className={`h-[58px] w-full rounded-xl border bg-[#fafbfd] pl-[82px] pr-12 text-[15px] font-medium text-[#172033] outline-none transition-all placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-4 focus:ring-[#315bd1]/10 ${
               otpVerified
                 ? "border-[#b9e8d4] bg-[#f4fcf8]"
                 : mobile
@@ -195,7 +195,10 @@ const AccountStep = () => {
           />
 
           {otpVerified && (
-            <CheckCircle2 className="absolute right-5 top-1/2 h-5 w-5 -translate-y-1/2 text-[#08a77e]" />
+            <CheckCircle2
+              className="absolute right-5 top-1/2 h-5 w-5 -translate-y-1/2 text-[#08a77e]"
+              strokeWidth={2.2}
+            />
           )}
         </div>
       </div>
@@ -204,21 +207,25 @@ const AccountStep = () => {
           MOBILE VERIFICATION INFO
       ======================================================== */}
 
-      <div className="flex items-start gap-4 rounded-xl border border-[#dbe3f7] bg-[#f1f4ff] px-5 py-4">
-        <ShieldCheck
-          className="mt-0.5 h-5 w-5 shrink-0 text-[#315bd1]"
-          strokeWidth={2}
-        />
+      <div className="rounded-2xl border border-[#dbe3f7] bg-[#f3f6ff] px-5 py-4">
+        <div className="flex items-start gap-4">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm">
+            <ShieldCheck
+              className="h-5 w-5 text-[#315bd1]"
+              strokeWidth={2}
+            />
+          </div>
 
-        <div>
-          <p className="text-[14px] font-semibold text-[#172033]">
-            Mobile verification
-          </p>
+          <div>
+            <p className="text-[14px] font-semibold text-[#172033]">
+              Mobile verification
+            </p>
 
-          <p className="mt-1 text-[12px] leading-5 text-[#697386]">
-            Your mobile number will be verified using a
-            one-time password (OTP).
-          </p>
+            <p className="mt-1 text-[12px] leading-5 text-[#697386]">
+              Your mobile number will be verified using a
+              one-time password (OTP).
+            </p>
+          </div>
         </div>
       </div>
 
@@ -228,7 +235,7 @@ const AccountStep = () => {
 
       {error && (
         <div className="rounded-xl border border-[#f0cccc] bg-[#fff5f5] px-4 py-3">
-          <p className="text-[13px] text-[#c84f4f]">
+          <p className="text-[13px] font-medium text-[#c84f4f]">
             {error}
           </p>
         </div>
@@ -243,9 +250,9 @@ const AccountStep = () => {
           type="button"
           onClick={handleSendOtp}
           disabled={mobile.length !== 10}
-          className={`flex h-[54px] w-full items-center justify-center gap-2 rounded-xl border text-[14px] font-semibold transition ${
+          className={`flex h-[54px] w-full items-center justify-center gap-2 rounded-xl border text-[14px] font-semibold transition-all ${
             mobile.length === 10
-              ? "border-[#c7d2ee] bg-white text-[#315bd1] hover:bg-[#f3f6ff]"
+              ? "border-[#c7d2ee] bg-white text-[#315bd1] shadow-sm hover:border-[#315bd1] hover:bg-[#f3f6ff]"
               : "cursor-not-allowed border-[#e0e3e8] bg-[#f7f8fa] text-[#a2a8b4]"
           }`}
         >
@@ -263,14 +270,14 @@ const AccountStep = () => {
       ======================================================== */}
 
       {otpSent && !otpVerified && (
-        <div className="rounded-xl border border-[#e1e5ec] bg-[#fafbfd] p-5">
+        <div className="rounded-2xl border border-[#e1e5ec] bg-[#fafbfd] p-5">
           <div className="flex items-center justify-between gap-4">
             <div>
               <p className="text-[14px] font-semibold text-[#172033]">
                 Enter OTP
               </p>
 
-              <p className="mt-1 text-[12px] text-[#8992a3]">
+              <p className="mt-1 text-[12px] leading-5 text-[#8992a3]">
                 Enter the 6-digit OTP sent to +91 {mobile}
               </p>
             </div>
@@ -282,7 +289,7 @@ const AccountStep = () => {
                 setOtp("");
                 setError("");
               }}
-              className="shrink-0 text-[12px] font-semibold text-[#315bd1] hover:underline"
+              className="shrink-0 rounded-lg px-2 py-1 text-[12px] font-semibold text-[#315bd1] transition hover:bg-[#eef2ff] hover:underline"
             >
               Change
             </button>
@@ -296,7 +303,7 @@ const AccountStep = () => {
             maxLength={6}
             inputMode="numeric"
             autoComplete="one-time-code"
-            className="mt-4 h-[58px] w-full rounded-xl border border-[#dfe3e9] bg-white px-4 text-center text-[18px] font-bold tracking-[0.4em] text-[#172033] outline-none transition placeholder:text-[#a1a8b5] placeholder:tracking-normal focus:border-[#315bd1] focus:ring-4 focus:ring-[#315bd1]/10"
+            className="mt-4 h-[58px] w-full rounded-xl border border-[#dfe3e9] bg-white px-4 text-center text-[18px] font-bold tracking-[0.4em] text-[#172033] outline-none transition-all placeholder:text-[#a1a8b5] placeholder:tracking-normal focus:border-[#315bd1] focus:ring-4 focus:ring-[#315bd1]/10"
           />
 
           <p className="mt-3 text-center text-[11px] text-[#9aa1ae]">
@@ -310,21 +317,25 @@ const AccountStep = () => {
       ======================================================== */}
 
       {otpVerified && (
-        <div className="flex items-start gap-4 rounded-xl border border-[#cce9dc] bg-[#f2fbf7] px-5 py-4">
-          <CheckCircle2
-            className="mt-0.5 h-5 w-5 shrink-0 text-[#08a77e]"
-            strokeWidth={2}
-          />
+        <div className="rounded-2xl border border-[#cce9dc] bg-[#f2fbf7] px-5 py-4">
+          <div className="flex items-start gap-4">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm">
+              <CheckCircle2
+                className="h-5 w-5 text-[#08a77e]"
+                strokeWidth={2.2}
+              />
+            </div>
 
-          <div>
-            <p className="text-[14px] font-semibold text-[#087b5d]">
-              Mobile number verified
-            </p>
+            <div>
+              <p className="text-[14px] font-semibold text-[#087b5d]">
+                Mobile number verified
+              </p>
 
-            <p className="mt-1 text-[12px] leading-5 text-[#5f756c]">
-              This mobile number will be registered with
-              your HappyPay retailer account.
-            </p>
+              <p className="mt-1 text-[12px] leading-5 text-[#5f756c]">
+                This mobile number will be registered with
+                your HappyPay retailer account.
+              </p>
+            </div>
           </div>
         </div>
       )}
@@ -348,6 +359,3 @@ const AccountStep = () => {
 };
 
 export default AccountStep;
-
-
-

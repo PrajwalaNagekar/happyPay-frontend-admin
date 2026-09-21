@@ -42,7 +42,7 @@ export default function Select({
       {label && (
         <label
           htmlFor={selectId}
-          className="mb-1.5 block text-sm font-medium text-slate-700"
+          className="mb-1.5 block text-[13px] font-semibold text-slate-700"
         >
           {label}
 
@@ -71,7 +71,7 @@ export default function Select({
                 ? `${selectId}-helper`
                 : undefined
           }
-          className={`h-11 appearance-none rounded-xl border bg-white text-sm text-slate-900 outline-none transition focus:ring-2 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400 ${
+          className={`h-12 appearance-none rounded-xl border bg-slate-50/70 text-sm text-slate-900 outline-none transition hover:border-slate-300 focus:bg-white focus:ring-4 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400 ${
             leftIcon ? "pl-10" : "px-3.5"
           } ${
             error

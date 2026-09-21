@@ -412,7 +412,7 @@ export default function BankDetails() {
   // ============================================================
 
   return (
-    <div className="bg-[#f5f7fb] px-4 pb-8 sm:px-5">
+    <div className="px-1 pb-6">
 
       {/* ======================================================
           HIDDEN FILE INPUT
@@ -555,7 +555,7 @@ export default function BankDetails() {
               SETTLEMENT ACCOUNT DETAILS
           ================================================== */}
 
-          <section className="rounded-[28px] border border-slate-300 bg-white p-5 shadow-sm sm:p-7">
+          <section className="rounded-[22px] border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
 
             {/* HEADER */}
 
@@ -601,10 +601,10 @@ export default function BankDetails() {
                     )
                   }
                   disabled={isSaving}
-                  className={`flex min-h-11 w-full items-center gap-4 rounded-2xl border bg-[#fafbfc] px-5 text-left transition ${
+                  className={`flex min-h-11 w-full items-center gap-4 rounded-2xl border bg-slate-50/80 px-5 text-left transition ${
                     openDropdown === "bank"
                       ? "border-[#315bd1] ring-1 ring-[#315bd1]"
-                      : "border-slate-300 hover:border-slate-400"
+                      : "border-slate-200 hover:border-slate-400"
                   }`}
                 >
 
@@ -679,7 +679,7 @@ export default function BankDetails() {
                 Account Holder Name
               </label>
 
-              <div className="mt-3 flex min-h-11 items-center gap-4 rounded-2xl border border-slate-300 bg-[#fafbfc] px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
+              <div className="mt-3 flex min-h-11 items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
 
                 <User
                   size={27}
@@ -722,11 +722,11 @@ export default function BankDetails() {
                     )
                   }
                   disabled={isSaving}
-                  className={`flex min-h-11 w-full items-center gap-4 rounded-2xl border bg-[#fafbfc] px-5 text-left transition ${
+                  className={`flex min-h-11 w-full items-center gap-4 rounded-2xl border bg-slate-50/80 px-5 text-left transition ${
                     openDropdown ===
                     "accountType"
                       ? "border-[#315bd1] ring-1 ring-[#315bd1]"
-                      : "border-slate-300 hover:border-slate-400"
+                      : "border-slate-200 hover:border-slate-400"
                   }`}
                 >
 
@@ -805,7 +805,7 @@ export default function BankDetails() {
                 IFSC Code
               </label>
 
-              <div className="mt-3 flex min-h-11 items-center rounded-2xl border border-slate-300 bg-[#fafbfc] px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
+              <div className="mt-3 flex min-h-11 items-center rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
 
                 <input
                   id="ifsc"
@@ -846,7 +846,7 @@ export default function BankDetails() {
                 Account Number
               </label>
 
-              <div className="mt-3 flex min-h-11 items-center gap-4 rounded-2xl border border-slate-300 bg-[#fafbfc] px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
+              <div className="mt-3 flex min-h-11 items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
 
                 <WalletCards
                   size={27}
@@ -887,7 +887,7 @@ export default function BankDetails() {
                 className={`mt-3 flex min-h-11 items-center gap-4 rounded-2xl border px-5 transition ${
                   confirmAccountNumber.length ===
                   0
-                    ? "border-slate-300 bg-[#fafbfc]"
+                    ? "border-slate-200 bg-slate-50/80"
                     : confirmAccountNumber ===
                         accountNumber
                       ? "border-emerald-400 bg-emerald-50"
@@ -950,7 +950,7 @@ export default function BankDetails() {
               BANK ACCOUNT PROOF
           ================================================== */}
 
-          <section className="rounded-[28px] border border-slate-300 bg-white p-5 shadow-sm sm:p-7">
+          <section className="rounded-[22px] border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
 
             <h2 className="text-sm font-semibold text-[#172033]">
               Bank Account Proof
@@ -961,7 +961,7 @@ export default function BankDetails() {
               payout clearance
             </p>
 
-            <div className="mt-6 flex items-center gap-4 rounded-2xl border border-slate-300 bg-[#fafbfc] p-4">
+            <div className="mt-6 flex items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50/80 p-4">
 
               <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-500">
                 <FileText size={30} />

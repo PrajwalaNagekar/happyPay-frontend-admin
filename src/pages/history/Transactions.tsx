@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import {
+  ReceiptText,
   CalendarDays,
   ChevronLeft,
   ChevronRight,
@@ -127,14 +128,14 @@ const getServiceIconClasses = (
   service: Transaction["service"],
 ) => {
   if (service === "AEPS") {
-    return "bg-[#edf1fc] text-[#315bd1]";
+    return "bg-[#f0f2f5] text-[#172033]";
   }
 
   if (service === "DMT") {
-    return "bg-[#f2e9ff] text-[#8338e8]";
+    return "bg-[#f0f2f5] text-[#172033]";
   }
 
-  return "bg-[#e5f8f1] text-[#0ba879]";
+  return "bg-[#f0f2f5] text-[#172033]";
 };
 
 const getAmountClasses = (
@@ -321,45 +322,51 @@ export default function Transactions() {
     )?.label || "All Services";
 
   return (
-    <div className="bg-[#f5f7fc]">
-      <main className="px-4 pb-8 pt-4 sm:px-5">
-        <div className="mx-auto w-full max-w-5xl">
+    <div>
+      <main className="pb-4">
+        <div className="mx-auto w-full max-w-[900px]">
 
           {/* Header */}
-          <div className="mb-5">
-            <h1 className="text-xl font-bold text-[#172033]">
-              Transactions
-            </h1>
+          <div className="mb-5 flex items-center gap-3">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#edf1fc] text-[#172033]">
+              <ReceiptText className="h-5 w-5" strokeWidth={2} />
+            </div>
 
-            <p className="mt-1 text-sm text-[#9aa0ab]">
-              View your complete transaction history
-            </p>
+            <div>
+              <h1 className="text-2xl font-bold tracking-tight text-[#172033]">
+                Transactions
+              </h1>
+
+              <p className="mt-1 text-sm text-slate-500">
+                View your complete transaction history
+              </p>
+            </div>
           </div>
 
           {/* Filters */}
-          <section className="relative mb-8 rounded-[30px] border border-slate-300 bg-white p-4 shadow-sm sm:p-5">
-            <div className="grid grid-cols-2 gap-4">
+          <section className="mb-5 rounded-2xl border border-slate-200 bg-white p-3.5 shadow-[0_8px_24px_-20px_rgba(15,23,42,0.32)] sm:p-4">
+            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
 
               {/* Date */}
               <button
                 type="button"
                 onClick={handleOpenDatePicker}
-                className={`flex min-h-[52px] items-center justify-center gap-2 rounded-xl px-4 text-sm font-semibold transition ${
+                className={`flex min-h-[50px] items-center justify-center gap-2 rounded-xl border px-4 text-sm font-semibold transition ${
                   selectedDate
-                    ? "border-2 border-[#b7c6e8] bg-[#edf1fc] text-[#315bd1]"
-                    : "bg-[#f8f8fa] text-[#333945]"
+                    ? "border-[#172033]/15 bg-[#f6f7f9] text-[#172033]"
+                    : "border-slate-200 bg-white text-[#4b5563] hover:bg-slate-50"
                 }`}
               >
                 {selectedDate ? (
                   <X
-                    className="h-5 w-5 shrink-0"
+                    className="h-4.5 w-4.5 shrink-0"
                     onClick={(event) => {
                       event.stopPropagation();
                       clearDate();
                     }}
                   />
                 ) : (
-                  <CalendarDays className="h-5 w-5 shrink-0" />
+                  <CalendarDays className="h-4.5 w-4.5 shrink-0" />
                 )}
 
                 <span>
@@ -380,9 +387,13 @@ export default function Transactions() {
                       (previous) => !previous,
                     )
                   }
-                  className="flex min-h-[52px] w-full items-center justify-center gap-2 rounded-xl bg-[#f8f8fa] px-4 text-sm font-semibold text-[#333945] transition hover:bg-[#f1f1f4]"
+                  className={`flex min-h-[50px] w-full items-center justify-center gap-2 rounded-xl border px-4 text-sm font-semibold transition ${
+                    selectedService !== "ALL"
+                      ? "border-[#172033]/15 bg-[#f6f7f9] text-[#172033]"
+                      : "border-slate-200 bg-white text-[#4b5563] hover:bg-slate-50"
+                  }`}
                 >
-                  <SlidersHorizontal className="h-5 w-5 shrink-0" />
+                  <SlidersHorizontal className="h-4.5 w-4.5 shrink-0" />
 
                   <span>
                     {selectedService === "ALL"
@@ -392,7 +403,7 @@ export default function Transactions() {
                 </button>
 
                 {showServiceMenu && (
-                  <div className="absolute right-0 top-[84px] z-30 w-[205px] overflow-hidden rounded-2xl bg-[#f2f1f7] shadow-[0_8px_25px_rgba(0,0,0,0.2)]">
+                  <div className="absolute right-0 top-[58px] z-30 w-[205px] overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_16px_35px_-16px_rgba(15,23,42,0.35)]">
                     {serviceOptions.map(
                       (option) => (
                         <button
@@ -403,11 +414,11 @@ export default function Transactions() {
                               option.value,
                             )
                           }
-                          className={`block w-full px-5 py-5 text-left text-lg font-semibold transition ${
+                          className={`block w-full px-5 py-3.5 text-left text-sm font-semibold transition ${
                             selectedService ===
                             option.value
-                              ? "bg-[#e6e4ed] text-[#172033]"
-                              : "text-[#172033] hover:bg-[#e9e8ee]"
+                              ? "bg-[#f0f2f5] text-[#172033]"
+                              : "text-slate-700 hover:bg-slate-50"
                           }`}
                         >
                           {option.label}
@@ -421,12 +432,12 @@ export default function Transactions() {
           </section>
 
           {/* Transaction List */}
-          <section className="overflow-hidden rounded-[30px] border border-slate-300 bg-white px-6 py-2 shadow-sm">
+          <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_10px_28px_-22px_rgba(15,23,42,0.32)] px-5 py-1 sm:px-6">
             {filteredTransactions.length ===
             0 ? (
-              <div className="py-12 text-center">
+              <div className="px-4 py-14 text-center">
 
-                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#edf1fc] text-[#315bd1]">
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#f0f2f5] text-[#172033]">
                   <CalendarDays className="h-7 w-7" />
                 </div>
 
@@ -454,20 +465,20 @@ export default function Transactions() {
                   return (
                     <div
                       key={transaction.id}
-                      className={`flex items-center gap-3 py-4 ${
+                      className={`group flex items-center gap-3 py-3.5 transition-colors hover:bg-slate-50/60 ${
                         !isLast
-                          ? "border-b border-slate-200"
+                          ? "border-b border-slate-100"
                           : ""
                       }`}
                     >
 
                       {/* Service Icon */}
                       <div
-                        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${getServiceIconClasses(
+                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${getServiceIconClasses(
                           transaction.service,
                         )}`}
                       >
-                        <Icon className="h-5 w-5" />
+                        <Icon className="h-[18px] w-[18px]" />
                       </div>
 
                       {/* Details */}
@@ -500,7 +511,7 @@ export default function Transactions() {
                           )}
                         </p>
 
-                        <span className="mt-1 inline-flex rounded-md bg-[#e8f7f2] px-2 py-0.5 text-[10px] font-bold text-[#199b78]">
+                        <span className="mt-1 inline-flex rounded-full bg-[#f0f2f5] px-2.5 py-1 text-[10px] font-bold text-[#596273]">
                           {transaction.status}
                         </span>
 
@@ -545,7 +556,7 @@ export default function Transactions() {
               </p>
             </div>
 
-            <CalendarDays className="h-7 w-7 text-[#315bd1]" />
+            <CalendarDays className="h-7 w-7 text-[#172033]" />
 
           </div>
 
@@ -563,7 +574,7 @@ export default function Transactions() {
                 onClick={handlePreviousMonth}
                 className="flex h-10 w-10 items-center justify-center rounded-full text-slate-600 transition hover:bg-slate-100"
               >
-                <ChevronLeft className="h-5 w-5" />
+                <ChevronLeft className="h-[18px] w-[18px]" />
               </button>
 
               <button
@@ -571,7 +582,7 @@ export default function Transactions() {
                 onClick={handleNextMonth}
                 className="flex h-10 w-10 items-center justify-center rounded-full text-slate-600 transition hover:bg-slate-100"
               >
-                <ChevronRight className="h-5 w-5" />
+                <ChevronRight className="h-[18px] w-[18px]" />
               </button>
 
             </div>
@@ -630,8 +641,8 @@ export default function Transactions() {
                     }
                     className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-medium transition ${
                       selected
-                        ? "bg-[#315bd1] text-white shadow-sm"
-                        : "text-[#172033] hover:bg-[#edf1fc] hover:text-[#315bd1]"
+                        ? "bg-[#172033] text-white shadow-sm"
+                        : "text-[#172033] hover:bg-[#f0f2f5]"
                     }`}
                   >
                     {day}
@@ -648,7 +659,7 @@ export default function Transactions() {
             <button
               type="button"
               onClick={handleCancelDate}
-              className="px-3 py-2 text-base font-bold text-[#315bd1]"
+              className="px-3 py-2 text-base font-bold text-[#172033]"
             >
               Cancel
             </button>
@@ -656,7 +667,7 @@ export default function Transactions() {
             <button
               type="button"
               onClick={handleApplyDate}
-              className="px-3 py-2 text-base font-bold text-[#315bd1]"
+              className="px-3 py-2 text-base font-bold text-[#172033]"
             >
               OK
             </button>

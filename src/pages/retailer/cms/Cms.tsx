@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Banknote, Landmark } from "lucide-react";
+import { Banknote, Landmark, WalletCards } from "lucide-react";
 
 import CashCollection from "./CashCollection";
 import CashDrop from "./CashDrop";
@@ -10,57 +10,68 @@ export default function Cms() {
   const [activeTab, setActiveTab] = useState<CmsTab>("collection");
 
   return (
-    <div className="bg-[#f5f7fb] p-4 md:p-5">
-      <div className="mx-auto max-w-5xl">
+    <div className="w-full px-2 py-2 sm:px-4 sm:py-3">
+      <div className="mx-auto w-full max-w-5xl">
         {/* Header */}
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold text-slate-900">
-            Cash Management (CMS)
-          </h1>
+        <section className="rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_8px_24px_rgba(15,23,42,0.05)] sm:px-6">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#eef2f7] text-[#172033]">
+              <WalletCards className="h-5 w-5" strokeWidth={2} />
+            </div>
 
-          <p className="mt-1 text-sm text-slate-500">
-            Manage your cash collection and cash drop transactions
-          </p>
-        </div>
+            <div className="min-w-0">
+              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8b99b0]">
+                Cash Management
+              </p>
+
+              <h1 className="mt-0.5 text-xl font-bold tracking-tight text-[#172033]">
+                CMS
+              </h1>
+
+              <p className="mt-0.5 text-xs text-[#687286] sm:text-sm">
+                Manage cash collection and cash drop transactions
+              </p>
+            </div>
+          </div>
+        </section>
 
         {/* CMS Tabs */}
-        <div className="mb-6 rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
-          <div className="grid grid-cols-2 gap-2">
+        <section className="mt-3 rounded-2xl border border-slate-200 bg-white p-1.5 shadow-[0_8px_24px_rgba(15,23,42,0.05)]">
+          <div className="grid grid-cols-2 gap-1.5">
             <button
               type="button"
               onClick={() => setActiveTab("collection")}
-              className={`flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold transition ${
+              className={`flex min-h-11 items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold transition ${
                 activeTab === "collection"
-                  ? "bg-[#315bd1] text-white shadow-sm"
-                  : "text-slate-600 hover:bg-slate-50"
+                  ? "bg-[#172033] text-white shadow-[0_6px_14px_rgba(23,32,51,0.18)]"
+                  : "text-[#687286] hover:bg-[#f5f7fb] hover:text-[#172033]"
               }`}
             >
-              <Banknote size={18} />
-              Cash Collection
+              <Banknote className="h-4 w-4" strokeWidth={2} />
+              <span>Cash Collection</span>
             </button>
 
             <button
               type="button"
               onClick={() => setActiveTab("drop")}
-              className={`flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold transition ${
+              className={`flex min-h-11 items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold transition ${
                 activeTab === "drop"
-                  ? "bg-[#315bd1] text-white shadow-sm"
-                  : "text-slate-600 hover:bg-slate-50"
+                  ? "bg-[#172033] text-white shadow-[0_6px_14px_rgba(23,32,51,0.18)]"
+                  : "text-[#687286] hover:bg-[#f5f7fb] hover:text-[#172033]"
               }`}
             >
-              <Landmark size={18} />
-              Cash Drop
+              <Landmark className="h-4 w-4" strokeWidth={2} />
+              <span>Cash Drop</span>
             </button>
           </div>
-        </div>
+        </section>
 
         {/* Active CMS Feature */}
-        {activeTab === "collection" && <CashCollection />}
-
-        {activeTab === "drop" && <CashDrop />}
+        <div className="mt-3">
+          {activeTab === "collection" && <CashCollection />}
+          {activeTab === "drop" && <CashDrop />}
+        </div>
       </div>
     </div>
   );
 }
-
-

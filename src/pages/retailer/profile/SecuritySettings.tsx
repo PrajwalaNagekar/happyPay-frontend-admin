@@ -241,7 +241,7 @@ const SecuritySettings = () => {
   };
 
   return (
-    <main className="bg-[#f7f9fc] px-4 pb-8 pt-4 sm:px-5">
+    <main className="px-1 pb-6 pt-1">
       <div className="mx-auto w-full max-w-5xl">
 
         {/* =========================

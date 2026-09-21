@@ -1,10 +1,12 @@
 import { useRef, useState } from "react";
 import {
   Camera,
+  ChevronDown,
   ChevronRight,
   FileBadge,
   FileText,
   Upload,
+  CheckCircle2,
 } from "lucide-react";
 
 const BusinessProofStep = () => {
@@ -42,103 +44,109 @@ const BusinessProofStep = () => {
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       {/* INSIDE SHOP */}
       <button
         type="button"
         onClick={() => handlePhotoAction("Inside Shop")}
-        className="flex w-full items-center gap-6 rounded-xl border-2 border-[#c9c9ce] bg-[#fafafd] px-4 py-3 text-left transition hover:border-[#315bd1]"
+        className="group flex w-full items-center gap-4 rounded-xl border border-[#dfe1e6] bg-[#fafbfd] px-4 py-4 text-left transition hover:border-[#315bd1] hover:bg-[#f7f9ff]"
       >
-        <div className="flex h-[48px] w-[86px] shrink-0 items-center justify-center rounded-xl bg-[#e4f7f3]">
+        <div className="flex h-12 w-14 shrink-0 items-center justify-center rounded-xl bg-[#e7f8f3]">
           <Camera
-            className="h-5 w-5 text-[#08a77e]"
-            strokeWidth={2.1}
+            className="h-5 w-5 text-[#08ae82]"
+            strokeWidth={2.2}
           />
         </div>
 
         <div className="min-w-0 flex-1">
-          <h3 className="text-sm font-semibold font-bold text-[#172033]">
+          <h3 className="text-sm font-bold text-[#172033]">
             Inside Shop
           </h3>
 
-          <p className="mt-2 text-sm leading-7 text-[#9aa1af]">
+          <p className="mt-1 text-sm leading-5 text-[#8992a3]">
             Take a photo of yourself inside the shop.
           </p>
         </div>
 
-        <ChevronRight
-          className="h-4 w-4 shrink-0 text-[#08a77e]"
-          strokeWidth={2.4}
-        />
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#e7f8f3] transition group-hover:bg-[#dcf5ed]">
+          <ChevronRight
+            className="h-4 w-4 text-[#08ae82]"
+            strokeWidth={2.5}
+          />
+        </div>
       </button>
 
       {/* OUTSIDE SHOP */}
       <button
         type="button"
         onClick={() => handlePhotoAction("Outside Shop")}
-        className="flex w-full items-center gap-6 rounded-xl border-2 border-[#c9c9ce] bg-[#fafafd] px-4 py-3 text-left transition hover:border-[#315bd1]"
+        className="group flex w-full items-center gap-4 rounded-xl border border-[#dfe1e6] bg-[#fafbfd] px-4 py-4 text-left transition hover:border-[#315bd1] hover:bg-[#f7f9ff]"
       >
-        <div className="flex h-[48px] w-[86px] shrink-0 items-center justify-center rounded-xl bg-[#e4f7f3]">
+        <div className="flex h-12 w-14 shrink-0 items-center justify-center rounded-xl bg-[#e7f8f3]">
           <Camera
-            className="h-5 w-5 text-[#08a77e]"
-            strokeWidth={2.1}
+            className="h-5 w-5 text-[#08ae82]"
+            strokeWidth={2.2}
           />
         </div>
 
         <div className="min-w-0 flex-1">
-          <h3 className="text-sm font-semibold font-bold text-[#172033]">
+          <h3 className="text-sm font-bold text-[#172033]">
             Outside Shop
           </h3>
 
-          <p className="mt-2 text-sm leading-7 text-[#9aa1af]">
+          <p className="mt-1 text-sm leading-5 text-[#8992a3]">
             Take a clear photo of the shop exterior.
           </p>
         </div>
 
-        <ChevronRight
-          className="h-4 w-4 shrink-0 text-[#08a77e]"
-          strokeWidth={2.4}
-        />
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#e7f8f3] transition group-hover:bg-[#dcf5ed]">
+          <ChevronRight
+            className="h-4 w-4 text-[#08ae82]"
+            strokeWidth={2.5}
+          />
+        </div>
       </button>
 
       {/* SHOP LOCATION */}
       <button
         type="button"
         onClick={() => handlePhotoAction("Shop Location")}
-        className="flex w-full items-center gap-6 rounded-xl border-2 border-[#c9c9ce] bg-[#fafafd] px-4 py-3 text-left transition hover:border-[#315bd1]"
+        className="group flex w-full items-center gap-4 rounded-xl border border-[#dfe1e6] bg-[#fafbfd] px-4 py-4 text-left transition hover:border-[#315bd1] hover:bg-[#f7f9ff]"
       >
-        <div className="flex h-[48px] w-[86px] shrink-0 items-center justify-center rounded-xl bg-[#e4f7f3]">
+        <div className="flex h-12 w-14 shrink-0 items-center justify-center rounded-xl bg-[#e7f8f3]">
           <Camera
-            className="h-5 w-5 text-[#08a77e]"
-            strokeWidth={2.1}
+            className="h-5 w-5 text-[#08ae82]"
+            strokeWidth={2.2}
           />
         </div>
 
         <div className="min-w-0 flex-1">
-          <h3 className="text-sm font-semibold font-bold text-[#172033]">
+          <h3 className="text-sm font-bold text-[#172033]">
             Shop Location
           </h3>
 
-          <p className="mt-2 text-sm leading-7 text-[#9aa1af]">
+          <p className="mt-1 text-sm leading-5 text-[#8992a3]">
             Capture a photo showing the shop location.
           </p>
         </div>
 
-        <ChevronRight
-          className="h-4 w-4 shrink-0 text-[#08a77e]"
-          strokeWidth={2.4}
-        />
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#e7f8f3] transition group-hover:bg-[#dcf5ed]">
+          <ChevronRight
+            className="h-4 w-4 text-[#08ae82]"
+            strokeWidth={2.5}
+          />
+        </div>
       </button>
 
       {/* ADDRESS / BUSINESS PROOF */}
       <div>
-        <label className="mb-1.5 block text-sm font-semibold text-[#172033]">
+        <label className="mb-2 block text-sm font-semibold text-[#172033]">
           Address / Business Proof
         </label>
 
         <div className="relative">
           <FileBadge
-            className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#8992a3]"
+            className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#8992a3]"
             strokeWidth={2}
           />
 
@@ -147,7 +155,7 @@ const BusinessProofStep = () => {
             onChange={(event) =>
               setBusinessProof(event.target.value)
             }
-            className={`h-[48px] w-full appearance-none rounded-xl border-2 bg-[#fafbfd] pl-11 pr-10 text-sm font-medium outline-none transition focus:border-[#315bd1] ${
+            className={`h-[52px] w-full appearance-none rounded-xl border bg-[#fafbfd] pl-11 pr-12 text-sm font-medium outline-none transition focus:border-[#315bd1] focus:bg-white focus:ring-2 focus:ring-[#315bd1]/10 ${
               businessProof
                 ? "border-[#315bd1] text-[#172033]"
                 : "border-[#dfe1e6] text-[#a1a8b5]"
@@ -164,24 +172,10 @@ const BusinessProofStep = () => {
             ))}
           </select>
 
-          <div className="pointer-events-none absolute right-7 top-1/2 -translate-y-1/2">
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M6 9L12 15L18 9"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="text-[#697386]"
-              />
-            </svg>
-          </div>
+          <ChevronDown
+            className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#697386]"
+            strokeWidth={2.2}
+          />
         </div>
       </div>
 
@@ -189,31 +183,56 @@ const BusinessProofStep = () => {
       <button
         type="button"
         onClick={() => businessProofInputRef.current?.click()}
-        className="flex w-full items-center gap-6 rounded-xl border-2 border-[#c9c9ce] bg-[#fafafd] px-4 py-3 text-left transition hover:border-[#315bd1]"
+        className={`group flex w-full items-center gap-4 rounded-xl border px-4 py-4 text-left transition ${
+          businessProofFile
+            ? "border-[#b9e8da] bg-[#f4fcf9]"
+            : "border-[#dfe1e6] bg-[#fafbfd] hover:border-[#315bd1] hover:bg-[#f7f9ff]"
+        }`}
       >
-        <div className="flex h-[48px] w-[86px] shrink-0 items-center justify-center rounded-xl bg-[#e8ecfc]">
-          <FileText
-            className="h-5 w-5 text-[#315bd1]"
-            strokeWidth={2}
-          />
+        <div
+          className={`flex h-12 w-14 shrink-0 items-center justify-center rounded-xl ${
+            businessProofFile
+              ? "bg-[#e7f8f3]"
+              : "bg-[#eef1ff]"
+          }`}
+        >
+          {businessProofFile ? (
+            <CheckCircle2
+              className="h-5 w-5 text-[#08ae82]"
+              strokeWidth={2.3}
+            />
+          ) : (
+            <FileText
+              className="h-5 w-5 text-[#315bd1]"
+              strokeWidth={2}
+            />
+          )}
         </div>
 
         <div className="min-w-0 flex-1">
-          <h3 className="text-sm font-semibold font-bold text-[#172033]">
+          <h3 className="text-sm font-bold text-[#172033]">
             Business Proof
           </h3>
 
-          <p className="mt-2 text-sm leading-7 text-[#9aa1af]">
+          <p
+            className={`mt-1 truncate text-sm leading-5 ${
+              businessProofFile
+                ? "font-medium text-[#08ae82]"
+                : "text-[#8992a3]"
+            }`}
+          >
             {businessProofFile
               ? businessProofFile.name
               : "Upload the selected business/address proof."}
           </p>
         </div>
 
-        <Upload
-          className="h-5 w-5 shrink-0 text-[#315bd1]"
-          strokeWidth={2.4}
-        />
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#eef1ff] transition group-hover:bg-[#e4e9ff]">
+          <Upload
+            className="h-4.5 w-4.5 text-[#315bd1]"
+            strokeWidth={2.4}
+          />
+        </div>
       </button>
 
       <input
@@ -228,9 +247,3 @@ const BusinessProofStep = () => {
 };
 
 export default BusinessProofStep;
-
-
-
-
-
-

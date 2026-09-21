@@ -114,7 +114,7 @@ export default function OtpInput({
             onKeyDown={(event) => handleKeyDown(index, event)}
             onPaste={handlePaste}
             aria-label={`OTP digit ${index + 1}`}
-            className={`h-12 w-12 rounded-xl border bg-white text-center text-lg font-semibold text-slate-900 outline-none transition focus:ring-2 sm:h-14 sm:w-14 ${
+            className={`h-12 w-12 rounded-xl border bg-slate-50/80 text-center text-lg font-semibold text-slate-900 outline-none transition focus:bg-white focus:ring-4 sm:h-14 sm:w-14 ${
               error
                 ? "border-red-400 focus:border-red-500 focus:ring-red-100"
                 : "border-slate-200 focus:border-[#315bd1] focus:ring-[#315bd1]/20"

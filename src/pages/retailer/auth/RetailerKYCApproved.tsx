@@ -9,8 +9,8 @@ const RetailerKycApproved = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f4f6fa] px-4">
-      <div className="w-full max-w-md rounded-3xl bg-white p-8 text-center shadow-lg border border-slate-200">
+    <div className="hp-canvas flex min-h-screen items-center justify-center px-4">
+      <div className="w-full max-w-md rounded-[24px] border border-white/80 bg-white p-8 text-center shadow-[0_24px_60px_-28px_rgba(15,23,42,0.45)]">
         <div className="flex justify-center mb-6">
           <div className="flex h-20 w-20 items-center justify-center rounded-full bg-emerald-50 ring-4 ring-emerald-100">
             <CheckCircle2 className="h-11 w-11 text-emerald-500" />
@@ -41,7 +41,7 @@ const RetailerKycApproved = () => {
         <button
           type="button"
           onClick={handleContinue}
-          className="mt-7 flex w-full items-center justify-center gap-2 rounded-xl bg-[#315bd1] px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#274dbd] active:scale-[0.99]"
+          className="hp-brand mt-7 flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-white shadow-[0_10px_22px_rgba(49,91,209,0.28)] transition hover:opacity-95 active:scale-[0.99]"
         >
           Go to Dashboard
           <ArrowRight className="h-4 w-4" />

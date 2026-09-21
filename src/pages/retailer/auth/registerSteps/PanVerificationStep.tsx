@@ -5,6 +5,7 @@ import {
   UserRound,
   CalendarDays,
   Sparkles,
+  Check,
 } from "lucide-react";
 
 const PanVerificationStep = () => {
@@ -27,38 +28,12 @@ const PanVerificationStep = () => {
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       {/* PAN CARD UPLOAD */}
       <div>
-        <button
-          type="button"
-          onClick={() => fileInputRef.current?.click()}
-          className="flex w-full items-center gap-6 rounded-xl border-2 border-[#c9c9ce] bg-[#fafafd] px-4 py-3 text-left transition hover:border-[#315bd1]"
-        >
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#e8ecfc]">
-            <CreditCard
-              className="h-6 w-6 text-[#315bd1]"
-              strokeWidth={2}
-            />
-          </div>
-
-          <div className="min-w-0 flex-1">
-            <h3 className="text-base font-bold text-[#172033]">
-              PAN Card
-            </h3>
-
-            <p className="mt-2 text-sm leading-7 text-[#8b93a3]">
-              {panFile
-                ? panFile.name
-                : "Upload a clear image of your PAN card."}
-            </p>
-          </div>
-
-          <Upload
-            className="h-5 w-5 shrink-0 text-[#315bd1]"
-            strokeWidth={2.4}
-          />
-        </button>
+        <label className="mb-3 block text-sm font-semibold text-[#172033]">
+          PAN Card
+        </label>
 
         <input
           ref={fileInputRef}
@@ -67,11 +42,60 @@ const PanVerificationStep = () => {
           onChange={handlePanUpload}
           className="hidden"
         />
+
+        <button
+          type="button"
+          onClick={() => fileInputRef.current?.click()}
+          className="group flex min-h-[92px] w-full items-center gap-4 rounded-xl border-2 border-dashed border-[#dfe1e6] bg-[#fafbfd] px-4 py-4 text-left transition hover:border-[#315bd1] hover:bg-[#f7f9ff]"
+        >
+          <div
+            className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${
+              panFile ? "bg-[#e9f9f4]" : "bg-[#eef1ff]"
+            }`}
+          >
+            {panFile ? (
+              <Check
+                className="h-6 w-6 text-[#08ae82]"
+                strokeWidth={2.5}
+              />
+            ) : (
+              <CreditCard
+                className="h-6 w-6 text-[#315bd1]"
+                strokeWidth={2}
+              />
+            )}
+          </div>
+
+          <div className="min-w-0 flex-1">
+            <h3 className="text-sm font-bold text-[#172033]">
+              {panFile ? "PAN Card Uploaded" : "Upload PAN Card"}
+            </h3>
+
+            <p className="mt-1 truncate text-sm text-[#8992a3]">
+              {panFile
+                ? panFile.name
+                : "Upload a clear image of your PAN card."}
+            </p>
+
+            {!panFile && (
+              <p className="mt-1 text-xs text-[#a1a8b5]">
+                Image or PDF format
+              </p>
+            )}
+          </div>
+
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#eef1ff] transition group-hover:bg-[#e4e9ff]">
+            <Upload
+              className="h-5 w-5 text-[#315bd1]"
+              strokeWidth={2.3}
+            />
+          </div>
+        </button>
       </div>
 
       {/* PAN NUMBER */}
       <div>
-        <label className="mb-3 block text-sm font-bold text-[#172033]">
+        <label className="mb-2 block text-sm font-semibold text-[#172033]">
           PAN Number
         </label>
 
@@ -94,14 +118,14 @@ const PanVerificationStep = () => {
             }
             placeholder="PAN number"
             maxLength={10}
-            className="h-[48px] w-full rounded-xl border-2 border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-6 text-sm font-medium tracking-wide text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#315bd1]"
+            className="h-[52px] w-full rounded-xl border border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-5 text-sm font-medium tracking-wide text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-2 focus:ring-[#315bd1]/10"
           />
         </div>
       </div>
 
       {/* NAME AS PER PAN */}
       <div>
-        <label className="mb-3 block text-sm font-bold text-[#172033]">
+        <label className="mb-2 block text-sm font-semibold text-[#172033]">
           Name as per PAN
         </label>
 
@@ -118,14 +142,14 @@ const PanVerificationStep = () => {
               setNameAsPerPan(event.target.value)
             }
             placeholder="Name extracted from PAN"
-            className="h-[48px] w-full rounded-xl border-2 border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-6 text-sm font-medium text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#315bd1]"
+            className="h-[52px] w-full rounded-xl border border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-5 text-sm font-medium text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-2 focus:ring-[#315bd1]/10"
           />
         </div>
       </div>
 
       {/* DATE OF BIRTH */}
       <div>
-        <label className="mb-3 block text-sm font-bold text-[#172033]">
+        <label className="mb-2 block text-sm font-semibold text-[#172033]">
           Date of Birth
         </label>
 
@@ -142,14 +166,14 @@ const PanVerificationStep = () => {
               setDateOfBirth(event.target.value)
             }
             placeholder="DD/MM/YYYY"
-            className="h-[48px] w-full rounded-xl border-2 border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-6 text-sm font-medium text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#315bd1]"
+            className="h-[52px] w-full rounded-xl border border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-5 text-sm font-medium text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-2 focus:ring-[#315bd1]/10"
           />
         </div>
       </div>
 
       {/* FATHER'S NAME */}
       <div>
-        <label className="mb-3 block text-sm font-bold text-[#172033]">
+        <label className="mb-2 block text-sm font-semibold text-[#172033]">
           Father's Name
         </label>
 
@@ -166,31 +190,34 @@ const PanVerificationStep = () => {
               setFatherName(event.target.value)
             }
             placeholder="Father's name"
-            className="h-[48px] w-full rounded-xl border-2 border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-6 text-sm font-medium text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#315bd1]"
+            className="h-[52px] w-full rounded-xl border border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-5 text-sm font-medium text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-2 focus:ring-[#315bd1]/10"
           />
         </div>
       </div>
 
       {/* OCR INFORMATION */}
-      <div className="flex items-start gap-3 rounded-xl border border-[#d9e0f5] bg-[#eef1ff] px-4 py-3">
-        <Sparkles
-          className="mt-1 h-5 w-5 shrink-0 text-[#315bd1]"
-          strokeWidth={2}
-        />
+      <div className="flex items-start gap-3 rounded-xl border border-[#d9e0f5] bg-[#f1f4ff] px-4 py-3.5">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#e4e9ff]">
+          <Sparkles
+            className="h-4.5 w-4.5 text-[#315bd1]"
+            strokeWidth={2}
+          />
+        </div>
 
-        <p className="text-sm leading-7 text-[#3f4759]">
-          PAN information can be extracted
-          <br />
-          automatically using OCR.
-        </p>
+        <div>
+          <p className="text-sm font-semibold text-[#315bd1]">
+            Automatic PAN verification
+          </p>
+
+          <p className="mt-1 text-xs leading-5 text-[#667085]">
+            PAN information can be extracted
+            <br />
+            automatically using OCR.
+          </p>
+        </div>
       </div>
     </div>
   );
 };
 
 export default PanVerificationStep;
-
-
-
-
-

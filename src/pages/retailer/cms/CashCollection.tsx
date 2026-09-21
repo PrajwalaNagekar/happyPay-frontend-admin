@@ -450,26 +450,26 @@ const CashCollection = () => {
     type: Client["icon"];
   }) => {
     if (type === "bike") {
-      return <Bike className="h-7 w-7" />;
+      return <Bike className="h-5 w-5" />;
     }
 
     if (type === "car") {
-      return <WalletCards className="h-7 w-7" />;
+      return <WalletCards className="h-5 w-5" />;
     }
 
     if (type === "shield") {
-      return <ShieldCheck className="h-7 w-7" />;
+      return <ShieldCheck className="h-5 w-5" />;
     }
 
     if (type === "bank") {
-      return <WalletCards className="h-7 w-7" />;
+      return <WalletCards className="h-5 w-5" />;
     }
 
     if (type === "building") {
-      return <FileText className="h-7 w-7" />;
+      return <FileText className="h-5 w-5" />;
     }
 
-    return <Send className="h-7 w-7" />;
+    return <Send className="h-5 w-5" />;
   };
 
   /* =========================
@@ -490,18 +490,18 @@ const CashCollection = () => {
     history?: boolean;
   }) => {
     return (
-      <header className="border-b border-gray-200 bg-white">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 sm:px-6">
+      <header className="border-b border-slate-200 bg-white/95">
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-3 py-4 sm:px-5">
           <div className="flex items-center gap-4">
             <button
               type="button"
               onClick={handleBack}
-              className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-gray-100"
+              className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-slate-100"
             >
-              <ArrowLeft className="h-7 w-7 text-[#111827]" />
+              <ArrowLeft className="h-5 w-5 text-slate-900" />
             </button>
 
-            <h1 className="text-2xl font-bold text-[#111827] sm:text-3xl">
+            <h1 className="text-xl font-bold text-slate-900 sm:text-3xl">
               {title}
             </h1>
           </div>
@@ -511,7 +511,7 @@ const CashCollection = () => {
               type="button"
               className="flex h-10 w-10 items-center justify-center rounded-full"
             >
-              <History className="h-7 w-7 text-[#111827]" />
+              <History className="h-5 w-5 text-slate-900" />
             </button>
           )}
         </div>
@@ -536,19 +536,19 @@ const CashCollection = () => {
       <button
         type="button"
         onClick={onClick}
-        className={`w-full rounded-3xl border-2 bg-white p-5 text-left transition ${
+        className={`w-full rounded-2xl border-2 bg-white p-5 text-left transition ${
           selected
-            ? "border-[#315bd1]"
-            : "border-gray-200 hover:border-[#315bd1]"
+            ? "border-[#172033]"
+            : "border-slate-200 hover:border-[#172033]"
         }`}
       >
         <div className="flex items-center gap-4">
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#edf1fc] text-[#315bd1]">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#edf1fc] text-[#172033]">
             <ClientIcon type={client.icon} />
           </div>
 
           <div className="min-w-0 flex-1">
-            <h3 className="text-lg font-bold text-[#172033]">
+            <h3 className="text-base font-bold text-[#172033]">
               {client.name}
             </h3>
 
@@ -562,7 +562,7 @@ const CashCollection = () => {
           </span>
 
           {selected && (
-            <CheckCircle2 className="h-5 w-5 shrink-0 text-[#315bd1]" />
+            <CheckCircle2 className="h-5 w-5 shrink-0 text-[#172033]" />
           )}
         </div>
       </button>
@@ -583,16 +583,16 @@ const CashCollection = () => {
     }
 
     return (
-      <div className="min-h-screen bg-[#f5f7fc]">
-        <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
+      <div className="">
+        <main className="mx-auto max-w-5xl px-2 py-4 sm:px-4">
           {/* Search */}
 
           <button
             type="button"
             onClick={() => setScreen("client-selection")}
-            className="flex h-[64px] w-full items-center gap-4 rounded-2xl border-2 border-[#315bd1] bg-white px-5 text-left"
+            className="flex h-[64px] w-full items-center gap-4 rounded-2xl border-2 border-[#172033] bg-white px-5 text-left"
           >
-            <Search className="h-7 w-7 text-[#65748b]" />
+            <Search className="h-5 w-5 text-[#65748b]" />
 
             <span className="flex-1 truncate text-lg text-[#8b95a6]">
               Search Client / Company (e.g. Chola...)
@@ -605,13 +605,13 @@ const CashCollection = () => {
 
           <div className="mt-5 rounded-2xl border-2 border-[#f0d6d6] bg-[#fff5f5] p-5">
             <div className="flex items-center gap-4">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#fde5e5] text-[#df3c3c]">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#fde5e5] text-[#df3c3c]">
                 <ClientIcon type={selectedClient.icon} />
               </div>
 
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
-                  <h2 className="truncate text-lg font-bold text-[#172033]">
+                  <h2 className="truncate text-base font-bold text-[#172033]">
                     {selectedClient.name}
                   </h2>
 
@@ -631,7 +631,7 @@ const CashCollection = () => {
                 onClick={() =>
                   setScreen("client-selection")
                 }
-                className="font-bold text-[#315bd1]"
+                className="font-bold text-[#172033]"
               >
                 Change
               </button>
@@ -640,7 +640,7 @@ const CashCollection = () => {
 
           {/* Commission */}
 
-          <div className="mt-6 flex items-start gap-4 rounded-3xl border border-[#f0d5a8] bg-[#fff8ed] p-5">
+          <div className="mt-6 flex items-start gap-4 rounded-2xl border border-[#f0d5a8] bg-[#fff8ed] p-5">
             <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f59e0b] text-white">
               <Star className="h-5 w-5 fill-current" />
             </div>
@@ -653,7 +653,7 @@ const CashCollection = () => {
 
           {/* Features */}
 
-          <section className="mt-6 rounded-3xl border border-gray-300 bg-white p-6 sm:p-7">
+          <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 sm:p-5">
             <h2 className="text-xl font-bold text-[#172033]">
               Cash Collection Features
             </h2>
@@ -686,9 +686,9 @@ const CashCollection = () => {
           <button
             type="button"
             onClick={handleStartCollection}
-            className="mt-7 flex min-h-[66px] w-full items-center justify-center gap-3 rounded-2xl bg-[#315bd1] text-lg font-bold text-white shadow-md hover:bg-[#274dbd]"
+            className="mt-5 flex min-h-[52px] w-full items-center justify-center gap-3 rounded-2xl bg-[#172033] text-base font-bold text-white shadow-md hover:bg-[#0f172a]"
           >
-            <WalletCards className="h-6 w-6" />
+            <WalletCards className="h-5 w-5" />
 
             Start {selectedClient.code} Cash Collection
           </button>
@@ -703,12 +703,12 @@ const CashCollection = () => {
 
   const renderClientSelection = () => {
     return (
-      <div className="min-h-screen bg-[#f5f7fc]">
-        <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
+      <div className="">
+        <main className="mx-auto max-w-5xl px-2 py-4 sm:px-4">
           {/* Search */}
 
-          <div className="flex h-[64px] items-center gap-4 rounded-2xl border-2 border-[#315bd1] bg-white px-5">
-            <Search className="h-7 w-7 text-[#65748b]" />
+          <div className="flex h-[64px] items-center gap-4 rounded-2xl border-2 border-[#172033] bg-white px-5">
+            <Search className="h-5 w-5 text-[#65748b]" />
 
             <input
               autoFocus
@@ -726,12 +726,12 @@ const CashCollection = () => {
                 type="button"
                 onClick={() => setSearch("")}
               >
-                <X className="h-6 w-6 text-[#65748b]" />
+                <X className="h-5 w-5 text-[#65748b]" />
               </button>
             )}
           </div>
 
-          <div className="mt-8 flex items-center justify-between">
+          <div className="mt-6 flex items-center justify-between">
             <h2 className="text-xl font-bold text-[#172033]">
               Select Client / Company Profile
             </h2>
@@ -742,7 +742,7 @@ const CashCollection = () => {
                 setSearch("");
                 setScreen("home");
               }}
-              className="font-bold text-[#315bd1]"
+              className="font-bold text-[#172033]"
             >
               Cancel
             </button>
@@ -763,7 +763,7 @@ const CashCollection = () => {
             ))}
 
             {filteredClients.length === 0 && (
-              <div className="rounded-2xl border border-gray-200 bg-white p-8 text-center text-gray-500">
+              <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-slate-500">
                 No client/company found.
               </div>
             )}
@@ -783,10 +783,10 @@ const CashCollection = () => {
     }
 
     return (
-      <div className="min-h-screen bg-[#f5f7fc]">
+      <div className="">
         <Header title="Cash Collection" />
 
-        <main className="mx-auto max-w-3xl px-4 py-6 sm:px-6">
+        <main className="mx-auto max-w-3xl px-2 py-4 sm:px-4">
           {/* Commission */}
 
           <div className="flex items-start gap-4 border-b border-[#efd39f] bg-[#fff8ed] p-5">
@@ -804,9 +804,9 @@ const CashCollection = () => {
 
           {/* Client */}
 
-          <section className="mt-7 rounded-3xl border border-gray-300 bg-white p-6">
+          <section className="mt-5 rounded-2xl border border-slate-200 bg-white p-6">
             <div className="flex items-center gap-4">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#fdeaea] text-[#df3c3c]">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#fdeaea] text-[#df3c3c]">
                 <ClientIcon type={selectedClient.icon} />
               </div>
 
@@ -829,7 +829,7 @@ const CashCollection = () => {
 
           {/* Employee Code */}
 
-          <div className="mt-7">
+          <div className="mt-5">
             <Input
               label="Enter Employee Code"
               value={employeeCode}
@@ -839,7 +839,7 @@ const CashCollection = () => {
                 )
               }
               placeholder="EMP-8842"
-              icon={<WalletCards className="h-7 w-7" />}
+              icon={<WalletCards className="h-5 w-5" />}
             />
           </div>
 
@@ -855,11 +855,11 @@ const CashCollection = () => {
             loading={isVerifyingEmployee}
             fullWidth
             size="lg"
-            className="mt-7 min-h-[66px] rounded-2xl text-lg"
+            className="mt-5 min-h-[52px] rounded-2xl text-lg"
           >
             Proceed & Next
             {!isVerifyingEmployee && (
-              <ArrowRight className="h-6 w-6" />
+              <ArrowRight className="h-5 w-5" />
             )}
           </Button>
         </main>
@@ -877,10 +877,10 @@ const CashCollection = () => {
     }
 
     return (
-      <div className="min-h-screen bg-[#f5f7fc]">
+      <div className="">
         <Header title="Cash Collection" />
 
-        <main className="mx-auto max-w-3xl px-4 py-6 sm:px-6">
+        <main className="mx-auto max-w-3xl px-2 py-4 sm:px-4">
           {/* Commission */}
 
           <div className="flex items-start gap-4 border-b border-[#efd39f] bg-[#fff8ed] p-5">
@@ -898,14 +898,14 @@ const CashCollection = () => {
 
           {/* Employee Details */}
 
-          <section className="mt-7 rounded-3xl border border-gray-300 bg-white p-6">
-            <div className="flex flex-col gap-3 border-b border-gray-200 pb-4 sm:flex-row sm:items-center sm:justify-between">
+          <section className="mt-5 rounded-2xl border border-slate-200 bg-white p-6">
+            <div className="flex flex-col gap-3 border-b border-slate-200 pb-4 sm:flex-row sm:items-center sm:justify-between">
               <h2 className="flex items-center gap-3 text-xl font-bold text-[#20a970]">
-                <ShieldCheck className="h-7 w-7" />
+                <ShieldCheck className="h-5 w-5" />
                 Verified Employee Details
               </h2>
 
-              <span className="w-fit rounded-lg bg-[#edf1fc] px-3 py-2 font-bold text-[#315bd1]">
+              <span className="w-fit rounded-lg bg-[#edf1fc] px-3 py-2 font-bold text-[#172033]">
                 {verifiedEmployee.code}
               </span>
             </div>
@@ -949,7 +949,7 @@ const CashCollection = () => {
 
           {/* Amount */}
 
-          <div className="mt-7">
+          <div className="mt-5">
             <Input
               label="Collection Amount"
               value={collectionAmount}
@@ -961,7 +961,7 @@ const CashCollection = () => {
               placeholder="25000"
               inputMode="numeric"
               icon={
-                <span className="text-2xl font-bold">
+                <span className="text-xl font-bold">
                   ₹
                 </span>
               }
@@ -982,14 +982,14 @@ const CashCollection = () => {
 
           {/* Consent */}
 
-          <label className="mt-7 flex cursor-pointer items-start gap-4 rounded-2xl border border-gray-300 bg-white p-5">
+          <label className="mt-5 flex cursor-pointer items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5">
             <input
               type="checkbox"
               checked={consent}
               onChange={(event) =>
                 setConsent(event.target.checked)
               }
-              className="mt-1 h-6 w-6 shrink-0 accent-[#315bd1]"
+              className="mt-1 h-5 w-5 shrink-0 accent-[#172033]"
             />
 
             <span className="text-base leading-6 text-[#172033] sm:text-lg">
@@ -1002,11 +1002,11 @@ const CashCollection = () => {
 
           {/* Actions */}
 
-          <div className="mt-7 grid gap-4 sm:grid-cols-[0.7fr_1.3fr]">
+          <div className="mt-5 grid gap-4 sm:grid-cols-[0.7fr_1.3fr]">
             <button
               type="button"
               onClick={handleBack}
-              className="min-h-[64px] rounded-2xl border-2 border-[#b9c7e8] bg-transparent text-lg font-bold text-[#315bd1]"
+              className="min-h-[52px] rounded-2xl border-2 border-[#b9c7e8] bg-transparent text-base font-bold text-[#172033]"
             >
               Back
             </button>
@@ -1017,10 +1017,10 @@ const CashCollection = () => {
               disabled={
                 numericAmount <= 0 || !consent
               }
-              className="flex min-h-[64px] items-center justify-center gap-3 rounded-2xl bg-[#315bd1] text-lg font-bold text-white disabled:bg-[#aab9e7]"
+              className="flex min-h-[52px] items-center justify-center gap-3 rounded-2xl bg-[#172033] text-base font-bold text-white disabled:bg-[#aab9e7]"
             >
               Proceed to OTP
-              <ArrowRight className="h-6 w-6" />
+              <ArrowRight className="h-5 w-5" />
             </button>
           </div>
         </main>
@@ -1038,10 +1038,10 @@ const CashCollection = () => {
     }
 
     return (
-      <div className="min-h-screen bg-[#f5f7fc]">
+      <div className="">
         <Header title="Cash Collection" />
 
-        <main className="mx-auto max-w-3xl px-4 py-6 sm:px-6">
+        <main className="mx-auto max-w-3xl px-2 py-4 sm:px-4">
           {/* Commission */}
 
           <div className="flex items-start gap-4 border-b border-[#efd39f] bg-[#fff8ed] p-5">
@@ -1059,7 +1059,7 @@ const CashCollection = () => {
 
           {/* Summary */}
 
-          <section className="mt-7 rounded-3xl border border-gray-300 bg-white p-6">
+          <section className="mt-5 rounded-2xl border border-slate-200 bg-white p-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h2 className="text-xl font-bold text-[#172033]">
@@ -1072,7 +1072,7 @@ const CashCollection = () => {
                 </p>
               </div>
 
-              <p className="text-2xl font-bold text-[#20a970]">
+              <p className="text-xl font-bold text-[#20a970]">
                 ₹{numericAmount.toFixed(2)}
               </p>
             </div>
@@ -1080,8 +1080,8 @@ const CashCollection = () => {
 
           {/* OTP Message */}
 
-          <div className="mt-5 flex items-start gap-4 rounded-3xl border border-[#c7d4f5] bg-[#e9efff] p-5">
-            <ShieldCheck className="h-7 w-7 shrink-0 text-[#315bd1]" />
+          <div className="mt-5 flex items-start gap-4 rounded-2xl border border-[#c7d4f5] bg-[#e9efff] p-5">
+            <ShieldCheck className="h-5 w-5 shrink-0 text-[#172033]" />
 
             <p className="font-semibold leading-6 text-[#172033]">
               OTP sent to authorized mobile number +91{" "}
@@ -1091,8 +1091,8 @@ const CashCollection = () => {
 
           {/* OTP */}
 
-          <div className="mt-7">
-            <label className="mb-3 block text-lg font-bold text-[#172033]">
+          <div className="mt-5">
+            <label className="mb-3 block text-base font-bold text-[#172033]">
               Enter OTP to Finalize Request
             </label>
 
@@ -1120,7 +1120,7 @@ const CashCollection = () => {
               type="button"
               disabled={otpTimer > 0}
               onClick={handleResendOtp}
-              className="font-bold text-[#315bd1] disabled:text-gray-400"
+              className="font-bold text-[#172033] disabled:text-slate-400"
             >
               Resend OTP
             </button>
@@ -1128,13 +1128,13 @@ const CashCollection = () => {
 
           {/* Actions */}
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-[0.7fr_1.3fr]">
+          <div className="mt-6 grid gap-4 sm:grid-cols-[0.7fr_1.3fr]">
             <Button
               type="button"
               onClick={handleBack}
               variant="outline"
               size="lg"
-              className="min-h-[64px] rounded-2xl border-2 text-lg"
+              className="min-h-[52px] rounded-2xl border-2 text-lg"
             >
               Back
             </Button>
@@ -1146,7 +1146,7 @@ const CashCollection = () => {
               loading={isSubmitting}
               variant="primary"
               size="lg"
-              className="min-h-[64px] rounded-2xl text-lg"
+              className="min-h-[52px] rounded-2xl text-lg"
             >
               Confirm & Submit Payment
             </Button>
@@ -1172,10 +1172,10 @@ const CashCollection = () => {
     }
 
     return (
-      <div className="min-h-screen bg-[#f5f7fc]">
-        <div className="border-b border-gray-200 bg-white">
-          <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-5 sm:px-6">
-            <h1 className="text-2xl font-bold text-[#111827] sm:text-3xl">
+      <div className="">
+        <div className="border-b border-slate-200 bg-white/95">
+          <div className="mx-auto flex max-w-3xl items-center justify-between px-3 py-4 sm:px-5">
+            <h1 className="text-xl font-bold text-slate-900 sm:text-3xl">
               Payment Receipt
             </h1>
 
@@ -1184,21 +1184,21 @@ const CashCollection = () => {
               onClick={handleNewCollection}
               className="flex h-10 w-10 items-center justify-center"
             >
-              <X className="h-7 w-7" />
+              <X className="h-5 w-5" />
             </button>
           </div>
         </div>
 
-        <main className="mx-auto max-w-3xl px-4 py-6 sm:px-6">
+        <main className="mx-auto max-w-3xl px-2 py-4 sm:px-4">
           {/* Success */}
 
-          <div className="flex items-start gap-4 rounded-3xl border border-[#b3e5d2] bg-[#e5f8f0] p-5">
+          <div className="flex items-start gap-4 rounded-2xl border border-[#b3e5d2] bg-[#e5f8f0] p-5">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#19b978] text-white">
-              <CheckCircle2 className="h-7 w-7" />
+              <CheckCircle2 className="h-5 w-5" />
             </div>
 
             <div>
-              <h2 className="text-2xl font-bold text-[#16a96e]">
+              <h2 className="text-xl font-bold text-[#16a96e]">
                 Payment Successful
               </h2>
 
@@ -1213,19 +1213,19 @@ const CashCollection = () => {
 
           {/* Receipt Card */}
 
-          <section className="mt-7 overflow-hidden rounded-3xl border border-gray-300 bg-white">
-            <div className="p-7 text-center">
+          <section className="mt-5 overflow-hidden rounded-2xl border border-slate-200 bg-white">
+            <div className="p-5 text-center">
               <div className="flex items-center justify-center gap-4">
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#edf1fc] text-[#315bd1]">
-                  <WalletCards className="h-7 w-7" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#edf1fc] text-[#172033]">
+                  <WalletCards className="h-5 w-5" />
                 </div>
 
-                <h2 className="text-2xl font-bold text-[#172033]">
+                <h2 className="text-xl font-bold text-[#172033]">
                   {selectedClient.name}
                 </h2>
               </div>
 
-              <p className="mt-6 text-5xl font-bold text-[#172033]">
+              <p className="mt-6 text-4xl font-bold text-[#172033]">
                 ₹{numericAmount.toFixed(2)}
               </p>
 
@@ -1235,9 +1235,9 @@ const CashCollection = () => {
               </span>
             </div>
 
-            <div className="border-t border-dashed border-gray-300" />
+            <div className="border-t border-dashed border-slate-200" />
 
-            <div className="space-y-5 p-7">
+            <div className="space-y-5 p-5">
               <ReceiptRow
                 label="Transaction ID"
                 value={transactionId}
@@ -1289,7 +1289,7 @@ const CashCollection = () => {
                 )}
               />
 
-              <div className="border-t border-gray-200 pt-5">
+              <div className="border-t border-slate-200 pt-5">
                 <ReceiptRow
                   label="Retailer Commission"
                   value={`+ ₹${commission.toFixed(2)}`}
@@ -1304,9 +1304,9 @@ const CashCollection = () => {
           <button
             type="button"
             onClick={handleNewCollection}
-            className="mt-7 flex min-h-[64px] w-full items-center justify-center gap-3 rounded-2xl bg-[#315bd1] text-lg font-bold text-white"
+            className="mt-5 flex min-h-[52px] w-full items-center justify-center gap-3 rounded-2xl bg-[#172033] text-base font-bold text-white"
           >
-            <RotateCcw className="h-6 w-6" />
+            <RotateCcw className="h-5 w-5" />
             New Cash Collection
           </button>
 
@@ -1315,7 +1315,7 @@ const CashCollection = () => {
           <div className="mt-5 grid gap-4 sm:grid-cols-2">
             <button
               type="button"
-              className="flex min-h-[60px] items-center justify-center gap-3 rounded-2xl border-2 border-[#b9c7e8] bg-transparent text-base font-bold text-[#315bd1]"
+              className="flex min-h-[60px] items-center justify-center gap-3 rounded-2xl border-2 border-[#b9c7e8] bg-transparent text-base font-bold text-[#172033]"
             >
               <Mail className="h-5 w-5" />
               Send Email Receipt
@@ -1323,7 +1323,7 @@ const CashCollection = () => {
 
             <button
               type="button"
-              className="flex min-h-[60px] items-center justify-center gap-3 rounded-2xl border-2 border-[#b9c7e8] bg-transparent text-base font-bold text-[#315bd1]"
+              className="flex min-h-[60px] items-center justify-center gap-3 rounded-2xl border-2 border-[#b9c7e8] bg-transparent text-base font-bold text-[#172033]"
             >
               <Send className="h-5 w-5 text-[#20b77a]" />
               Share WhatsApp
@@ -1336,17 +1336,17 @@ const CashCollection = () => {
             <button
               type="button"
               onClick={() => window.print()}
-              className="flex items-center justify-center gap-3 font-bold text-[#315bd1]"
+              className="flex items-center justify-center gap-3 font-bold text-[#172033]"
             >
-              <Download className="h-6 w-6" />
+              <Download className="h-5 w-5" />
               Printable PDF
             </button>
 
             <button
               type="button"
-              className="flex items-center justify-center gap-3 font-bold text-[#315bd1]"
+              className="flex items-center justify-center gap-3 font-bold text-[#172033]"
             >
-              <History className="h-6 w-6" />
+              <History className="h-5 w-5" />
               View History
             </button>
           </div>
@@ -1395,7 +1395,7 @@ const Feature = ({
 }) => {
   return (
     <div className="flex items-start gap-3">
-      <CheckCircle2 className="mt-0.5 h-6 w-6 shrink-0 text-[#20b77a]" />
+      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#20b77a]" />
 
       <p className="text-base leading-6 text-[#555b67]">
         <strong className="text-[#172033]">
@@ -1447,7 +1447,7 @@ const DetailRow = ({
         {label}
       </span>
 
-      <span className="text-right text-lg font-bold text-[#172033]">
+      <span className="text-right text-base font-bold text-[#172033]">
         {value}
       </span>
     </div>
@@ -1498,7 +1498,7 @@ const ReceiptRow = ({
           <button
             type="button"
             onClick={handleCopy}
-            className="text-[#315bd1]"
+            className="text-[#172033]"
           >
             <Copy className="h-5 w-5" />
           </button>

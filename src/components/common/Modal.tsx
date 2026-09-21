@@ -73,14 +73,14 @@ export default function Modal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-[3px]"
       role="dialog"
       aria-modal="true"
       aria-labelledby={title ? "modal-title" : undefined}
       onMouseDown={handleOverlayClick}
     >
       <div
-        className={`w-full ${sizeClasses[size]} overflow-hidden rounded-2xl bg-white shadow-xl`}
+        className={`w-full ${sizeClasses[size]} overflow-hidden rounded-[22px] border border-slate-100 bg-white shadow-[0_24px_60px_-24px_rgba(15,23,42,0.45)]`}
       >
         {(title || showCloseButton) && (
           <div className="flex items-start justify-between border-b border-slate-100 px-5 py-4">

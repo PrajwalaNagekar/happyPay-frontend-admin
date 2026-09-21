@@ -614,17 +614,21 @@ const Dmt = () => {
     title: string;
   }) => {
     return (
-      <div className="border-b border-gray-100 bg-white">
-        <div className="mx-auto flex max-w-5xl items-center gap-4 px-4 py-5 sm:px-6">
-          <button
-            type="button"
-            onClick={handleBack}
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition hover:bg-gray-100"
-          >
-            <ArrowLeft className="h-6 w-6 text-[#111827]" />
-          </button>
+      <div className="hp-page-head mx-auto w-full max-w-[760px]">
+        <button
+          type="button"
+          onClick={handleBack}
+          className="hp-back"
+          aria-label="Go back"
+        >
+          <ArrowLeft className="h-5 w-5" />
+        </button>
 
-          <h1 className="text-2xl font-bold text-[#111827] sm:text-3xl">
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400">
+            Money transfer
+          </p>
+          <h1 className="text-base font-bold tracking-tight text-slate-900 sm:text-lg">
             {title}
           </h1>
         </div>
@@ -638,60 +642,60 @@ const Dmt = () => {
 
   const renderTransferDetails = () => {
     return (
-      <div className="bg-[#f5f7fb]">
-        <main className="px-4 py-7 sm:px-6">
-          <div className="mx-auto w-full max-w-5xl space-y-6">
-            <section className="min-h-[190px] overflow-hidden rounded-3xl bg-gradient-to-r from-[#3156d9] via-[#218bbd] to-[#10a88a] p-5 text-white shadow-lg sm:p-6">
-              <div className="flex h-full flex-col gap-5 md:flex-row md:items-center md:gap-6">
-                <div className="flex min-w-0 items-center gap-4 md:w-[32%] md:shrink-0">
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/15">
-                    <Send className="h-7 w-7" />
+      <div className="">
+        <main className="mt-4">
+          <div className="mx-auto w-full max-w-[760px] space-y-4">
+            <section className="min-h-[126px] overflow-hidden rounded-[16px] bg-[#172033] p-4 text-white shadow-[0_12px_28px_-18px_rgba(15,23,42,0.30)] sm:p-5">
+              <div className="flex h-full flex-col gap-3 md:flex-row md:items-center md:gap-4">
+                <div className="flex min-w-0 items-center gap-4 md:w-[29%] md:shrink-0">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/15">
+                    <Send className="h-5 w-5" />
                   </div>
 
                   <div className="min-w-0">
-                    <h1 className="text-2xl font-bold sm:text-3xl">
+                    <h1 className="text-lg font-bold sm:text-xl">
                       DMT
                     </h1>
 
-                    <p className="mt-1 text-sm leading-5 text-white/80 sm:text-base">
+                    <p className="mt-0.5 text-[11px] leading-4 text-white/80 sm:text-xs">
                       Send money securely to any bank account
                     </p>
                   </div>
                 </div>
 
-                <div className="grid flex-1 grid-cols-1 gap-3 sm:grid-cols-3">
-                  <div className="rounded-2xl bg-white/10 p-3.5 sm:p-4">
+                <div className="grid flex-1 grid-cols-1 gap-2.5 sm:grid-cols-3">
+                  <div className="rounded-xl bg-white/10 p-2.5 sm:p-3">
                     <Wallet className="h-5 w-5" />
 
-                    <p className="mt-2 text-xs text-white/75 sm:text-sm">
+                    <p className="mt-1 text-[10px] text-white/75 sm:text-[11px]">
                       Available Balance
                     </p>
 
-                    <p className="mt-0.5 text-xl font-bold sm:text-2xl">
+                    <p className="mt-0.5 text-base font-bold sm:text-lg">
                       ₹25,000
                     </p>
                   </div>
 
-                  <div className="rounded-2xl bg-white/10 p-3.5 sm:p-4">
+                  <div className="rounded-xl bg-white/10 p-2.5 sm:p-3">
                     <Send className="h-5 w-5" />
 
-                    <p className="mt-2 text-xs text-white/75 sm:text-sm">
+                    <p className="mt-1 text-[10px] text-white/75 sm:text-[11px]">
                       Transfer Type
                     </p>
 
-                    <p className="mt-0.5 text-xl font-bold sm:text-2xl">
+                    <p className="mt-0.5 text-base font-bold sm:text-lg">
                       IMPS / NEFT
                     </p>
                   </div>
 
-                  <div className="rounded-2xl bg-white/10 p-3.5 sm:p-4">
+                  <div className="rounded-xl bg-white/10 p-2.5 sm:p-3">
                     <ShieldCheck className="h-5 w-5" />
 
-                    <p className="mt-2 text-xs text-white/75 sm:text-sm">
+                    <p className="mt-1 text-[10px] text-white/75 sm:text-[11px]">
                       Security
                     </p>
 
-                    <p className="mt-0.5 text-xl font-bold sm:text-2xl">
+                    <p className="mt-0.5 text-base font-bold sm:text-lg">
                       OTP Protected
                     </p>
                   </div>
@@ -699,25 +703,25 @@ const Dmt = () => {
               </div>
             </section>
 
-            <section className="mt-7 rounded-[28px] border border-gray-200 bg-white p-6 shadow-sm sm:p-9">
-              <h2 className="text-2xl font-bold text-[#111827]">
+            <section className="hp-card mt-4 rounded-[16px] p-4 sm:p-5">
+              <h2 className="text-base font-bold text-slate-900">
                 Transfer Details
               </h2>
 
-              <p className="mt-2 text-base text-[#50627d]">
+              <p className="mt-1.5 text-sm text-[#50627d]">
                 Enter the customer's mobile number and
                 transfer amount.
               </p>
 
-              <div className="mt-8 grid gap-6 md:grid-cols-2">
+              <div className="mt-4 grid gap-4 md:grid-cols-2">
                 {/* Mobile */}
                 <div>
-                  <label className="mb-3 block text-base font-semibold text-[#183153]">
+                  <label className="mb-2 block text-sm font-semibold text-[#183153]">
                     Customer Mobile Number
                   </label>
 
-                  <div className="flex min-h-[62px] items-center gap-4 rounded-2xl border border-gray-200 px-5 focus-within:border-[#315bd1] focus-within:ring-2 focus-within:ring-[#315bd1]/10">
-                    <Phone className="h-6 w-6 text-[#9aa5b5]" />
+                  <div className="flex min-h-[48px] items-center gap-3 rounded-xl border border-slate-200 px-3.5 focus-within:border-[#172033] focus-within:ring-2 focus-within:ring-[#172033]/10">
+                    <Phone className="h-5 w-5 text-[#9aa5b5]" />
 
                     <input
                       type="text"
@@ -742,12 +746,12 @@ const Dmt = () => {
 
                 {/* Amount */}
                 <div>
-                  <label className="mb-3 block text-base font-semibold text-[#183153]">
+                  <label className="mb-2 block text-sm font-semibold text-[#183153]">
                     Transfer Amount
                   </label>
 
-                  <div className="flex min-h-[62px] items-center gap-4 rounded-2xl border border-gray-200 px-5 focus-within:border-[#315bd1] focus-within:ring-2 focus-within:ring-[#315bd1]/10">
-                    <span className="text-2xl text-[#9aa5b5]">
+                  <div className="flex min-h-[48px] items-center gap-3 rounded-xl border border-slate-200 px-3.5 focus-within:border-[#172033] focus-within:ring-2 focus-within:ring-[#172033]/10">
+                    <span className="text-lg text-[#9aa5b5]">
                       ₹
                     </span>
 
@@ -770,27 +774,27 @@ const Dmt = () => {
                 </div>
               </div>
 
-              <div className="mt-7 flex items-start gap-4 rounded-2xl bg-[#f1f4fd] p-5">
-                <LockKeyhole className="h-6 w-6 shrink-0 text-[#315bd1]" />
+              <div className="mt-4 flex items-start gap-3 rounded-xl bg-[#f3f4f6] p-3.5">
+                <LockKeyhole className="h-5 w-5 shrink-0 text-[#172033]" />
 
                 <div>
                   <h3 className="font-semibold text-[#183153]">
                     Secure Money Transfer
                   </h3>
 
-                  <p className="mt-1 text-sm text-[#50627d]">
+                  <p className="mt-1 text-xs text-[#50627d]">
                     The transaction will require beneficiary
                     verification and OTP authentication.
                   </p>
                 </div>
               </div>
 
-              <div className="mt-8 flex justify-end">
+              <div className="mt-4 flex justify-end">
                 <button
                   type="button"
                   onClick={handleContinue}
                   disabled={!isTransferDetailsValid}
-                  className="flex min-h-[60px] items-center gap-3 rounded-2xl bg-[#315bd1] px-8 font-bold text-white transition hover:bg-[#274dbd] disabled:cursor-not-allowed disabled:bg-[#aab9e7]"
+                  className="flex min-h-[44px] items-center gap-2 rounded-xl bg-[#172033] px-5 text-sm font-bold text-white transition hover:bg-[#0f172a] disabled:cursor-not-allowed disabled:bg-[#b8bec9]"
                 >
                   Continue
 
@@ -810,26 +814,26 @@ const Dmt = () => {
 
   const renderOtpVerification = () => {
     return (
-      <div className="bg-[#f5f7fb]">
+      <div className="">
         <PageHeader title="OTP Verification" />
 
-        <main className="mx-auto flex max-w-5xl flex-col items-center px-5 py-14 text-center sm:py-20">
-          <div className="flex h-28 w-28 items-center justify-center rounded-full bg-[#e5ebfb]">
-            <MessageSquare className="h-14 w-14 fill-[#315bd1] text-[#315bd1]" />
+        <main className="mx-auto mt-3 flex max-w-[760px] flex-col items-center py-4 text-center sm:py-6">
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#eef1f5]">
+            <MessageSquare className="h-9 w-9 fill-[#172033] text-[#172033]" />
           </div>
 
-          <h2 className="mt-10 text-3xl font-bold text-[#172033] sm:text-4xl">
+          <h2 className="mt-5 text-xl font-bold text-[#172033] sm:text-2xl">
             Enter Verification Code
           </h2>
 
-          <p className="mt-4 text-lg text-[#555b67] sm:text-2xl">
+          <p className="mt-2 text-sm text-[#555b67] sm:text-base">
             OTP has been sent to{" "}
             <span className="font-medium">
               +91 {customerMobile}
             </span>
           </p>
 
-          <div className="mt-10 w-full max-w-xl">
+          <div className="mt-5 w-full max-w-sm">
             <OtpInput
               value={otp}
               onChange={(value) => {
@@ -848,11 +852,11 @@ const Dmt = () => {
             </p>
           )}
 
-          <div className="mt-9 text-lg text-[#555b67]">
+          <div className="mt-6 text-base text-[#555b67]">
             {otpTimer > 0 ? (
               <>
                 Resend OTP in{" "}
-                <span className="font-bold text-[#315bd1]">
+                <span className="font-bold text-[#172033]">
                   00:{String(otpTimer).padStart(2, "0")}
                 </span>
               </>
@@ -860,7 +864,7 @@ const Dmt = () => {
               <button
                 type="button"
                 onClick={handleResendOtp}
-                className="font-semibold text-[#315bd1]"
+                className="font-semibold text-[#172033]"
               >
                 Resend OTP
               </button>
@@ -878,7 +882,7 @@ const Dmt = () => {
               otp.length !== 6 ||
               isVerifyingOtp
             }
-            className="mt-16 flex min-h-[64px] w-full max-w-[700px] items-center justify-center rounded-2xl bg-[#315bd1] text-xl font-bold text-white disabled:cursor-not-allowed disabled:bg-[#aab9e7]"
+            className="mt-10 flex min-h-[52px] w-full max-w-[560px] items-center justify-center rounded-xl bg-[#172033] text-base font-bold text-white disabled:cursor-not-allowed disabled:bg-[#b8bec9]"
           >
             {isVerifyingOtp
               ? "VERIFYING..."
@@ -895,30 +899,30 @@ const Dmt = () => {
 
   const renderAddBeneficiary = () => {
     return (
-      <div className="bg-[#f5f7fb]">
-        <main className="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-8">
-          <section className="rounded-[28px] border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
+      <div className="">
+        <main className="mx-auto mt-4 max-w-[760px]">
+          <section className="rounded-[16px] border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
             <div className="flex items-center gap-4">
               <button
                 type="button"
                 onClick={handleBack}
-                className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-gray-100"
+                className="flex h-9 w-9 items-center justify-center rounded-lg hover:bg-slate-100"
               >
-                <ArrowLeft className="h-6 w-6" />
+                <ArrowLeft className="h-5 w-5" />
               </button>
 
               <div>
-                <h2 className="text-2xl font-bold text-[#111827] sm:text-3xl">
+                <h2 className="text-base font-bold text-slate-900 sm:text-2xl">
                   Add Beneficiary
                 </h2>
 
-                <p className="mt-1 text-sm text-[#50627d]">
+                <p className="mt-1 text-xs text-[#50627d]">
                   Enter the beneficiary bank account details.
                 </p>
               </div>
             </div>
 
-            <div className="mt-8 grid gap-6 md:grid-cols-2">
+            <div className="mt-4 grid gap-4 md:grid-cols-2">
               {/* Name */}
               <div>
                 <label className="mb-2 block font-semibold text-[#183153]">
@@ -936,7 +940,7 @@ const Dmt = () => {
                     setAccountVerified(false);
                   }}
                   placeholder="Enter beneficiary name"
-                  className="h-14 w-full rounded-2xl border border-gray-200 px-4 outline-none focus:border-[#315bd1]"
+                  className="h-12 w-full rounded-xl border border-slate-200 px-4 outline-none focus:border-[#172033]"
                 />
               </div>
 
@@ -962,7 +966,7 @@ const Dmt = () => {
                     setVerifyAccount(false);
                     setAccountVerified(false);
                   }}
-                  className="h-14 w-full rounded-2xl border border-gray-200 bg-white px-4 outline-none focus:border-[#315bd1]"
+                  className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 outline-none focus:border-[#172033]"
                 >
                   <option value="">
                     Select Bank
@@ -1002,7 +1006,7 @@ const Dmt = () => {
                     setAccountVerified(false);
                   }}
                   placeholder="Enter account number"
-                  className="h-14 w-full rounded-2xl border border-gray-200 px-4 outline-none focus:border-[#315bd1]"
+                  className="h-12 w-full rounded-xl border border-slate-200 px-4 outline-none focus:border-[#172033]"
                 />
               </div>
 
@@ -1019,7 +1023,7 @@ const Dmt = () => {
                     beneficiaryBank?.ifsc || ""
                   }
                   placeholder="IFSC will be auto-filled"
-                  className="h-14 w-full cursor-not-allowed rounded-2xl border border-gray-200 bg-gray-50 px-4 uppercase"
+                  className="h-12 w-full cursor-not-allowed rounded-2xl border border-slate-200 bg-slate-50 px-4 uppercase"
                 />
               </div>
 
@@ -1029,7 +1033,7 @@ const Dmt = () => {
                   Mobile Number
                 </label>
 
-                <div className="flex h-14 items-center gap-3 rounded-2xl border border-gray-200 px-4 focus-within:border-[#315bd1]">
+                <div className="flex h-12 items-center gap-3 rounded-xl border border-slate-200 px-4 focus-within:border-[#172033]">
                   <Phone className="h-5 w-5 text-[#9aa5b5]" />
 
                   <input
@@ -1055,7 +1059,7 @@ const Dmt = () => {
             </div>
 
             {/* Verify */}
-            <div className="mt-7 rounded-2xl border border-[#dbe3f8] bg-[#f5f7fd] p-5">
+            <div className="mt-4 rounded-xl border border-[#e1e4e9] bg-[#f5f6f8] p-4">
               <label
                 className={`flex items-start gap-4 ${canVerifyAccount
                     ? "cursor-pointer"
@@ -1072,7 +1076,7 @@ const Dmt = () => {
                   onChange={
                     handleVerifyAccountChange
                   }
-                  className="mt-1 h-5 w-5 accent-[#315bd1]"
+                  className="mt-1 h-5 w-5 accent-[#172033]"
                 />
 
                 <div>
@@ -1080,7 +1084,7 @@ const Dmt = () => {
                     Verify this account
                   </p>
 
-                  <p className="mt-1 text-sm text-[#50627d]">
+                  <p className="mt-1 text-xs text-[#50627d]">
                     Verify the beneficiary account before
                     adding it.
                   </p>
@@ -1092,7 +1096,7 @@ const Dmt = () => {
                   )}
 
                   {isVerifyingAccount && (
-                    <p className="mt-2 text-sm font-medium text-[#315bd1]">
+                    <p className="mt-2 text-sm font-medium text-[#172033]">
                       Verifying account...
                     </p>
                   )}
@@ -1108,12 +1112,12 @@ const Dmt = () => {
             </div>
 
             {/* Add */}
-            <div className="mt-8 flex justify-end">
+            <div className="mt-4 flex justify-end">
               <button
                 type="button"
                 onClick={handleAddBeneficiary}
                 disabled={!canAddBeneficiary}
-                className="flex min-h-[58px] items-center gap-3 rounded-2xl bg-[#315bd1] px-8 font-bold text-white disabled:cursor-not-allowed disabled:bg-[#aab9e7]"
+                className="flex min-h-[46px] items-center gap-2.5 rounded-xl bg-[#172033] px-5 text-sm font-bold text-white disabled:cursor-not-allowed disabled:bg-[#b8bec9]"
               >
                 <Plus className="h-5 w-5" />
 
@@ -1132,45 +1136,45 @@ const Dmt = () => {
 
   const renderCustomerDetails = () => {
     return (
-      <div className="bg-[#f5f7fb]">
+      <div className="">
         <PageHeader title="Customer Details" />
 
-        <main className="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-8">
+        <main className="mx-auto mt-4 max-w-[760px]">
           {/* Customer Card */}
-          <section className="rounded-[30px] bg-gradient-to-r from-[#315bd1] to-[#4568db] p-6 text-white shadow-lg sm:p-8">
-            <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex items-center gap-5">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/15 text-xl font-bold sm:h-20 sm:w-20">
+          <section className="rounded-[16px] bg-[#172033] p-4 text-white shadow-[0_10px_25px_-18px_rgba(15,23,42,0.4)] sm:p-6">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/15 text-base font-bold sm:h-14 sm:w-14">
                   RK
                 </div>
 
                 <div>
-                  <h2 className="text-2xl font-bold sm:text-3xl">
+                  <h2 className="text-lg font-bold sm:text-xl">
                     {customerName}
                   </h2>
 
-                  <p className="mt-1 text-base text-white/75">
+                  <p className="mt-1 text-sm text-white/75">
                     +91 {customerMobile}
                   </p>
                 </div>
               </div>
 
-              <div className="flex w-fit items-center gap-2 rounded-xl bg-[#09b878] px-4 py-3 text-sm font-bold">
+              <div className="flex w-fit items-center gap-2 rounded-xl bg-[#09b878] px-3.5 py-2.5 text-xs font-bold">
                 <Check className="h-5 w-5" />
 
                 eKYC Verified
               </div>
             </div>
 
-            <div className="my-6 h-px bg-white/20" />
+            <div className="my-4 h-px bg-white/20" />
 
-            <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-base text-white/70">
+                <p className="text-sm text-white/70">
                   Available Balance
                 </p>
 
-                <p className="mt-1 text-3xl font-bold">
+                <p className="mt-1 text-lg font-bold">
                   ₹25000.00
                 </p>
               </div>
@@ -1178,7 +1182,7 @@ const Dmt = () => {
               <button
                 type="button"
                 onClick={handleOpenAddBeneficiary}
-                className="flex min-h-[56px] items-center justify-center gap-3 rounded-2xl bg-white px-6 font-bold text-[#315bd1]"
+                className="flex min-h-[46px] items-center justify-center gap-2 rounded-xl bg-white px-5 text-sm font-bold text-[#172033]"
               >
                 <Plus className="h-5 w-5" />
 
@@ -1188,8 +1192,8 @@ const Dmt = () => {
           </section>
 
           {/* Heading */}
-          <div className="mt-8 flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-[#111827] sm:text-3xl">
+          <div className="mt-5 flex items-center justify-between">
+            <h2 className="text-base font-bold text-slate-900 sm:text-2xl">
               List of Beneficiaries
             </h2>
 
@@ -1199,28 +1203,28 @@ const Dmt = () => {
           </div>
 
           {/* List */}
-          <div className="mt-5 space-y-5">
+          <div className="mt-3 space-y-2.5">
             {beneficiaries.map((beneficiary) => (
               <div
                 key={beneficiary.id}
-                className="rounded-[26px] border border-gray-200 bg-white p-5 shadow-sm sm:p-6"
+                className="rounded-[16px] border border-slate-200 bg-white p-3.5 shadow-sm sm:p-4"
               >
-                <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
-                  <div className="flex min-w-0 flex-1 items-center gap-4">
-                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#edf1fc] font-bold text-[#315bd1] sm:h-16 sm:w-16">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                  <div className="flex min-w-0 flex-1 items-center gap-3">
+                    <div className="flex h-12 w-14 shrink-0 items-center justify-center rounded-full bg-[#f0f2f5] font-bold text-[#172033] sm:h-14 sm:w-14">
                       {beneficiary.initials}
                     </div>
 
                     <div className="min-w-0">
-                      <h3 className="text-xl font-bold text-[#111827]">
+                      <h3 className="text-base font-bold text-slate-900">
                         {beneficiary.name}
                       </h3>
 
-                      <p className="mt-1 font-medium text-[#555b67]">
+                      <p className="mt-0.5 text-sm font-medium text-[#555b67]">
                         {beneficiary.bankName}
                       </p>
 
-                      <p className="mt-1 text-sm text-[#555b67] sm:text-base">
+                      <p className="mt-0.5 text-xs text-[#555b67] sm:text-sm">
                         A/C: {beneficiary.accountNumber}
 
                         <span className="mx-2">
@@ -1239,7 +1243,7 @@ const Dmt = () => {
                         beneficiary
                       )
                     }
-                    className="flex min-h-[52px] items-center justify-center gap-2 rounded-2xl bg-[#315bd1] px-7 text-base font-bold text-white shadow-sm hover:bg-[#274dbd]"
+                    className="flex min-h-[40px] items-center justify-center gap-2 rounded-xl bg-[#172033] px-4 text-sm font-bold text-white shadow-sm hover:bg-[#0f172a]"
                   >
                     <Send className="h-5 w-5" />
 
@@ -1251,15 +1255,15 @@ const Dmt = () => {
           </div>
 
           {selectedBeneficiary && (
-            <div className="mt-6 flex items-start gap-4 rounded-2xl bg-[#f1f4fd] p-5">
-              <CircleUserRound className="h-6 w-6 text-[#315bd1]" />
+            <div className="mt-6 flex items-start gap-4 rounded-2xl bg-[#f3f4f6] p-5">
+              <CircleUserRound className="h-6 w-6 text-[#172033]" />
 
               <div>
                 <p className="font-semibold text-[#183153]">
                   Beneficiary Selected
                 </p>
 
-                <p className="mt-1 text-sm text-[#50627d]">
+                <p className="mt-1 text-xs text-[#50627d]">
                   {selectedBeneficiary.name}
                 </p>
               </div>
@@ -1280,23 +1284,23 @@ const Dmt = () => {
     }
 
     return (
-      <div className="bg-[#f5f7fb]">
+      <div className="">
         <PageHeader title="Send Money Transfer" />
 
-        <main className="mx-auto max-w-5xl px-5 py-6 sm:py-8">
+        <main className="mx-auto mt-4 max-w-[760px]">
           {/* Beneficiary Card */}
-          <section className="rounded-[28px] border border-gray-300 bg-white p-6 shadow-sm">
+          <section className="rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
             <div className="flex items-center gap-4">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#edf1fc] font-bold text-[#315bd1]">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#f0f2f5] font-bold text-[#172033]">
                 {selectedBeneficiary.initials}
               </div>
 
               <div className="min-w-0 flex-1">
-                <h2 className="text-xl font-bold text-[#111827]">
+                <h2 className="text-base font-bold text-slate-900">
                   {selectedBeneficiary.name}
                 </h2>
 
-                <p className="mt-1 text-base font-semibold text-[#111827]">
+                <p className="mt-1 text-base font-semibold text-slate-900">
                   {selectedBeneficiary.bankName}
                 </p>
 
@@ -1314,13 +1318,13 @@ const Dmt = () => {
           </section>
 
           {/* Enter Amount */}
-          <section className="mt-8">
-            <label className="mb-3 block text-xl font-bold text-[#172033]">
+          <section className="mt-6">
+            <label className="mb-2 block text-base font-bold text-[#172033]">
               Enter Amount
             </label>
 
-            <div className="flex h-[88px] items-center rounded-[24px] border-2 border-[#315bd1] bg-white px-6">
-              <span className="mr-5 text-4xl font-medium text-[#315bd1]">
+            <div className="flex h-[54px] items-center rounded-xl border-2 border-[#172033] bg-white px-5">
+              <span className="mr-3 text-xl font-medium text-[#172033]">
                 ₹
               </span>
 
@@ -1336,11 +1340,11 @@ const Dmt = () => {
                   );
                 }}
                 placeholder="1500"
-                className="w-full bg-transparent text-4xl font-bold text-[#172033] outline-none placeholder:text-gray-400"
+                className="w-full bg-transparent text-base font-bold text-[#172033] outline-none placeholder:text-slate-400"
               />
             </div>
 
-            <p className="mt-3 text-lg text-[#555b67]">
+            <p className="mt-2 text-sm text-[#555b67]">
               Available Balance: ₹
               {availableBalance.toFixed(2)}
             </p>
@@ -1354,29 +1358,29 @@ const Dmt = () => {
           </section>
 
           {/* Transfer Mode */}
-          <section className="mt-10">
-            <h3 className="text-xl font-bold text-[#172033]">
+          <section className="mt-7">
+            <h3 className="text-base font-bold text-[#172033]">
               Transfer Mode
             </h3>
 
-            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            <div className="mt-3 grid gap-3 sm:grid-cols-2">
               {/* IMPS */}
               <button
                 type="button"
                 onClick={() =>
                   setTransferMode("IMPS")
                 }
-                className={`rounded-[24px] border-2 p-6 text-center transition ${transferMode === "IMPS"
-                    ? "border-[#315bd1] bg-[#315bd1] text-white shadow-lg"
-                    : "border-gray-300 bg-white text-[#172033]"
+                className={`rounded-xl border p-4 text-center transition ${transferMode === "IMPS"
+                    ? "border-[#172033] bg-[#172033] text-white shadow-lg"
+                    : "border-slate-200 bg-white text-[#172033]"
                   }`}
               >
-                <p className="text-2xl font-bold">
+                <p className="text-lg font-bold">
                   IMPS
                 </p>
 
                 <p
-                  className={`mt-1 text-base ${transferMode === "IMPS"
+                  className={`mt-1 text-sm ${transferMode === "IMPS"
                       ? "text-white/80"
                       : "text-[#555b67]"
                     }`}
@@ -1391,17 +1395,17 @@ const Dmt = () => {
                 onClick={() =>
                   setTransferMode("NEFT")
                 }
-                className={`rounded-[24px] border-2 p-6 text-center transition ${transferMode === "NEFT"
-                    ? "border-[#315bd1] bg-[#315bd1] text-white shadow-lg"
-                    : "border-gray-300 bg-white text-[#172033]"
+                className={`rounded-xl border p-4 text-center transition ${transferMode === "NEFT"
+                    ? "border-[#172033] bg-[#172033] text-white shadow-lg"
+                    : "border-slate-200 bg-white text-[#172033]"
                   }`}
               >
-                <p className="text-2xl font-bold">
+                <p className="text-lg font-bold">
                   NEFT
                 </p>
 
                 <p
-                  className={`mt-1 text-base ${transferMode === "NEFT"
+                  className={`mt-1 text-sm ${transferMode === "NEFT"
                       ? "text-white/80"
                       : "text-[#555b67]"
                     }`}
@@ -1414,8 +1418,8 @@ const Dmt = () => {
 
           {/* Summary */}
           {numericSendAmount > 0 && (
-            <section className="mt-8 rounded-[28px] border border-gray-300 bg-white p-6 sm:p-8">
-              <div className="space-y-6 text-lg">
+            <section className="mt-6 rounded-[18px] border border-slate-200 bg-white p-5 sm:p-6">
+              <div className="space-y-4 text-lg">
                 <div className="flex items-center justify-between">
                   <span className="text-[#555b67]">
                     Transfer Amount
@@ -1453,13 +1457,13 @@ const Dmt = () => {
                   </span>
                 </div>
 
-                <div className="border-t border-gray-200 pt-5">
+                <div className="border-t border-slate-200 pt-5">
                   <div className="flex items-center justify-between">
-                    <span className="text-xl font-bold text-[#172033]">
+                    <span className="text-base font-bold text-[#172033]">
                       Total Payable
                     </span>
 
-                    <span className="text-2xl font-bold text-[#172033]">
+                    <span className="text-base font-bold text-[#172033]">
                       ₹{totalPayable.toFixed(2)}
                     </span>
                   </div>
@@ -1476,7 +1480,7 @@ const Dmt = () => {
               !canTransfer ||
               isProcessingTransfer
             }
-            className="mt-8 flex min-h-[64px] w-full items-center justify-center rounded-[22px] bg-[#315bd1] text-xl font-bold text-white shadow-md transition hover:bg-[#274dbd] disabled:cursor-not-allowed disabled:bg-[#9eafe4]"
+            className="mt-6 flex min-h-[52px] w-full items-center justify-center rounded-xl bg-[#172033] text-base font-bold text-white shadow-md transition hover:bg-[#0f172a] disabled:cursor-not-allowed disabled:bg-[#b8bec9]"
           >
             {isProcessingTransfer ? (
               <div className="flex items-center gap-3">
@@ -1492,7 +1496,7 @@ const Dmt = () => {
           {/* Save */}
           <button
             type="button"
-            className="mt-5 flex min-h-[60px] w-full items-center justify-center rounded-[22px] border-2 border-[#c2cde8] bg-transparent text-xl font-bold text-[#315bd1] transition hover:bg-white"
+            className="mt-4 flex min-h-[50px] w-full items-center justify-center rounded-xl border-2 border-[#cbd0d8] bg-transparent text-base font-bold text-[#172033] transition hover:bg-white"
           >
             SAVE
           </button>
@@ -1511,19 +1515,19 @@ const Dmt = () => {
     }
 
     return (
-      <div className="bg-[#f5f7fb]">
-        <main className="mx-auto max-w-5xl px-5 py-12 sm:py-16">
+      <div className="">
+        <main className="mx-auto mt-4 max-w-[760px]">
           {/* Success Icon */}
           <div className="flex flex-col items-center text-center">
-            <div className="flex h-36 w-36 items-center justify-center rounded-full bg-[#dff7ed]">
-              <Check className="h-20 w-20 text-[#13ae6e]" />
+            <div className="flex h-24 w-24 items-center justify-center rounded-full bg-[#dff7ed]">
+              <Check className="h-12 w-12 text-[#13ae6e]" />
             </div>
 
-            <h1 className="mt-8 text-3xl font-bold text-[#12a968] sm:text-4xl">
+            <h1 className="mt-5 text-2xl font-bold text-[#12a968] sm:text-3xl">
               Transfer Successful!
             </h1>
 
-            <p className="mt-3 text-xl text-[#555b67]">
+            <p className="mt-1.5 text-sm text-[#555b67]">
               Money transferred to{" "}
               <span className="font-medium">
                 {selectedBeneficiary.name}
@@ -1532,10 +1536,10 @@ const Dmt = () => {
           </div>
 
           {/* Receipt */}
-          <section className="mt-10 rounded-[30px] border border-gray-300 bg-white p-7 shadow-sm sm:p-9">
+          <section className="mt-6 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
             {/* Amount */}
             <div className="text-center">
-              <p className="text-4xl font-bold text-[#172033]">
+              <p className="text-base font-bold text-[#172033]">
                 ₹{numericSendAmount.toFixed(2)}
               </p>
 
@@ -1544,11 +1548,11 @@ const Dmt = () => {
               </span>
             </div>
 
-            <div className="my-7 h-px bg-gray-200" />
+            <div className="my-7 h-px bg-slate-200" />
 
             {/* Transaction ID */}
-            <div className="space-y-5 text-base sm:text-lg">
-              <div className="flex items-start justify-between gap-5">
+            <div className="space-y-4 text-sm sm:text-base">
+              <div className="flex items-start justify-between gap-3">
                 <span className="text-[#555b67]">
                   Transaction ID
                 </span>
@@ -1558,7 +1562,7 @@ const Dmt = () => {
                 </span>
               </div>
 
-              <div className="flex items-start justify-between gap-5">
+              <div className="flex items-start justify-between gap-3">
                 <span className="text-[#555b67]">
                   Beneficiary
                 </span>
@@ -1568,7 +1572,7 @@ const Dmt = () => {
                 </span>
               </div>
 
-              <div className="flex items-start justify-between gap-5">
+              <div className="flex items-start justify-between gap-3">
                 <span className="text-[#555b67]">
                   Bank Name
                 </span>
@@ -1578,7 +1582,7 @@ const Dmt = () => {
                 </span>
               </div>
 
-              <div className="flex items-start justify-between gap-5">
+              <div className="flex items-start justify-between gap-3">
                 <span className="text-[#555b67]">
                   Account Number
                 </span>
@@ -1588,7 +1592,7 @@ const Dmt = () => {
                 </span>
               </div>
 
-              <div className="flex items-start justify-between gap-5">
+              <div className="flex items-start justify-between gap-3">
                 <span className="text-[#555b67]">
                   IFSC Code
                 </span>
@@ -1598,7 +1602,7 @@ const Dmt = () => {
                 </span>
               </div>
 
-              <div className="flex items-start justify-between gap-5">
+              <div className="flex items-start justify-between gap-3">
                 <span className="text-[#555b67]">
                   Transfer Mode
                 </span>
@@ -1608,7 +1612,7 @@ const Dmt = () => {
                 </span>
               </div>
 
-              <div className="flex items-start justify-between gap-5">
+              <div className="flex items-start justify-between gap-3">
                 <span className="text-[#555b67]">
                   CCF Charged
                 </span>
@@ -1618,7 +1622,7 @@ const Dmt = () => {
                 </span>
               </div>
 
-              <div className="flex items-start justify-between gap-5">
+              <div className="flex items-start justify-between gap-3">
                 <span className="text-[#555b67]">
                   Commission Earned
                 </span>
@@ -1628,7 +1632,7 @@ const Dmt = () => {
                 </span>
               </div>
 
-              <div className="flex items-start justify-between gap-5">
+              <div className="flex items-start justify-between gap-3">
                 <span className="text-[#555b67]">
                   Total Deducted
                 </span>
@@ -1644,9 +1648,9 @@ const Dmt = () => {
           <button
             type="button"
             onClick={() => window.print()}
-            className="mt-7 flex min-h-[64px] w-full items-center justify-center gap-3 rounded-[22px] border-2 border-[#b9c7e8] bg-transparent text-xl font-bold text-[#315bd1] transition hover:bg-white"
+            className="mt-5 flex min-h-[52px] w-full items-center justify-center gap-3 rounded-xl border-2 border-[#cbd0d8] bg-transparent text-base font-bold text-[#172033] transition hover:bg-white"
           >
-            <Printer className="h-6 w-6" />
+            <Printer className="h-5 w-5" />
 
             PRINT RECEIPT
           </button>
@@ -1655,9 +1659,9 @@ const Dmt = () => {
           <button
             type="button"
             onClick={handleAnotherTransaction}
-            className="mt-5 flex min-h-[64px] w-full items-center justify-center gap-3 rounded-[22px] bg-[#315bd1] text-xl font-bold text-white shadow-md transition hover:bg-[#274dbd]"
+            className="mt-4 flex min-h-[50px] w-full items-center justify-center gap-3 rounded-xl bg-[#172033] text-base font-bold text-white shadow-md transition hover:bg-[#0f172a]"
           >
-            <RefreshCw className="h-6 w-6" />
+            <RefreshCw className="h-5 w-5" />
 
             ANOTHER TRANSACTION
           </button>

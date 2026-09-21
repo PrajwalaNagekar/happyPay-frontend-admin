@@ -41,22 +41,22 @@ const AadhaarStep = () => {
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       {/* HEADER INFORMATION */}
       <div className="flex items-start gap-4">
-        <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-[22px] bg-gradient-to-br from-[#e9efff] to-[#e6f6f1]">
+        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#eef1ff]">
           <Fingerprint
-            className="h-9 w-9 text-[#315bd1]"
+            className="h-7 w-7 text-[#315bd1]"
             strokeWidth={2}
           />
         </div>
 
-        <div>
+        <div className="pt-0.5">
           <h3 className="text-base font-bold text-[#172033]">
             Aadhaar Verification
           </h3>
 
-          <p className="mt-2 text-sm leading-7 text-[#697386]">
+          <p className="mt-1.5 text-sm leading-6 text-[#8992a3]">
             Verify your Aadhaar information
             <br />
             securely.
@@ -68,10 +68,10 @@ const AadhaarStep = () => {
       <button
         type="button"
         onClick={() => setConsent((previous) => !previous)}
-        className={`flex w-full items-start gap-3 rounded-xl border-2 px-4 py-3 text-left transition ${
+        className={`flex w-full items-start gap-3 rounded-xl border px-4 py-3.5 text-left transition ${
           consent
-            ? "border-[#315bd1] bg-[#f0f3ff]"
-            : "border-[#c9c9ce] bg-[#fafafd]"
+            ? "border-[#315bd1] bg-[#f3f5ff]"
+            : "border-[#dfe1e6] bg-[#fafbfd] hover:border-[#bfc8e8]"
         }`}
       >
         {consent ? (
@@ -86,7 +86,7 @@ const AadhaarStep = () => {
           />
         )}
 
-        <span className="pt-1 text-sm font-semibold leading-7 text-[#172033]">
+        <span className="text-sm font-semibold leading-6 text-[#172033]">
           I provide my consent for Aadhaar-based
           <br />
           identity verification.
@@ -95,19 +95,19 @@ const AadhaarStep = () => {
 
       {/* MOBILE LINK QUESTION */}
       <div>
-        <p className="mb-5 text-sm font-bold leading-7 text-[#172033]">
+        <p className="mb-3 text-sm font-semibold leading-6 text-[#172033]">
           Is your Aadhaar linked with a mobile number?
         </p>
 
-        <div className="grid grid-cols-2 gap-5">
+        <div className="grid grid-cols-2 gap-4">
           {/* YES */}
           <button
             type="button"
             onClick={() => setLinkedMobile("yes")}
-            className={`flex h-[48px] items-center justify-center gap-3 rounded-xl border-2 text-sm font-semibold transition ${
+            className={`flex h-[52px] items-center justify-center gap-2.5 rounded-xl border transition ${
               linkedMobile === "yes"
-                ? "border-[#315bd1] bg-[#f0f3ff] text-[#172033]"
-                : "border-[#d4d5da] bg-[#fafafd] text-[#172033]"
+                ? "border-[#315bd1] bg-[#f3f5ff] text-[#172033]"
+                : "border-[#dfe1e6] bg-[#fafbfd] text-[#172033] hover:border-[#bfc8e8]"
             }`}
           >
             {linkedMobile === "yes" ? (
@@ -122,17 +122,17 @@ const AadhaarStep = () => {
               />
             )}
 
-            Yes
+            <span className="text-sm font-semibold">Yes</span>
           </button>
 
           {/* NO */}
           <button
             type="button"
             onClick={() => setLinkedMobile("no")}
-            className={`flex h-[48px] items-center justify-center gap-3 rounded-xl border-2 text-sm font-semibold transition ${
+            className={`flex h-[52px] items-center justify-center gap-2.5 rounded-xl border transition ${
               linkedMobile === "no"
-                ? "border-[#315bd1] bg-[#f0f3ff] text-[#172033]"
-                : "border-[#d4d5da] bg-[#fafafd] text-[#172033]"
+                ? "border-[#315bd1] bg-[#f3f5ff] text-[#172033]"
+                : "border-[#dfe1e6] bg-[#fafbfd] text-[#172033] hover:border-[#bfc8e8]"
             }`}
           >
             {linkedMobile === "no" ? (
@@ -147,14 +147,14 @@ const AadhaarStep = () => {
               />
             )}
 
-            No
+            <span className="text-sm font-semibold">No</span>
           </button>
         </div>
       </div>
 
       {/* AADHAAR NUMBER */}
       <div>
-        <label className="mb-3 block text-sm font-bold text-[#172033]">
+        <label className="mb-2.5 block text-sm font-semibold text-[#172033]">
           Aadhaar Number
         </label>
 
@@ -171,7 +171,7 @@ const AadhaarStep = () => {
             onChange={handleAadhaarChange}
             placeholder="Enter Aadhaar number"
             maxLength={14}
-            className="h-[48px] w-full rounded-xl border-2 border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-6 text-sm font-medium tracking-wide text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#315bd1]"
+            className="h-[52px] w-full rounded-xl border border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-5 text-sm font-medium tracking-wide text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-2 focus:ring-[#315bd1]/10"
           />
         </div>
       </div>
@@ -180,21 +180,28 @@ const AadhaarStep = () => {
       <button
         type="button"
         onClick={() => aadhaarInputRef.current?.click()}
-        className="flex w-full items-center gap-6 rounded-xl border-2 border-[#c9c9ce] bg-[#fafafd] px-4 py-3 text-left transition hover:border-[#315bd1]"
+        className="group flex w-full items-center gap-4 rounded-xl border border-[#dfe1e6] bg-[#fafbfd] px-4 py-3.5 text-left transition hover:border-[#315bd1] hover:bg-[#f7f9ff]"
       >
-        <div className="flex h-[48px] w-[86px] shrink-0 items-center justify-center rounded-xl bg-[#e8ecfc]">
-          <FileText
-            className="h-5 w-5 text-[#315bd1]"
-            strokeWidth={2}
-          />
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#eef1ff]">
+          {aadhaarFile ? (
+            <CheckCircle2
+              className="h-5 w-5 text-[#08ae82]"
+              strokeWidth={2}
+            />
+          ) : (
+            <FileText
+              className="h-5 w-5 text-[#315bd1]"
+              strokeWidth={2}
+            />
+          )}
         </div>
 
         <div className="min-w-0 flex-1">
-          <h3 className="text-sm font-semibold font-bold text-[#172033]">
+          <h3 className="text-sm font-bold text-[#172033]">
             Aadhaar Document
           </h3>
 
-          <p className="mt-2 text-sm leading-6 text-[#9aa1af]">
+          <p className="mt-1 truncate text-sm text-[#8992a3]">
             {aadhaarFile
               ? aadhaarFile.name
               : "Upload Aadhaar front and back images."}
@@ -202,8 +209,8 @@ const AadhaarStep = () => {
         </div>
 
         <Upload
-          className="h-5 w-5 shrink-0 text-[#315bd1]"
-          strokeWidth={2.4}
+          className="h-5 w-5 shrink-0 text-[#315bd1] transition group-hover:scale-105"
+          strokeWidth={2.3}
         />
       </button>
 
@@ -217,13 +224,15 @@ const AadhaarStep = () => {
       />
 
       {/* SECURITY INFORMATION */}
-      <div className="flex items-start gap-3 rounded-xl border border-[#d9e0f5] bg-[#eef1ff] px-4 py-3">
-        <ShieldCheck
-          className="mt-1 h-5 w-5 shrink-0 text-[#315bd1]"
-          strokeWidth={2}
-        />
+      <div className="flex items-start gap-3 rounded-xl border border-[#d9e0f5] bg-[#f1f4ff] px-4 py-3.5">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#e4e9ff]">
+          <ShieldCheck
+            className="h-5 w-5 text-[#315bd1]"
+            strokeWidth={2}
+          />
+        </div>
 
-        <p className="text-sm leading-7 text-[#3f4759]">
+        <p className="text-sm leading-6 text-[#596275]">
           Sensitive Aadhaar information is securely
           <br />
           handled and masked where appropriate.
@@ -234,8 +243,3 @@ const AadhaarStep = () => {
 };
 
 export default AadhaarStep;
-
-
-
-
-

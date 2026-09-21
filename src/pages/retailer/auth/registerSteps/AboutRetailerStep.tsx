@@ -6,6 +6,7 @@ import {
   Heart,
   GraduationCap,
   Check,
+  ChevronDown,
 } from "lucide-react";
 
 const AboutRetailerStep = () => {
@@ -28,32 +29,48 @@ const AboutRetailerStep = () => {
   };
 
   return (
-    <div className="space-y-5">
-      {/* Full Name */}
+    <div className="space-y-6">
+      {/* =====================================================
+          FULL NAME
+      ===================================================== */}
+
       <div>
-        <label className="mb-2 block text-sm font-medium text-gray-700">
+        <label
+          htmlFor="retailer-full-name"
+          className="mb-2.5 block text-[14px] font-semibold text-[#172033]"
+        >
           Full Name
         </label>
 
         <div className="relative">
           <UserRound
-            size={20}
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+            className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[#8992a3]"
+            strokeWidth={2}
           />
 
           <input
+            id="retailer-full-name"
             type="text"
             value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
+            onChange={(event) =>
+              setFullName(event.target.value)
+            }
             placeholder="Enter your full name"
-            className="h-12 w-full rounded-xl border border-gray-200 bg-white pl-12 pr-4 text-sm text-gray-700 outline-none transition focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/10"
+            className={`h-[54px] w-full rounded-xl border bg-[#fafbfd] pl-12 pr-5 text-[14px] font-medium text-[#172033] outline-none transition-all placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-4 focus:ring-[#315bd1]/10 ${
+              fullName
+                ? "border-[#315bd1]"
+                : "border-[#dfe3e9]"
+            }`}
           />
         </div>
       </div>
 
-      {/* Selfie */}
+      {/* =====================================================
+          SELFIE
+      ===================================================== */}
+
       <div>
-        <label className="mb-2 block text-sm font-medium text-gray-700">
+        <label className="mb-2.5 block text-[14px] font-semibold text-[#172033]">
           Selfie
         </label>
 
@@ -67,21 +84,46 @@ const AboutRetailerStep = () => {
 
         <button
           type="button"
-          onClick={() => selfieInputRef.current?.click()}
-          className="flex h-32 w-full flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 transition hover:border-[#2563EB] hover:bg-blue-50"
+          onClick={() =>
+            selfieInputRef.current?.click()
+          }
+          className={`flex min-h-[150px] w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed px-5 text-center transition-all ${
+            selfie
+              ? "border-[#b9e8d4] bg-[#f3fcf8]"
+              : "border-[#dfe3e9] bg-[#fafbfd] hover:border-[#315bd1] hover:bg-[#f3f6ff]"
+          }`}
         >
           {selfie ? (
-            <div className="flex items-center gap-2 text-sm font-medium text-green-600">
-              <Check size={20} />
-              {selfie.name}
-            </div>
+            <>
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#e2f7ef]">
+                <Check
+                  className="h-6 w-6 text-[#08a77e]"
+                  strokeWidth={2.5}
+                />
+              </div>
+
+              <span className="mt-3 max-w-full truncate px-4 text-[14px] font-semibold text-[#087b5d]">
+                {selfie.name}
+              </span>
+
+              <span className="mt-1 text-[12px] text-[#6d8078]">
+                Selfie uploaded successfully
+              </span>
+            </>
           ) : (
             <>
-              <Camera size={28} className="mb-2 text-gray-400" />
-              <span className="text-sm font-medium text-gray-600">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#edf1fc]">
+                <Camera
+                  className="h-6 w-6 text-[#315bd1]"
+                  strokeWidth={2}
+                />
+              </div>
+
+              <span className="mt-3 text-[14px] font-semibold text-[#172033]">
                 Upload Selfie
               </span>
-              <span className="mt-1 text-xs text-gray-400">
+
+              <span className="mt-1 text-[12px] text-[#8992a3]">
                 Click to select an image
               </span>
             </>
@@ -89,21 +131,31 @@ const AboutRetailerStep = () => {
         </button>
       </div>
 
-      {/* Gender */}
+      {/* =====================================================
+          GENDER
+      ===================================================== */}
+
       <SelectField
         label="Gender"
         value={gender}
         onChange={setGender}
-        icon={<UsersRound size={20} />}
-        options={["Male", "Female", "Other"]}
+        icon={<UsersRound />}
+        options={[
+          "Male",
+          "Female",
+          "Other",
+        ]}
       />
 
-      {/* Marital Status */}
+      {/* =====================================================
+          MARITAL STATUS
+      ===================================================== */}
+
       <SelectField
         label="Marital Status"
         value={maritalStatus}
         onChange={setMaritalStatus}
-        icon={<Heart size={20} />}
+        icon={<Heart />}
         options={[
           "Single",
           "Married",
@@ -113,12 +165,15 @@ const AboutRetailerStep = () => {
         ]}
       />
 
-      {/* Educational Qualification */}
+      {/* =====================================================
+          EDUCATIONAL QUALIFICATION
+      ===================================================== */}
+
       <SelectField
         label="Educational Qualification"
         value={education}
         onChange={setEducation}
-        icon={<GraduationCap size={20} />}
+        icon={<GraduationCap />}
         options={[
           "10th",
           "12th",
@@ -131,6 +186,10 @@ const AboutRetailerStep = () => {
     </div>
   );
 };
+
+/* ============================================================
+   SELECT FIELD
+============================================================ */
 
 interface SelectFieldProps {
   label: string;
@@ -149,43 +208,44 @@ const SelectField = ({
 }: SelectFieldProps) => {
   return (
     <div>
-      <label className="mb-2 block text-sm font-medium text-gray-700">
+      <label className="mb-2.5 block text-[14px] font-semibold text-[#172033]">
         {label}
       </label>
 
       <div className="relative">
-        <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+        <div className="pointer-events-none absolute left-4 top-1/2 z-10 -translate-y-1/2 text-[#8992a3] [&>svg]:h-5 [&>svg]:w-5">
           {icon}
         </div>
 
         <select
           value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="h-12 w-full appearance-none rounded-xl border border-gray-200 bg-white pl-12 pr-10 text-sm text-gray-700 outline-none transition focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/10"
+          onChange={(event) =>
+            onChange(event.target.value)
+          }
+          className={`h-[54px] w-full appearance-none rounded-xl border bg-[#fafbfd] pl-12 pr-11 text-[14px] font-medium text-[#172033] outline-none transition-all focus:border-[#315bd1] focus:bg-white focus:ring-4 focus:ring-[#315bd1]/10 ${
+            value
+              ? "border-[#315bd1]"
+              : "border-[#dfe3e9]"
+          }`}
         >
-          <option value="">Select {label}</option>
+          <option value="">
+            Select {label}
+          </option>
 
           {options.map((option) => (
-            <option key={option} value={option}>
+            <option
+              key={option}
+              value={option}
+            >
               {option}
             </option>
           ))}
         </select>
 
-        <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="m6 9 6 6 6-6" />
-          </svg>
-        </div>
+        <ChevronDown
+          className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#697386]"
+          strokeWidth={2}
+        />
       </div>
     </div>
   );

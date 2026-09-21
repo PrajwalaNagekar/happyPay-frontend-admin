@@ -19,7 +19,7 @@ export default function TransactionSummary({
 }: TransactionSummaryProps) {
   return (
     <div
-      className={`rounded-2xl border border-slate-200 bg-white p-5 shadow-sm ${className}`}
+      className={`hp-card rounded-[22px] p-5 ${className}`}
     >
       {title && (
         <h3 className="mb-4 text-base font-semibold text-slate-900">

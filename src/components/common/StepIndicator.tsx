@@ -28,9 +28,9 @@ export default function StepIndicator({
             >
               <div className="flex flex-col items-center">
                 <div
-                  className={`flex h-9 w-9 items-center justify-center rounded-full text-sm font-semibold transition ${
+                  className={`flex h-9 w-9 items-center justify-center rounded-full text-sm font-semibold shadow-sm transition ${
                     isCompleted || isActive
-                      ? "bg-[#315bd1] text-white"
+                      ? "hp-brand text-white"
                       : "bg-slate-100 text-slate-400"
                   }`}
                 >

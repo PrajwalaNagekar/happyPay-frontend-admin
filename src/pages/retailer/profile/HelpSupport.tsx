@@ -410,13 +410,13 @@ const HelpSupport = () => {
   };
 
   return (
-    <div className="bg-[#f5f7fb]">
+    <div>
 
       {/* ======================================================
           PAGE HEADER
       ====================================================== */}
 
-      <header className="border-b border-[#edf0f4] bg-white">
+      <header className="mb-3 rounded-2xl border border-white/80 bg-white/90 px-4 py-3 shadow-[0_8px_24px_-18px_rgba(15,23,42,0.4)] backdrop-blur-md">
         <div className="mx-auto flex w-full max-w-4xl items-center justify-between px-4 py-4 sm:px-5">
 
           <div className="flex items-center gap-3">
@@ -739,7 +739,7 @@ const HelpSupport = () => {
         >
 
           <div
-            className="w-full max-w-2xl overflow-hidden rounded-t-[30px] bg-white shadow-2xl sm:max-h-[calc(100vh-32px)] sm:rounded-[28px]"
+            className="w-full max-w-2xl overflow-hidden rounded-t-[30px] bg-white shadow-2xl sm:max-h-[calc(100vh-32px)] sm:rounded-[22px]"
             role="dialog"
             aria-modal="true"
             aria-label="Raise Support Ticket"

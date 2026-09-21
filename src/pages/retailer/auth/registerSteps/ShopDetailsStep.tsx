@@ -54,23 +54,27 @@ const ShopDetailsStep = () => {
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       {/* =====================================================
           EMAIL ID
       ===================================================== */}
 
       <div>
-        <label className="mb-1.5 block text-sm font-semibold text-[#172033]">
+        <label
+          htmlFor="shop-email"
+          className="mb-2.5 block text-[14px] font-semibold text-[#172033]"
+        >
           Email ID
         </label>
 
         <div className="relative">
           <Mail
-            className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#8992a3]"
+            className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[#8992a3]"
             strokeWidth={2}
           />
 
           <input
+            id="shop-email"
             type="email"
             value={email}
             onChange={(event) => {
@@ -78,7 +82,11 @@ const ShopDetailsStep = () => {
               setEmailOtpSent(false);
             }}
             placeholder="Enter email address"
-            className="h-11 w-full rounded-xl border border-slate-200 bg-white pl-11 pr-6 text-sm font-medium text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:ring-2 focus:ring-[#315bd1]/10"
+            className={`h-[54px] w-full rounded-xl border bg-[#fafbfd] pl-12 pr-5 text-[14px] font-medium text-[#172033] outline-none transition-all placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-4 focus:ring-[#315bd1]/10 ${
+              email
+                ? "border-[#315bd1]"
+                : "border-[#dfe3e9]"
+            }`}
           />
         </div>
       </div>
@@ -90,20 +98,26 @@ const ShopDetailsStep = () => {
       <button
         type="button"
         onClick={handleSendEmailOtp}
-        className={`flex h-[44px] w-full items-center justify-center gap-4 rounded-xl border-2 bg-white text-sm font-bold transition ${
+        className={`flex h-[52px] w-full items-center justify-center gap-3 rounded-xl border text-[14px] font-semibold transition-all ${
           emailOtpSent
-            ? "border-[#b9e8d4] text-[#08a77e]"
-            : "border-[#c7d2ee] text-[#315bd1] hover:bg-[#f3f6ff]"
+            ? "border-[#b9e8d4] bg-[#f3fcf8] text-[#08a77e]"
+            : "border-[#c7d2ee] bg-white text-[#315bd1] shadow-sm hover:border-[#315bd1] hover:bg-[#f3f6ff]"
         }`}
       >
         {emailOtpSent ? (
           <>
-            <CheckCircle2 className="h-8 w-8" />
+            <CheckCircle2
+              className="h-5 w-5"
+              strokeWidth={2.2}
+            />
             EMAIL OTP SENT
           </>
         ) : (
           <>
-            <Mail className="h-8 w-8" />
+            <Mail
+              className="h-5 w-5"
+              strokeWidth={2}
+            />
             VERIFY EMAIL OTP
           </>
         )}
@@ -114,24 +128,32 @@ const ShopDetailsStep = () => {
       ===================================================== */}
 
       <div>
-        <label className="mb-1.5 block text-sm font-semibold text-[#172033]">
+        <label
+          htmlFor="shop-name"
+          className="mb-2.5 block text-[14px] font-semibold text-[#172033]"
+        >
           Shop Name
         </label>
 
         <div className="relative">
           <Store
-            className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#8992a3]"
+            className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[#8992a3]"
             strokeWidth={2}
           />
 
           <input
+            id="shop-name"
             type="text"
             value={shopName}
             onChange={(event) =>
               setShopName(event.target.value)
             }
             placeholder="Enter shop name"
-            className="h-11 w-full rounded-xl border border-slate-200 bg-white pl-11 pr-6 text-sm font-medium text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:ring-2 focus:ring-[#315bd1]/10"
+            className={`h-[54px] w-full rounded-xl border bg-[#fafbfd] pl-12 pr-5 text-[14px] font-medium text-[#172033] outline-none transition-all placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-4 focus:ring-[#315bd1]/10 ${
+              shopName
+                ? "border-[#315bd1]"
+                : "border-[#dfe3e9]"
+            }`}
           />
         </div>
       </div>
@@ -165,24 +187,32 @@ const ShopDetailsStep = () => {
       ===================================================== */}
 
       <div>
-        <label className="mb-1.5 block text-sm font-semibold text-[#172033]">
+        <label
+          htmlFor="shop-address"
+          className="mb-2.5 block text-[14px] font-semibold text-[#172033]"
+        >
           Complete Shop Address
         </label>
 
         <div className="relative">
           <MapPin
-            className="pointer-events-none absolute left-3 top-4 h-4 w-4 text-[#8992a3]"
+            className="pointer-events-none absolute left-4 top-4 h-5 w-5 text-[#8992a3]"
             strokeWidth={2}
           />
 
           <textarea
+            id="shop-address"
             value={address}
             onChange={(event) =>
               setAddress(event.target.value)
             }
             rows={4}
             placeholder="Enter complete shop address"
-            className="min-h-[80px] w-full resize-none rounded-xl border-2 border-[#dfe1e6] bg-[#fafbfd] px-4 py-3 pl-11 text-sm leading-7 text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:ring-2 focus:ring-[#315bd1]/10"
+            className={`min-h-[108px] w-full resize-none rounded-xl border bg-[#fafbfd] px-5 py-3 pl-12 text-[14px] leading-6 text-[#172033] outline-none transition-all placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-4 focus:ring-[#315bd1]/10 ${
+              address
+                ? "border-[#315bd1]"
+                : "border-[#dfe3e9]"
+            }`}
           />
         </div>
       </div>
@@ -192,47 +222,47 @@ const ShopDetailsStep = () => {
       ===================================================== */}
 
       <div>
-        <label className="mb-1.5 block text-sm font-semibold text-[#172033]">
+        <label className="mb-2.5 block text-[14px] font-semibold text-[#172033]">
           Shop Location
         </label>
 
         <button
           type="button"
           onClick={handleLocation}
-          className={`flex w-full items-center gap-3 rounded-xl border-2 p-6 text-left transition ${
+          className={`flex w-full items-center gap-4 rounded-2xl border-2 p-5 text-left transition-all ${
             locationAdded
               ? "border-[#b9e8d4] bg-[#f3fcf8]"
-              : "border-[#d0d2d7] bg-[#fafbfd] hover:border-[#315bd1]"
+              : "border-[#dfe3e9] bg-[#fafbfd] hover:border-[#315bd1] hover:bg-white"
           }`}
         >
           <div
-            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ${
+            className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${
               locationAdded
                 ? "bg-[#e4f7f1]"
-                : "bg-[#e8edff]"
+                : "bg-[#edf1fc]"
             }`}
           >
             {locationAdded ? (
               <CheckCircle2
-                className="h-9 w-9 text-[#08a77e]"
-                strokeWidth={2}
+                className="h-6 w-6 text-[#08a77e]"
+                strokeWidth={2.2}
               />
             ) : (
               <MapPin
-                className="h-9 w-9 text-[#315bd1]"
+                className="h-6 w-6 text-[#315bd1]"
                 strokeWidth={2}
               />
             )}
           </div>
 
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-bold text-[#172033]">
+            <p className="text-[14px] font-bold text-[#172033]">
               {locationAdded
                 ? "Shop Location Added"
                 : "Pin your shop location"}
             </p>
 
-            <p className="mt-1.5 text-sm leading-6 text-[#939baa]">
+            <p className="mt-1 text-[12px] leading-5 text-[#8992a3]">
               {locationAdded
                 ? "Your shop location has been selected."
                 : "Pin your shop location on the map"}
@@ -240,7 +270,7 @@ const ShopDetailsStep = () => {
           </div>
 
           <ChevronRight
-            className={`h-8 w-8 shrink-0 ${
+            className={`h-5 w-5 shrink-0 ${
               locationAdded
                 ? "text-[#08a77e]"
                 : "text-[#315bd1]"
@@ -263,15 +293,16 @@ const ShopDetailsStep = () => {
           LOCATION INFO
       ===================================================== */}
 
-      <div className="flex items-start gap-3 rounded-xl border border-[#d9e0f5] bg-[#eef1ff] px-4 py-3">
-        <Navigation
-          className="mt-1 h-8 w-8 shrink-0 text-[#315bd1]"
-          strokeWidth={2}
-        />
+      <div className="flex items-start gap-3 rounded-2xl border border-[#d9e0f5] bg-[#f3f6ff] px-4 py-4">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white">
+          <Navigation
+            className="h-4.5 w-4.5 text-[#315bd1]"
+            strokeWidth={2}
+          />
+        </div>
 
-        <p className="text-sm leading-7 text-[#4a5263]">
+        <p className="text-[12px] leading-5 text-[#596274]">
           Make sure the shop location matches your
-          <br />
           registered business address.
         </p>
       </div>
@@ -298,14 +329,14 @@ const SelectField = ({
 }) => {
   return (
     <div>
-      <label className="mb-1.5 block text-sm font-semibold text-[#172033]">
+      <label className="mb-2.5 block text-[14px] font-semibold text-[#172033]">
         {label}
       </label>
 
       <div className="relative">
         {/* ICON */}
 
-        <span className="pointer-events-none absolute left-3.5 top-1/2 z-10 -translate-y-1/2 text-slate-400 [&>svg]:h-4 [&>svg]:w-4">
+        <span className="pointer-events-none absolute left-4 top-1/2 z-10 -translate-y-1/2 text-[#8992a3] [&>svg]:h-5 [&>svg]:w-5">
           {icon}
         </span>
 
@@ -316,7 +347,11 @@ const SelectField = ({
           onChange={(event) =>
             onChange(event.target.value)
           }
-          className={`h-11 w-full appearance-none rounded-xl border border-slate-200 bg-white pl-11 pr-8 text-sm text-[#172033] outline-none transition focus:border-[#315bd1] focus:ring-2 focus:ring-[#315bd1]/10`}
+          className={`h-[54px] w-full appearance-none rounded-xl border bg-[#fafbfd] pl-12 pr-11 text-[14px] font-medium text-[#172033] outline-none transition-all focus:border-[#315bd1] focus:bg-white focus:ring-4 focus:ring-[#315bd1]/10 ${
+            value
+              ? "border-[#315bd1]"
+              : "border-[#dfe3e9]"
+          }`}
         >
           <option value="" disabled>
             Select {label.toLowerCase()}
@@ -335,7 +370,7 @@ const SelectField = ({
         {/* ARROW */}
 
         <svg
-          className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#697386]"
+          className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#697386]"
           viewBox="0 0 24 24"
           fill="none"
         >
@@ -353,9 +388,3 @@ const SelectField = ({
 };
 
 export default ShopDetailsStep;
-
-
-
-
-
-

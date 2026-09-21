@@ -233,7 +233,7 @@ export default function ShopInformation() {
   };
 
   return (
-    <div className="bg-[#f5f7fb] px-4 pb-8 sm:px-5">
+    <div className="px-1 pb-6">
       {/* ========================================================
           HIDDEN FILE INPUT
       ======================================================== */}
@@ -251,7 +251,7 @@ export default function ShopInformation() {
             HEADER
         ====================================================== */}
 
-        <header className="flex items-center justify-between bg-[#f5f7fb] py-4">
+        <header className="mb-2 flex items-center justify-between py-3">
           <button
             type="button"
             onClick={() =>
@@ -278,7 +278,7 @@ export default function ShopInformation() {
               SHOP HEADER CARD
           ==================================================== */}
 
-          <section className="rounded-[28px] border border-slate-300 bg-white p-5 shadow-sm sm:p-7">
+          <section className="rounded-[22px] border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
             <div className="flex items-center gap-4">
               <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#e8f1f5] text-[#315bd1]">
                 <Store size={30} />
@@ -321,14 +321,14 @@ export default function ShopInformation() {
             </p>
           </section>
 
-          <section className="rounded-[28px] border border-slate-300 bg-white p-5 shadow-sm sm:p-7">
+          <section className="rounded-[22px] border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
             {/* SHOP NAME */}
 
             <label className="text-base font-bold text-[#172033]">
               Shop Name
             </label>
 
-            <div className="mt-3 flex min-h-12 items-center gap-4 rounded-2xl border border-slate-300 bg-[#fafbfc] px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
+            <div className="mt-3 flex min-h-12 items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
               <Store
                 size={27}
                 className="shrink-0 text-slate-400"
@@ -366,10 +366,10 @@ export default function ShopInformation() {
                   setShowPropertyDropdown(false);
                   setShowProofDropdown(false);
                 }}
-                className={`flex min-h-12 w-full items-center gap-4 rounded-2xl border bg-[#fafbfc] px-5 text-left ${
+                className={`flex min-h-12 w-full items-center gap-4 rounded-2xl border bg-slate-50/80 px-5 text-left ${
                   showCategoryDropdown
                     ? "border-[#315bd1] ring-1 ring-[#315bd1]"
-                    : "border-slate-300"
+                    : "border-slate-200"
                 }`}
               >
                 <Shapes
@@ -439,10 +439,10 @@ export default function ShopInformation() {
                   setShowCategoryDropdown(false);
                   setShowProofDropdown(false);
                 }}
-                className={`flex min-h-12 w-full items-center gap-4 rounded-2xl border bg-[#fafbfc] px-5 text-left ${
+                className={`flex min-h-12 w-full items-center gap-4 rounded-2xl border bg-slate-50/80 px-5 text-left ${
                   showPropertyDropdown
                     ? "border-[#315bd1] ring-1 ring-[#315bd1]"
-                    : "border-slate-300"
+                    : "border-slate-200"
                 }`}
               >
                 <Building2
@@ -507,7 +507,7 @@ export default function ShopInformation() {
             </p>
           </section>
 
-          <section className="rounded-[28px] border border-slate-300 bg-white p-5 shadow-sm sm:p-7">
+          <section className="rounded-[22px] border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
             {/* EMAIL */}
 
             <div className="flex items-center justify-between gap-3">
@@ -525,7 +525,7 @@ export default function ShopInformation() {
               </span>
             </div>
 
-            <div className="mt-3 flex min-h-12 items-center gap-4 rounded-2xl border border-slate-300 bg-[#fafbfc] px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
+            <div className="mt-3 flex min-h-12 items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
               <Mail
                 size={27}
                 className="shrink-0 text-slate-400"
@@ -560,7 +560,7 @@ export default function ShopInformation() {
               </span>
             </div>
 
-            <div className="mt-3 flex min-h-12 items-center gap-4 rounded-2xl border border-slate-300 bg-[#fafbfc] px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
+            <div className="mt-3 flex min-h-12 items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
               <Phone
                 size={27}
                 className="shrink-0 text-slate-400"
@@ -600,14 +600,14 @@ export default function ShopInformation() {
             </p>
           </section>
 
-          <section className="rounded-[28px] border border-slate-300 bg-white p-5 shadow-sm sm:p-7">
+          <section className="rounded-[22px] border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
             {/* ADDRESS */}
 
             <label className="text-base font-bold text-[#172033]">
               Complete Shop Address
             </label>
 
-            <div className="mt-3 flex min-h-14 items-start gap-4 rounded-2xl border border-slate-300 bg-[#fafbfc] px-5 py-4 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
+            <div className="mt-3 flex min-h-14 items-start gap-4 rounded-2xl border border-slate-200 bg-slate-50/80 px-5 py-4 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
               <MapPin
                 size={28}
                 className="mt-1 shrink-0 text-slate-400"
@@ -635,7 +635,7 @@ export default function ShopInformation() {
                   Pincode
                 </label>
 
-                <div className="mt-3 flex min-h-12 items-center rounded-2xl border border-slate-300 bg-[#fafbfc] px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
+                <div className="mt-3 flex min-h-12 items-center rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
                   <input
                     type="text"
                     value={pincode}
@@ -662,7 +662,7 @@ export default function ShopInformation() {
                   City
                 </label>
 
-                <div className="mt-3 flex min-h-12 items-center rounded-2xl border border-slate-300 bg-[#fafbfc] px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
+                <div className="mt-3 flex min-h-12 items-center rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
                   <input
                     type="text"
                     value={city}
@@ -683,7 +683,7 @@ export default function ShopInformation() {
                   State
                 </label>
 
-                <div className="mt-3 flex min-h-12 items-center rounded-2xl border border-slate-300 bg-[#fafbfc] px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
+                <div className="mt-3 flex min-h-12 items-center rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
                   <input
                     type="text"
                     value={state}
@@ -739,7 +739,7 @@ export default function ShopInformation() {
             </p>
           </section>
 
-          <section className="rounded-[28px] border border-slate-300 bg-white p-5 shadow-sm sm:p-7">
+          <section className="rounded-[22px] border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
             <div className="space-y-5">
               {[
                 "Inside Shop",
@@ -748,7 +748,7 @@ export default function ShopInformation() {
               ].map((label) => (
                 <div
                   key={label}
-                  className="flex items-center gap-4 rounded-2xl border border-slate-300 bg-[#fafbfc] p-4"
+                  className="flex items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50/80 p-4"
                 >
                   <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-500">
                     <CheckCircle2
@@ -797,7 +797,7 @@ export default function ShopInformation() {
             </p>
           </section>
 
-          <section className="rounded-[28px] border border-slate-300 bg-white p-5 shadow-sm sm:p-7">
+          <section className="rounded-[22px] border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
             {/* PROOF TYPE */}
 
             <label className="text-base font-bold text-[#172033]">
@@ -818,10 +818,10 @@ export default function ShopInformation() {
                   setShowCategoryDropdown(false);
                   setShowPropertyDropdown(false);
                 }}
-                className={`flex min-h-12 w-full items-center gap-4 rounded-2xl border bg-[#fafbfc] px-5 text-left ${
+                className={`flex min-h-12 w-full items-center gap-4 rounded-2xl border bg-slate-50/80 px-5 text-left ${
                   showProofDropdown
                     ? "border-[#315bd1] ring-1 ring-[#315bd1]"
-                    : "border-slate-300"
+                    : "border-slate-200"
                 }`}
               >
                 <FileCheck2
@@ -877,7 +877,7 @@ export default function ShopInformation() {
               GSTIN / Business Registration Number
             </label>
 
-            <div className="mt-3 flex min-h-12 items-center rounded-2xl border border-slate-300 bg-[#fafbfc] px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
+            <div className="mt-3 flex min-h-12 items-center rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
               <input
                 value={gstNumber}
                 onChange={(event) =>
@@ -893,7 +893,7 @@ export default function ShopInformation() {
 
             {/* BUSINESS PROOF FILE */}
 
-            <div className="mt-5 flex items-center gap-4 rounded-2xl border border-slate-300 bg-[#fafbfc] p-4">
+            <div className="mt-5 flex items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50/80 p-4">
               <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-500">
                 <FileText size={30} />
               </div>

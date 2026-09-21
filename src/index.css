@@ -1,4 +1,111 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap");
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --color-hp-ink: #0f172a;
+  --color-hp-muted: #64748b;
+  --color-hp-line: #e6eaf2;
+  --color-hp-canvas: #eef1f7;
+  --color-hp-primary: #315bd1;
+  --color-hp-teal: #10a88a;
+}
+
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  background: #e8ecf4;
+  color: #0f172a;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.hp-canvas {
+  background:
+    radial-gradient(1100px 480px at -8% -12%, rgba(49, 91, 209, 0.12), transparent 58%),
+    radial-gradient(900px 420px at 108% -8%, rgba(16, 168, 138, 0.1), transparent 52%),
+    linear-gradient(180deg, #f4f6fb 0%, #e8ecf4 100%);
+}
+
+.hp-card {
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  background: #ffffff;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 12px 32px -20px rgba(15, 23, 42, 0.22);
+}
+
+.hp-brand {
+  background: linear-gradient(135deg, #3156d9 0%, #218bbd 52%, #10a88a 100%);
+}
+
+.hp-page {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 72rem;
+}
+
+.hp-page-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 3.5rem;
+  padding: 0.75rem 1.1rem;
+  border-radius: 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 8px 24px -18px rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(12px);
+}
+
+.hp-back {
+  display: inline-flex;
+  height: 2.5rem;
+  width: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.85rem;
+  color: #334155;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.hp-back:hover {
+  background: #eef2ff;
+  color: #315bd1;
+}
+
+.hp-input {
+  width: 100%;
+  min-height: 3rem;
+  border-radius: 0.85rem;
+  border: 1px solid #e2e8f0;
+  background: rgba(248, 250, 252, 0.8);
+  padding: 0 1rem;
+  font-size: 0.875rem;
+  color: #0f172a;
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+}
+
+.hp-input:hover {
+  border-color: #cbd5e1;
+}
+
+.hp-input:focus {
+  background: #fff;
+  border-color: #315bd1;
+  box-shadow: 0 0 0 4px rgba(49, 91, 209, 0.12);
+}
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 5px;
 }
@@ -8,14 +115,13 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #3478d4;
+  background: #c5cedd;
   border-radius: 9999px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #2563eb;
+  background: #315bd1;
 }
-
 
 @keyframes slideInRight {
   from {

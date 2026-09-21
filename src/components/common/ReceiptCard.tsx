@@ -46,7 +46,7 @@ export default function ReceiptCard({
 
   return (
     <div
-      className={`w-full rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6 ${className}`}
+      className={`hp-card w-full rounded-[22px] p-5 sm:p-6 ${className}`}
     >
       <div className="flex flex-col items-center text-center">
         <div

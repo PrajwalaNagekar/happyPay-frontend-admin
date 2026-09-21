@@ -19,19 +19,19 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const baseClasses =
-    "inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50";
+    "inline-flex items-center justify-center gap-2 rounded-xl font-semibold tracking-tight transition duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 active:scale-[0.99]";
 
   const variantClasses = {
     primary:
-      "bg-[#315bd1] text-white hover:opacity-90 focus:ring-[#315bd1]",
+      "hp-brand text-white shadow-[0_8px_18px_rgba(49,91,209,0.28)] hover:opacity-95 focus-visible:ring-[#315bd1]",
     secondary:
-      "bg-slate-100 text-slate-700 hover:bg-slate-200 focus:ring-slate-300",
+      "bg-slate-100 text-slate-700 hover:bg-slate-200 focus-visible:ring-slate-300",
     outline:
-      "border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 focus:ring-slate-300",
+      "border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 focus-visible:ring-slate-300",
     danger:
-      "bg-red-500 text-white hover:bg-red-600 focus:ring-red-400",
+      "bg-red-500 text-white hover:bg-red-600 focus-visible:ring-red-400",
     ghost:
-      "bg-transparent text-slate-600 hover:bg-slate-100 focus:ring-slate-300",
+      "bg-transparent text-slate-600 hover:bg-slate-100 focus-visible:ring-slate-300",
   };
 
   const sizeClasses = {
