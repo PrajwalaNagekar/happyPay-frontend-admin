@@ -22,9 +22,9 @@ export default function ErrorState({
 }: ErrorStateProps) {
   return (
     <div
-      className={`flex w-full flex-col items-center justify-center rounded-2xl border border-red-100 bg-white px-5 py-12 text-center shadow-[0_8px_24px_-20px_rgba(15,23,42,0.35)] ${className}`}
+      className={`flex w-full flex-col items-center justify-center rounded-2xl border border-purple-100 bg-white px-5 py-12 text-center shadow-[0_8px_24px_-20px_rgba(15,23,42,0.35)] ${className}`}
     >
-      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-red-50 text-red-500">
+      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-purple-50 text-purple-500">
         {icon || <AlertCircle size={28} />}
       </div>
 

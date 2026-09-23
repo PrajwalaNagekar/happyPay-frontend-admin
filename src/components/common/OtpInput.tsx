@@ -116,8 +116,8 @@ export default function OtpInput({
             aria-label={`OTP digit ${index + 1}`}
             className={`h-12 w-12 rounded-xl border bg-slate-50/80 text-center text-lg font-semibold text-slate-900 outline-none transition focus:bg-white focus:ring-4 sm:h-14 sm:w-14 ${
               error
-                ? "border-red-400 focus:border-red-500 focus:ring-red-100"
-                : "border-slate-200 focus:border-[#315bd1] focus:ring-[#315bd1]/20"
+                ? "border-purple-400 focus:border-purple-500 focus:ring-purple-100"
+                : "border-slate-200 focus:border-[#7c3aed] focus:ring-[#7c3aed]/20"
             } ${
               disabled
                 ? "cursor-not-allowed bg-slate-100 text-slate-400"
@@ -128,7 +128,7 @@ export default function OtpInput({
       </div>
 
       {error && (
-        <p className="mt-2 text-center text-sm text-red-500">
+        <p className="mt-2 text-center text-sm text-purple-500">
           {error}
         </p>
       )}
@@ -147,7 +147,7 @@ export default function OtpInput({
               type="button"
               onClick={onResend}
               disabled={disabled || resendDisabled}
-              className="text-sm font-semibold text-[#315bd1] transition hover:text-[#274dbd] disabled:cursor-not-allowed disabled:opacity-50"
+              className="text-sm font-semibold text-[#7c3aed] transition hover:text-[#6d28d9] disabled:cursor-not-allowed disabled:opacity-50"
             >
               Resend OTP
             </button>

@@ -137,9 +137,9 @@ const AccountStep = () => {
             placeholder="Enter PAN number"
             maxLength={10}
             autoComplete="off"
-            className={`h-[58px] w-full rounded-xl border bg-[#fafbfd] pl-11 pr-5 text-[15px] font-semibold uppercase tracking-[0.04em] text-[#172033] outline-none transition-all placeholder:normal-case placeholder:tracking-normal placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-4 focus:ring-[#315bd1]/10 ${
+            className={`h-[58px] w-full rounded-xl border bg-[#fafbfd] pl-11 pr-5 text-[15px] font-semibold uppercase tracking-[0.04em] text-[#172033] outline-none transition-all placeholder:normal-case placeholder:tracking-normal placeholder:text-[#a1a8b5] focus:border-[#7c3aed] focus:bg-white focus:ring-4 focus:ring-[#7c3aed]/10 ${
               pan
-                ? "border-[#315bd1]"
+                ? "border-[#7c3aed]"
                 : "border-[#dfe3e9]"
             }`}
           />
@@ -185,11 +185,11 @@ const AccountStep = () => {
             inputMode="numeric"
             autoComplete="tel"
             disabled={otpVerified}
-            className={`h-[58px] w-full rounded-xl border bg-[#fafbfd] pl-[82px] pr-12 text-[15px] font-medium text-[#172033] outline-none transition-all placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-4 focus:ring-[#315bd1]/10 ${
+            className={`h-[58px] w-full rounded-xl border bg-[#fafbfd] pl-[82px] pr-12 text-[15px] font-medium text-[#172033] outline-none transition-all placeholder:text-[#a1a8b5] focus:border-[#7c3aed] focus:bg-white focus:ring-4 focus:ring-[#7c3aed]/10 ${
               otpVerified
                 ? "border-[#b9e8d4] bg-[#f4fcf8]"
                 : mobile
-                  ? "border-[#315bd1]"
+                  ? "border-[#7c3aed]"
                   : "border-[#dfe3e9]"
             }`}
           />
@@ -211,7 +211,7 @@ const AccountStep = () => {
         <div className="flex items-start gap-4">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm">
             <ShieldCheck
-              className="h-5 w-5 text-[#315bd1]"
+              className="h-5 w-5 text-[#7c3aed]"
               strokeWidth={2}
             />
           </div>
@@ -252,7 +252,7 @@ const AccountStep = () => {
           disabled={mobile.length !== 10}
           className={`flex h-[54px] w-full items-center justify-center gap-2 rounded-xl border text-[14px] font-semibold transition-all ${
             mobile.length === 10
-              ? "border-[#c7d2ee] bg-white text-[#315bd1] shadow-sm hover:border-[#315bd1] hover:bg-[#f3f6ff]"
+              ? "border-[#c7d2ee] bg-white text-[#7c3aed] shadow-sm hover:border-[#7c3aed] hover:bg-[#f3f6ff]"
               : "cursor-not-allowed border-[#e0e3e8] bg-[#f7f8fa] text-[#a2a8b4]"
           }`}
         >
@@ -289,7 +289,7 @@ const AccountStep = () => {
                 setOtp("");
                 setError("");
               }}
-              className="shrink-0 rounded-lg px-2 py-1 text-[12px] font-semibold text-[#315bd1] transition hover:bg-[#eef2ff] hover:underline"
+              className="shrink-0 rounded-lg px-2 py-1 text-[12px] font-semibold text-[#7c3aed] transition hover:bg-[#f8f5ff] hover:underline"
             >
               Change
             </button>
@@ -303,7 +303,7 @@ const AccountStep = () => {
             maxLength={6}
             inputMode="numeric"
             autoComplete="one-time-code"
-            className="mt-4 h-[58px] w-full rounded-xl border border-[#dfe3e9] bg-white px-4 text-center text-[18px] font-bold tracking-[0.4em] text-[#172033] outline-none transition-all placeholder:text-[#a1a8b5] placeholder:tracking-normal focus:border-[#315bd1] focus:ring-4 focus:ring-[#315bd1]/10"
+            className="mt-4 h-[58px] w-full rounded-xl border border-[#dfe3e9] bg-white px-4 text-center text-[18px] font-bold tracking-[0.4em] text-[#172033] outline-none transition-all placeholder:text-[#a1a8b5] placeholder:tracking-normal focus:border-[#7c3aed] focus:ring-4 focus:ring-[#7c3aed]/10"
           />
 
           <p className="mt-3 text-center text-[11px] text-[#9aa1ae]">
@@ -346,7 +346,7 @@ const AccountStep = () => {
 
       <div className="flex items-center justify-center gap-2 pt-1 text-[11px] text-[#9aa1ae]">
         <ShieldCheck
-          className="h-3.5 w-3.5 text-[#315bd1]"
+          className="h-3.5 w-3.5 text-[#7c3aed]"
           strokeWidth={2}
         />
 

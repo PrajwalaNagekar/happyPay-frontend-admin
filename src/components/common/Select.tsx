@@ -47,7 +47,7 @@ export default function Select({
           {label}
 
           {required && (
-            <span className="ml-1 text-red-500" aria-hidden="true">
+            <span className="ml-1 text-purple-500" aria-hidden="true">
               *
             </span>
           )}
@@ -75,8 +75,8 @@ export default function Select({
             leftIcon ? "pl-10" : "px-3.5"
           } ${
             error
-              ? "border-red-400 focus:border-red-500 focus:ring-red-100"
-              : "border-slate-200 focus:border-[#315bd1] focus:ring-[#315bd1]/20"
+              ? "border-purple-400 focus:border-purple-500 focus:ring-purple-100"
+              : "border-slate-200 focus:border-[#7c3aed] focus:ring-[#7c3aed]/20"
           } ${fullWidth ? "w-full" : ""} ${className}`}
           {...props}
         >
@@ -111,7 +111,7 @@ export default function Select({
       {error ? (
         <p
           id={`${selectId}-error`}
-          className="mt-1.5 text-xs text-red-500"
+          className="mt-1.5 text-xs text-purple-500"
         >
           {error}
         </p>

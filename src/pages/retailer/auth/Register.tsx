@@ -183,7 +183,7 @@ const RetailerRegister = () => {
     ((currentStep + 1) / steps.length) * 100;
 
   return (
-    <div className="min-h-screen bg-[#eef2f7] px-3 py-3 text-slate-900 sm:px-5 sm:py-5">
+    <div className="min-h-screen bg-slate-50 px-3 py-3 text-slate-900 sm:px-5 sm:py-5">
 
       {/* ======================================================
           MAIN CARD
@@ -199,21 +199,21 @@ const RetailerRegister = () => {
                 LEFT REGISTRATION PANEL
             =================================================== */}
 
-            <aside className="relative hidden overflow-hidden bg-[#172033] lg:flex">
+            <aside className="relative hidden overflow-hidden bg-gradient-to-br from-[#315bd1] via-[#6366f1] to-[#7c3aed] lg:flex">
 
               {/* Decorative background */}
-              <div className="absolute -right-28 -top-24 h-[350px] w-[350px] rounded-full bg-[#315bd1]/20 blur-[80px]" />
+              <div className="absolute -right-28 -top-24 h-[350px] w-[350px] rounded-full bg-white/10 blur-[80px]" />
 
-              <div className="absolute -bottom-28 -left-24 h-[330px] w-[330px] rounded-full bg-[#08ae82]/10 blur-[90px]" />
+              <div className="absolute -bottom-28 -left-24 h-[330px] w-[330px] rounded-full bg-white/20 blur-[90px]" />
 
-              <div className="absolute inset-0 opacity-[0.025] [background-image:linear-gradient(rgba(255,255,255,1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,1)_1px,transparent_1px)] [background-size:40px_40px]" />
+              <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(rgba(255,255,255,1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,1)_1px,transparent_1px)] [background-size:40px_40px]" />
 
               <div className="relative flex w-full flex-col p-7 xl:p-8">
 
                 {/* BRAND */}
                 <div className="flex items-center gap-3">
 
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#315bd1] shadow-[0_8px_20px_rgba(49,91,209,0.3)]">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 shadow-lg backdrop-blur-md">
                     <span className="text-lg font-bold text-white">
                       H
                     </span>
@@ -276,10 +276,10 @@ const RetailerRegister = () => {
 
                   </div>
 
-                  <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-white/10">
+                  <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-white/20">
 
                     <div
-                      className="h-full rounded-full bg-gradient-to-r from-[#315bd1] to-[#08ae82] transition-all duration-500"
+                      className="h-full rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.5)] transition-all duration-500"
                       style={{
                         width: `${progress}%`,
                       }}
@@ -324,9 +324,9 @@ const RetailerRegister = () => {
                         <div
                           className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
                             isActive
-                              ? "bg-[#315bd1] text-white"
+                              ? "bg-white text-[#7c3aed] shadow-md"
                               : isCompleted
-                                ? "bg-[#315bd1]/15 text-[#8fa8ff]"
+                                ? "bg-white/20 text-white backdrop-blur-sm"
                                 : "bg-white/[0.06] text-white/35"
                           }`}
                         >
@@ -406,7 +406,7 @@ const RetailerRegister = () => {
 
                 <div className="flex items-center gap-2.5">
 
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#315bd1] shadow-[0_7px_16px_rgba(49,91,209,0.2)]">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#7c3aed] shadow-[0_7px_16px_rgba(49,91,209,0.2)]">
                     <span className="text-sm font-bold text-white">
                       H
                     </span>
@@ -426,9 +426,9 @@ const RetailerRegister = () => {
 
                 <div className="flex items-center gap-1.5 rounded-full bg-[#f2f5ff] px-2.5 py-1.5">
 
-                  <ShieldCheck className="h-3.5 w-3.5 text-[#315bd1]" />
+                  <ShieldCheck className="h-3.5 w-3.5 text-[#7c3aed]" />
 
-                  <span className="text-[9px] font-bold text-[#315bd1]">
+                  <span className="text-[9px] font-bold text-[#7c3aed]">
                     Secure
                   </span>
 
@@ -442,7 +442,7 @@ const RetailerRegister = () => {
                 <div className="flex items-center justify-between">
 
                   <div>
-                    <p className="text-[9px] font-bold uppercase tracking-[0.1em] text-[#315bd1]">
+                    <p className="text-[9px] font-bold uppercase tracking-[0.1em] text-[#7c3aed]">
                       Step {currentStep + 1} of {steps.length}
                     </p>
 
@@ -451,7 +451,7 @@ const RetailerRegister = () => {
                     </p>
                   </div>
 
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#eef2ff] text-[#315bd1]">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#f8f5ff] text-[#7c3aed]">
                     <CurrentStepIcon className="h-4 w-4" />
                   </div>
 
@@ -460,7 +460,7 @@ const RetailerRegister = () => {
                 <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-[#e9edf4]">
 
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-[#315bd1] to-[#08ae82] transition-all duration-500"
+                    className="h-full rounded-full bg-gradient-to-r from-[#7c3aed] to-[#08ae82] transition-all duration-500"
                     style={{
                       width: `${progress}%`,
                     }}
@@ -478,7 +478,7 @@ const RetailerRegister = () => {
 
                   <div className="flex min-w-0 items-start gap-3">
 
-                    <div className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#eef2ff] text-[#315bd1] sm:flex">
+                    <div className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f8f5ff] text-[#7c3aed] sm:flex">
 
                       <CurrentStepIcon className="h-5 w-5" />
 
@@ -486,7 +486,7 @@ const RetailerRegister = () => {
 
                     <div className="min-w-0">
 
-                      <p className="text-[9px] font-bold uppercase tracking-[0.13em] text-[#315bd1]">
+                      <p className="text-[9px] font-bold uppercase tracking-[0.13em] text-[#7c3aed]">
                         {steps[currentStep].title}
                       </p>
 
@@ -508,7 +508,7 @@ const RetailerRegister = () => {
                       Step
                     </p>
 
-                    <p className="mt-0.5 text-center text-sm font-bold text-[#315bd1]">
+                    <p className="mt-0.5 text-center text-sm font-bold text-[#7c3aed]">
                       {currentStep + 1}
                       <span className="mx-0.5 text-[#b4bac5]">
                         /
@@ -652,11 +652,11 @@ const RetailerRegister = () => {
                     <button
                       type="button"
                       onClick={nextStep}
-                      className={`flex h-11 items-center justify-center gap-2 rounded-xl px-6 text-[12px] font-bold text-white shadow-[0_8px_18px_rgba(49,91,209,0.18)] transition ${
+                      className={`flex h-11 items-center justify-center gap-2 rounded-xl px-6 text-[12px] font-bold text-white shadow-md transition ${
                         currentStep ===
                         steps.length - 1
-                          ? "bg-[#08ae82] hover:bg-[#079b74]"
-                          : "bg-[#315bd1] hover:bg-[#294fb8]"
+                          ? "bg-[#10a88a] hover:bg-[#0d8a70]"
+                          : "bg-gradient-to-r from-[#315bd1] to-[#7c3aed] hover:opacity-90"
                       }`}
                     >
 
@@ -683,7 +683,7 @@ const RetailerRegister = () => {
 
                   <div className="mt-4 flex items-center justify-center gap-2">
 
-                    <ShieldCheck className="h-3.5 w-3.5 text-[#315bd1]" />
+                    <ShieldCheck className="h-3.5 w-3.5 text-[#7c3aed]" />
 
                     <p className="text-[9px] text-[#9aa2b0]">
                       Secure retailer registration

@@ -82,9 +82,9 @@ const ShopDetailsStep = () => {
               setEmailOtpSent(false);
             }}
             placeholder="Enter email address"
-            className={`h-[54px] w-full rounded-xl border bg-[#fafbfd] pl-12 pr-5 text-[14px] font-medium text-[#172033] outline-none transition-all placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-4 focus:ring-[#315bd1]/10 ${
+            className={`h-[54px] w-full rounded-xl border bg-[#fafbfd] pl-12 pr-5 text-[14px] font-medium text-[#172033] outline-none transition-all placeholder:text-[#a1a8b5] focus:border-[#7c3aed] focus:bg-white focus:ring-4 focus:ring-[#7c3aed]/10 ${
               email
-                ? "border-[#315bd1]"
+                ? "border-[#7c3aed]"
                 : "border-[#dfe3e9]"
             }`}
           />
@@ -101,7 +101,7 @@ const ShopDetailsStep = () => {
         className={`flex h-[52px] w-full items-center justify-center gap-3 rounded-xl border text-[14px] font-semibold transition-all ${
           emailOtpSent
             ? "border-[#b9e8d4] bg-[#f3fcf8] text-[#08a77e]"
-            : "border-[#c7d2ee] bg-white text-[#315bd1] shadow-sm hover:border-[#315bd1] hover:bg-[#f3f6ff]"
+            : "border-[#c7d2ee] bg-white text-[#7c3aed] shadow-sm hover:border-[#7c3aed] hover:bg-[#f3f6ff]"
         }`}
       >
         {emailOtpSent ? (
@@ -149,9 +149,9 @@ const ShopDetailsStep = () => {
               setShopName(event.target.value)
             }
             placeholder="Enter shop name"
-            className={`h-[54px] w-full rounded-xl border bg-[#fafbfd] pl-12 pr-5 text-[14px] font-medium text-[#172033] outline-none transition-all placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-4 focus:ring-[#315bd1]/10 ${
+            className={`h-[54px] w-full rounded-xl border bg-[#fafbfd] pl-12 pr-5 text-[14px] font-medium text-[#172033] outline-none transition-all placeholder:text-[#a1a8b5] focus:border-[#7c3aed] focus:bg-white focus:ring-4 focus:ring-[#7c3aed]/10 ${
               shopName
-                ? "border-[#315bd1]"
+                ? "border-[#7c3aed]"
                 : "border-[#dfe3e9]"
             }`}
           />
@@ -208,9 +208,9 @@ const ShopDetailsStep = () => {
             }
             rows={4}
             placeholder="Enter complete shop address"
-            className={`min-h-[108px] w-full resize-none rounded-xl border bg-[#fafbfd] px-5 py-3 pl-12 text-[14px] leading-6 text-[#172033] outline-none transition-all placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-4 focus:ring-[#315bd1]/10 ${
+            className={`min-h-[108px] w-full resize-none rounded-xl border bg-[#fafbfd] px-5 py-3 pl-12 text-[14px] leading-6 text-[#172033] outline-none transition-all placeholder:text-[#a1a8b5] focus:border-[#7c3aed] focus:bg-white focus:ring-4 focus:ring-[#7c3aed]/10 ${
               address
-                ? "border-[#315bd1]"
+                ? "border-[#7c3aed]"
                 : "border-[#dfe3e9]"
             }`}
           />
@@ -232,7 +232,7 @@ const ShopDetailsStep = () => {
           className={`flex w-full items-center gap-4 rounded-2xl border-2 p-5 text-left transition-all ${
             locationAdded
               ? "border-[#b9e8d4] bg-[#f3fcf8]"
-              : "border-[#dfe3e9] bg-[#fafbfd] hover:border-[#315bd1] hover:bg-white"
+              : "border-[#dfe3e9] bg-[#fafbfd] hover:border-[#7c3aed] hover:bg-white"
           }`}
         >
           <div
@@ -249,7 +249,7 @@ const ShopDetailsStep = () => {
               />
             ) : (
               <MapPin
-                className="h-6 w-6 text-[#315bd1]"
+                className="h-6 w-6 text-[#7c3aed]"
                 strokeWidth={2}
               />
             )}
@@ -273,7 +273,7 @@ const ShopDetailsStep = () => {
             className={`h-5 w-5 shrink-0 ${
               locationAdded
                 ? "text-[#08a77e]"
-                : "text-[#315bd1]"
+                : "text-[#7c3aed]"
             }`}
             strokeWidth={2.3}
           />
@@ -296,7 +296,7 @@ const ShopDetailsStep = () => {
       <div className="flex items-start gap-3 rounded-2xl border border-[#d9e0f5] bg-[#f3f6ff] px-4 py-4">
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white">
           <Navigation
-            className="h-4.5 w-4.5 text-[#315bd1]"
+            className="h-4.5 w-4.5 text-[#7c3aed]"
             strokeWidth={2}
           />
         </div>
@@ -347,9 +347,9 @@ const SelectField = ({
           onChange={(event) =>
             onChange(event.target.value)
           }
-          className={`h-[54px] w-full appearance-none rounded-xl border bg-[#fafbfd] pl-12 pr-11 text-[14px] font-medium text-[#172033] outline-none transition-all focus:border-[#315bd1] focus:bg-white focus:ring-4 focus:ring-[#315bd1]/10 ${
+          className={`h-[54px] w-full appearance-none rounded-xl border bg-[#fafbfd] pl-12 pr-11 text-[14px] font-medium text-[#172033] outline-none transition-all focus:border-[#7c3aed] focus:bg-white focus:ring-4 focus:ring-[#7c3aed]/10 ${
             value
-              ? "border-[#315bd1]"
+              ? "border-[#7c3aed]"
               : "border-[#dfe3e9]"
           }`}
         >

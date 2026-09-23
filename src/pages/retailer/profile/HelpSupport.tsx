@@ -167,7 +167,7 @@ const SupportChannelCard = ({
     <button
       type="button"
       onClick={onClick}
-      className="w-full min-w-0 rounded-2xl border border-[#d4d6dc] bg-white p-5 text-left shadow-[0_1px_3px_rgba(23,32,51,0.03)] transition hover:border-[#315bd1]/40 hover:shadow-[0_3px_10px_rgba(23,32,51,0.06)]"
+      className="w-full min-w-0 rounded-2xl border border-[#d4d6dc] bg-white p-5 text-left shadow-[0_1px_3px_rgba(23,32,51,0.03)] transition hover:border-[#7c3aed]/40 hover:shadow-[0_3px_10px_rgba(23,32,51,0.06)]"
     >
       <div className="flex items-start justify-between gap-3">
         <div
@@ -242,12 +242,12 @@ const TicketCard = ({
     <button
       type="button"
       onClick={onClick}
-      className="group w-full rounded-2xl border border-[#d4d6dc] bg-white p-5 text-left shadow-[0_1px_3px_rgba(23,32,51,0.03)] transition hover:border-[#315bd1]/40 hover:shadow-[0_3px_10px_rgba(23,32,51,0.06)]"
+      className="group w-full rounded-2xl border border-[#d4d6dc] bg-white p-5 text-left shadow-[0_1px_3px_rgba(23,32,51,0.03)] transition hover:border-[#7c3aed]/40 hover:shadow-[0_3px_10px_rgba(23,32,51,0.06)]"
     >
       <div className="flex items-start gap-3">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <span className="text-base font-bold tracking-wide text-[#315bd1]">
+            <span className="text-base font-bold tracking-wide text-[#7c3aed]">
               {ticket.id}
             </span>
 
@@ -288,8 +288,8 @@ const FaqCategoryButton = ({
       onClick={onClick}
       className={`flex h-12 shrink-0 items-center justify-center gap-2 rounded-xl border px-5 text-sm font-semibold transition ${
         active
-          ? "border-[#dbe4fb] bg-[#e4ebfc] text-[#315bd1]"
-          : "border-[#cfd1d6] bg-white text-[#353942] hover:border-[#315bd1]/40"
+          ? "border-[#dbe4fb] bg-[#e4ebfc] text-[#7c3aed]"
+          : "border-[#cfd1d6] bg-white text-[#353942] hover:border-[#7c3aed]/40"
       }`}
     >
       {active && (
@@ -416,8 +416,8 @@ const HelpSupport = () => {
           PAGE HEADER
       ====================================================== */}
 
-      <header className="mb-3 rounded-2xl border border-white/80 bg-white/90 px-4 py-3 shadow-[0_8px_24px_-18px_rgba(15,23,42,0.4)] backdrop-blur-md">
-        <div className="mx-auto flex w-full max-w-4xl items-center justify-between px-4 py-4 sm:px-5">
+      <header className="mx-auto mb-4 w-full max-w-5xl rounded-2xl border border-white/80 bg-white/90 px-3 py-2 shadow-[0_8px_24px_-18px_rgba(15,23,42,0.4)] backdrop-blur-md">
+        <div className="flex min-h-14 items-center justify-between">
 
           <div className="flex items-center gap-3">
             <button
@@ -448,8 +448,8 @@ const HelpSupport = () => {
         </div>
       </header>
 
-      <main className="px-4 py-5 sm:px-5">
-        <div className="mx-auto w-full max-w-4xl space-y-6">
+      <main className="px-4 pb-6 sm:px-6">
+        <div className="mx-auto w-full max-w-5xl space-y-6">
 
           {/* ==================================================
               DIRECT SUPPORT CHANNELS
@@ -475,10 +475,10 @@ const HelpSupport = () => {
                   <Headphones className="h-5 w-5" />
                 }
                 iconBackground="#e8edfc"
-                iconColor="#315bd1"
+                iconColor="#7c3aed"
                 badge="Free 24x7"
                 badgeBackground="#eef2fc"
-                badgeColor="#315bd1"
+                badgeColor="#7c3aed"
                 title="Toll-Free Helpline"
                 value="1800 266 8484"
               />
@@ -590,7 +590,7 @@ const HelpSupport = () => {
                   setSearchQuery(event.target.value)
                 }
                 placeholder="Search queries, error codes or features..."
-                className="h-11 w-full rounded-xl border border-[#d6d9df] bg-white pl-16 pr-5 text-base text-[#172033] outline-none placeholder:text-[#9aa3b2] focus:border-[#315bd1] focus:ring-2 focus:ring-[#315bd1]/10"
+                className="h-11 w-full rounded-xl border border-[#d6d9df] bg-white pl-16 pr-5 text-base text-[#172033] outline-none placeholder:text-[#9aa3b2] focus:border-[#7c3aed] focus:ring-2 focus:ring-[#7c3aed]/10"
               />
 
             </div>
@@ -794,7 +794,7 @@ const HelpSupport = () => {
                         event.target.value,
                       )
                     }
-                    className="h-[104px] w-full appearance-none rounded-2xl border border-[#d6d9df] bg-[#f8f9fb] px-16 pr-14 text-base font-bold text-[#172033] outline-none focus:border-[#315bd1] focus:ring-2 focus:ring-[#315bd1]/10 sm:text-lg"
+                    className="h-[104px] w-full appearance-none rounded-2xl border border-[#d6d9df] bg-[#f8f9fb] px-16 pr-14 text-base font-bold text-[#172033] outline-none focus:border-[#7c3aed] focus:ring-2 focus:ring-[#7c3aed]/10 sm:text-lg"
                   >
                     <option>
                       AEPS / Aadhaar ATM
@@ -845,7 +845,7 @@ const HelpSupport = () => {
                       )
                     }
                     placeholder="e.g. HP-CMS-74829 or RRN number"
-                    className="h-[100px] w-full rounded-2xl border border-[#d6d9df] bg-[#f8f9fb] px-16 text-base text-[#172033] outline-none placeholder:text-[#a4aab5] focus:border-[#315bd1] focus:ring-2 focus:ring-[#315bd1]/10 sm:text-lg"
+                    className="h-[100px] w-full rounded-2xl border border-[#d6d9df] bg-[#f8f9fb] px-16 text-base text-[#172033] outline-none placeholder:text-[#a4aab5] focus:border-[#7c3aed] focus:ring-2 focus:ring-[#7c3aed]/10 sm:text-lg"
                   />
 
                 </div>
@@ -874,7 +874,7 @@ const HelpSupport = () => {
                       )
                     }
                     placeholder="Brief summary of the issue"
-                    className="h-[100px] w-full rounded-2xl border border-[#d6d9df] bg-[#f8f9fb] px-16 text-base text-[#172033] outline-none placeholder:text-[#a4aab5] focus:border-[#315bd1] focus:ring-2 focus:ring-[#315bd1]/10 sm:text-lg"
+                    className="h-[100px] w-full rounded-2xl border border-[#d6d9df] bg-[#f8f9fb] px-16 text-base text-[#172033] outline-none placeholder:text-[#a4aab5] focus:border-[#7c3aed] focus:ring-2 focus:ring-[#7c3aed]/10 sm:text-lg"
                   />
 
                 </div>
@@ -899,7 +899,7 @@ const HelpSupport = () => {
                   }
                   placeholder="Describe what occurred, customer details, or error message shown..."
                   rows={5}
-                  className="mt-3 w-full resize-none rounded-2xl border border-[#d6d9df] bg-[#f8f9fb] px-8 py-6 text-base leading-7 text-[#172033] outline-none placeholder:text-[#a4aab5] focus:border-[#315bd1] focus:ring-2 focus:ring-[#315bd1]/10 sm:text-lg"
+                  className="mt-3 w-full resize-none rounded-2xl border border-[#d6d9df] bg-[#f8f9fb] px-8 py-6 text-base leading-7 text-[#172033] outline-none placeholder:text-[#a4aab5] focus:border-[#7c3aed] focus:ring-2 focus:ring-[#7c3aed]/10 sm:text-lg"
                 />
 
               </div>
@@ -908,7 +908,7 @@ const HelpSupport = () => {
                   ATTACHMENT
               ================================================== */}
 
-              <label className="mt-6 flex min-h-[72px] cursor-pointer items-center gap-4 rounded-2xl border-2 border-[#d0d2d6] bg-white px-6 transition hover:border-[#315bd1]">
+              <label className="mt-6 flex min-h-[72px] cursor-pointer items-center gap-4 rounded-2xl border-2 border-[#d0d2d6] bg-white px-6 transition hover:border-[#7c3aed]">
 
                 <Paperclip className="h-7 w-7 shrink-0 text-[#505762]" />
 
@@ -940,7 +940,7 @@ const HelpSupport = () => {
               <button
                 type="button"
                 onClick={handleSubmitTicket}
-                className="mt-7 flex h-[80px] w-full items-center justify-center gap-4 rounded-2xl bg-[#315bd1] text-lg font-bold text-white shadow-[0_5px_12px_rgba(49,91,209,0.25)] transition hover:bg-[#274dbd] sm:h-[88px] sm:text-xl"
+                className="mt-7 flex h-[80px] w-full items-center justify-center gap-4 rounded-2xl bg-[#7c3aed] text-lg font-bold text-white shadow-[0_5px_12px_rgba(49,91,209,0.25)] transition hover:bg-[#274dbd] sm:h-[88px] sm:text-xl"
               >
                 <Send className="h-7 w-7 fill-current" />
 
@@ -984,7 +984,7 @@ const HelpSupport = () => {
 
               <div className="flex items-start justify-between gap-5">
 
-                <h2 className="text-3xl font-bold leading-tight text-[#315bd1] sm:text-[38px]">
+                <h2 className="text-3xl font-bold leading-tight text-[#7c3aed] sm:text-[38px]">
                   {selectedTicket.id}
                 </h2>
 
@@ -1055,7 +1055,7 @@ const HelpSupport = () => {
               <button
                 type="button"
                 onClick={closeTicket}
-                className="mt-7 flex h-[58px] w-full items-center justify-center rounded-[18px] border-2 border-[#c9d2e8] bg-white text-lg font-bold text-[#315bd1] transition hover:bg-[#f5f7fc] sm:text-xl"
+                className="mt-7 flex h-[58px] w-full items-center justify-center rounded-[18px] border-2 border-[#c9d2e8] bg-white text-lg font-bold text-[#7c3aed] transition hover:bg-[#f5f7fc] sm:text-xl"
               >
                 Close
               </button>

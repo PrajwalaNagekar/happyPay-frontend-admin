@@ -1,4 +1,5 @@
 import { useState } from "react";
+import AepsDeposit from "./AepsDeposit";
 import {
   ArrowLeft,
   ArrowRight,
@@ -359,6 +360,9 @@ const Aeps = () => {
    */
 
   const [step, setStep] = useState<Step>(0);
+  const [activeTab, setActiveTab] = useState<"withdraw" | "deposit">("withdraw");
+  const [withdrawalDevice, setWithdrawalDevice] = useState("Mantra MFS100");
+  const [isDeviceDropdownOpen, setIsDeviceDropdownOpen] = useState(false);
 
   /*
    * Retailer authentication
@@ -931,117 +935,135 @@ const Aeps = () => {
   const renderRetailerAuth = () => {
     return (
       <>
-        <div className="hp-brand rounded-[22px] p-5 text-white shadow-[0_16px_36px_-16px_rgba(49,91,209,0.5)] sm:p-7">
-          <div className="flex items-start gap-4">
-            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/15">
-              <ShieldCheck className="h-8 w-8" />
-            </div>
-
-            <div>
-              <h2 className="text-xl font-bold sm:text-2xl">
-                Retailer Daily 2FA Active
-              </h2>
-
-              <p className="mt-1 text-sm text-white/75 sm:text-base">
-                NPCI Mandatory Biometric Verification
-              </p>
-            </div>
-          </div>
-
-          <p className="mt-5 text-sm leading-6 text-white/90 sm:text-base">
-            As per regulatory compliance,
-            complete 2FA authentication once
-            every morning before initiating
-            cash transactions.
-          </p>
-        </div>
-
-        <section>
-          <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-lg font-bold text-slate-900 sm:text-xl">
-              Select Biometric Device
-            </h2>
-
-            <span className="rounded-full bg-[#dff7ec] px-3 py-1.5 text-xs font-semibold text-[#20a46b] sm:text-sm">
-              ✓ USB / OTG
-            </span>
-          </div>
-
-          <div className="rounded-[22px] border-2 border-[#315bd1] bg-white p-4 shadow-sm">
-            <div className="flex items-center gap-4">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#edf1fc]">
-                <Fingerprint className="h-8 w-8 text-[#315bd1]" />
+        {/* 2FA + Biometric Device */}
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+          <div className="flex h-full flex-col rounded-2xl border border-purple-100 bg-white p-4 text-slate-900 shadow-md sm:p-5">
+            <div className="flex items-start gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-purple-50 text-purple-600">
+                <ShieldCheck className="h-7 w-7" />
               </div>
 
-              <div className="min-w-0 flex-1">
-                <h3 className="text-lg font-bold text-[#315bd1]">
-                  Mantra MFS100
-                </h3>
+              <div>
+                <h2 className="text-lg font-bold text-[#171717] sm:text-xl">
+                  Retailer Daily 2FA Active
+                </h2>
 
-                <p className="mt-1 flex items-center gap-2 text-sm font-medium text-[#20a46b]">
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#20a46b]" />
-                  Ready · RD Service Active
+                <p className="mt-1 text-sm text-[#8992a3] sm:text-base">
+                  NPCI Mandatory Biometric Verification
                 </p>
               </div>
+            </div>
 
-              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-[#315bd1]">
-                <div className="h-3 w-3 rounded-full bg-[#315bd1]" />
-              </div>
+            <p className="mt-4 text-sm leading-6 text-[#596273] sm:text-base">
+              As per regulatory compliance, complete 2FA authentication once
+              every morning before initiating cash transactions.
+            </p>
+          </div>
+
+          <div className="flex h-full flex-col rounded-2xl border border-purple-100 bg-white p-4 shadow-sm sm:p-5">
+            <div className="mb-3 flex items-center justify-between">
+              <h2 className="text-lg font-bold text-slate-900 sm:text-xl">
+                Select Biometric Device
+              </h2>
+
+              <span className="rounded-full bg-purple-50 px-3 py-1.5 text-xs font-semibold text-purple-600 sm:text-sm">
+                ✓ USB / OTG
+              </span>
+            </div>
+
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setIsDeviceDropdownOpen(!isDeviceDropdownOpen)}
+                className="flex w-full items-center justify-between rounded-2xl border border-purple-100 bg-white p-4 transition-all hover:border-purple-300"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-purple-50">
+                    <Fingerprint className="h-7 w-7 text-purple-600" />
+                  </div>
+                  <div className="text-left">
+                    <h3 className="text-base font-bold text-[#171717]">{withdrawalDevice}</h3>
+                    <p className="mt-1 flex items-center gap-2 text-sm font-medium text-[#087f5b]">
+                      <span className="h-2.5 w-2.5 rounded-full bg-[#20a873]" />
+                      Ready · RD Service Active
+                    </p>
+                  </div>
+                </div>
+                <ChevronRight className={`h-5 w-5 text-slate-400 transition-transform ${isDeviceDropdownOpen ? "rotate-90" : ""}`} />
+              </button>
+
+              {isDeviceDropdownOpen && (
+                <div className="absolute left-0 right-0 mt-2 z-10 overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-lg">
+                  {["Mantra MFS100", "Morpho MSO 1300 E3", "Startek FM220"].map((device) => (
+                    <button
+                      key={device}
+                      type="button"
+                      onClick={() => {
+                        setWithdrawalDevice(device);
+                        setIsDeviceDropdownOpen(false);
+                      }}
+                      className={`w-full border-b border-slate-50 px-4 py-3 text-left transition-colors last:border-0 hover:bg-slate-50 ${
+                        withdrawalDevice === device ? "bg-purple-50/50 font-bold text-purple-600" : "font-medium text-slate-700"
+                      }`}
+                    >
+                      {device}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
-        </section>
+        </div>
 
-        <section>
-          <label className="mb-3 block text-lg font-bold text-slate-900 sm:text-xl">
-            Retailer Mobile Number{" "}
-            <span className="text-sm font-medium text-slate-500">
-              (Autofetched)
-            </span>
-          </label>
+        {/* Retailer Mobile + Aadhaar */}
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+          <section>
+            <label className="mb-3 block text-lg font-bold text-slate-900 sm:text-xl">
+              Retailer Mobile Number{" "}
+              <span className="text-sm font-medium text-slate-500">
+                (Autofetched)
+              </span>
+            </label>
 
-          <div className="flex min-h-[72px] items-center gap-4 rounded-[22px] border border-slate-200 bg-[#f1f2f6] px-5">
-            <Phone className="h-6 w-6 text-[#315bd1]" />
+            <div className="flex min-h-[56px] w-full max-w-xl items-center gap-4 rounded-xl border border-purple-100 bg-[#f8f5ff] px-4">
+              <Phone className="h-5 w-5 shrink-0 text-purple-600" />
 
-            <span className="text-lg font-semibold text-slate-800">
-              {retailerMobile}
-            </span>
-          </div>
-        </section>
+              <span className="text-base font-semibold text-slate-800">
+                {retailerMobile}
+              </span>
+            </div>
+          </section>
 
-        <section>
-          <label
-            htmlFor="retailer-aadhaar"
-            className="mb-3 block text-lg font-bold text-slate-900 sm:text-xl"
-          >
-            Retailer Aadhaar Number
-          </label>
+          <section>
+            <label
+              htmlFor="retailer-aadhaar"
+              className="mb-3 block text-lg font-bold text-slate-900 sm:text-xl"
+            >
+              Retailer Aadhaar Number
+            </label>
 
-          <div className="flex min-h-[72px] items-center gap-4 rounded-[22px] border-2 border-slate-200 bg-white px-5 focus-within:border-[#315bd1]">
-            <IdCard className="h-7 w-7 shrink-0 text-slate-500" />
+            <div className="flex min-h-[56px] w-full max-w-xl items-center gap-4 rounded-xl border border-slate-200 bg-white px-4 focus-within:border-[#7c3aed]">
+              <IdCard className="h-6 w-6 shrink-0 text-purple-600" />
 
-            <input
-              id="retailer-aadhaar"
-              type="text"
-              inputMode="numeric"
-              maxLength={12}
-              value={retailerAadhaar}
-              onChange={
-                handleRetailerAadhaarChange
-              }
-              disabled={
-                isCapturingRetailer ||
-                retailerAuthenticated
-              }
-              placeholder="Enter 12-digit Aadhaar number"
-              className="w-full bg-transparent text-lg font-medium outline-none placeholder:text-slate-400"
-            />
-          </div>
-        </section>
+              <input
+                id="retailer-aadhaar"
+                type="text"
+                inputMode="numeric"
+                maxLength={12}
+                value={retailerAadhaar}
+                onChange={handleRetailerAadhaarChange}
+                disabled={isCapturingRetailer || retailerAuthenticated}
+                placeholder="Enter 12-digit Aadhaar number"
+                className="w-full bg-transparent text-lg font-medium outline-none placeholder:text-slate-400"
+              />
+            </div>
+          </section>
+        </div>
 
         {isCapturingRetailer && (
-          <div className="rounded-[22px] border-2 border-[#315bd1] bg-white p-8 text-center">
-            <div className="mx-auto flex h-28 w-28 items-center justify-center rounded-full bg-[#edf1fc]">
-              <Fingerprint className="h-16 w-16 animate-pulse text-[#315bd1]" />
+          <div className="rounded-2xl border-2 border-[#172033] bg-white p-6 text-center">
+            <div className="mx-auto flex h-28 w-28 items-center justify-center rounded-full bg-purple-50">
+              <Fingerprint className="h-12 w-12 animate-pulse text-[#172033]" />
             </div>
 
             <h2 className="mt-6 text-xl font-bold text-slate-900">
@@ -1052,60 +1074,52 @@ const Aeps = () => {
               Place your finger on Mantra MFS100 scanner
             </p>
 
-            <div className="mx-auto mt-6 h-9 w-9 animate-spin rounded-full border-4 border-slate-200 border-t-[#315bd1]" />
+            <div className="mx-auto mt-6 h-9 w-9 animate-spin rounded-full border-4 border-slate-200 border-t-[#172033]" />
           </div>
         )}
 
-        {retailerAuthenticated &&
-          !isCapturingRetailer && (
-            <>
-              <div className="rounded-[22px] border-2 border-[#8edfc1] bg-[#e2f8ef] p-5">
-                <div className="flex items-center gap-4">
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#19b86d]">
-                    <Check className="h-8 w-8 text-white" />
-                  </div>
+        {retailerAuthenticated && !isCapturingRetailer && (
+          <>
+            <div className="rounded-2xl border-2 border-[#cbd3e3] bg-purple-50 p-5">
+              <div className="flex items-center gap-4">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-purple-600 transition hover:bg-purple-700">
+                  <Check className="h-8 w-8 text-white" />
+                </div>
 
-                  <div>
-                    <h2 className="text-lg font-bold text-[#16a467]">
-                      Retailer 2FA Authentication Success
-                    </h2>
+                <div>
+                  <h2 className="text-lg font-bold text-[#172033]">
+                    Retailer 2FA Authentication Success
+                  </h2>
 
-                    <p className="mt-1 text-slate-700">
-                      Verified with UIDAI
-                    </p>
-                  </div>
+                  <p className="mt-1 text-slate-700">
+                    Verified with UIDAI
+                  </p>
                 </div>
               </div>
+            </div>
 
-              <button
-                type="button"
-                onClick={
-                  handleStartTransaction
-                }
-                className="flex min-h-[64px] w-full items-center justify-center gap-3 rounded-[22px] bg-[#08ad7c] px-6 text-lg font-bold text-white shadow-md hover:bg-[#07996e] sm:text-xl"
-              >
-                <Play className="h-6 w-6 fill-current" />
-                START TRANSACTION
-              </button>
-            </>
-          )}
-
-        {!retailerAuthenticated &&
-          !isCapturingRetailer && (
             <button
               type="button"
-              onClick={
-                handleRetailerBiometric
-              }
-              disabled={
-                retailerAadhaar.length !== 12
-              }
-              className="flex min-h-[64px] w-full items-center justify-center gap-3 rounded-[22px] bg-[#315bd1] px-6 text-lg font-bold text-white shadow-md disabled:cursor-not-allowed disabled:opacity-50 sm:text-xl"
+              onClick={handleStartTransaction}
+              className="flex min-h-[52px] w-full items-center justify-center gap-3 rounded-xl bg-purple-600 px-5 text-sm font-bold text-white shadow-md transition-all hover:-translate-y-0.5 hover:bg-purple-700 sm:text-base"
             >
-              <Fingerprint className="h-7 w-7" />
-              PROCEED FOR BIOMETRIC AUTH
+              <Play className="h-6 w-6 fill-current" />
+              START TRANSACTION
             </button>
-          )}
+          </>
+        )}
+
+        {!retailerAuthenticated && !isCapturingRetailer && (
+          <button
+            type="button"
+            onClick={handleRetailerBiometric}
+            disabled={retailerAadhaar.length !== 12}
+            className="flex min-h-[52px] w-full items-center justify-center gap-3 rounded-xl bg-purple-600 px-5 text-sm font-bold text-white shadow-md transition-all hover:-translate-y-0.5 hover:bg-purple-700 disabled:cursor-not-allowed disabled:opacity-50 sm:text-base"
+          >
+            <Fingerprint className="h-7 w-7" />
+            PROCEED FOR BIOMETRIC AUTH
+          </button>
+        )}
       </>
     );
   };
@@ -1131,7 +1145,7 @@ const Aeps = () => {
           </p>
         </div>
 
-        <section>
+        <section className="w-full max-w-3xl">
           <label
             htmlFor="customer-aadhaar"
             className="mb-3 block text-lg font-bold text-slate-900"
@@ -1140,10 +1154,10 @@ const Aeps = () => {
           </label>
 
           <div
-            className={`flex min-h-[72px] items-center gap-4 rounded-[22px] border-2 bg-white px-5 ${
+            className={`flex min-h-[72px] items-center gap-4 rounded-2xl border-2 bg-white px-5 ${
               customerVerified
                 ? "border-slate-200"
-                : "border-slate-200 focus-within:border-[#315bd1]"
+                : "border-slate-200 focus-within:border-[#172033]"
             }`}
           >
             <IdCard className="h-7 w-7 shrink-0 text-slate-500" />
@@ -1176,7 +1190,7 @@ const Aeps = () => {
                   disabled={
                     isVerifyingCustomer
                   }
-                  className="shrink-0 font-bold text-[#315bd1] hover:text-[#2448b8] disabled:opacity-60"
+                  className="shrink-0 font-bold text-[#172033] hover:text-[#101827] disabled:opacity-60"
                 >
                   {isVerifyingCustomer
                     ? "VERIFYING..."
@@ -1185,7 +1199,7 @@ const Aeps = () => {
               )}
 
             {customerVerified && (
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#19b86d]">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-purple-600 transition hover:bg-purple-700">
                 <Check className="h-6 w-6 text-white" />
               </div>
             )}
@@ -1193,9 +1207,9 @@ const Aeps = () => {
         </section>
 
         {customerVerified && (
-          <div className="flex items-center justify-between rounded-[22px] border-2 border-[#a9e5d0] bg-[#e4f8f0] p-5">
+          <div className="w-full max-w-3xl flex items-center justify-between rounded-2xl border-2 border-[#cbd3e3] bg-purple-50 p-5">
             <div className="flex items-center gap-4">
-              <Phone className="h-7 w-7 text-[#19a96d]" />
+              <Phone className="h-7 w-7 text-[#172033]" />
 
               <div>
                 <p className="text-sm font-semibold text-slate-600">
@@ -1208,7 +1222,7 @@ const Aeps = () => {
               </div>
             </div>
 
-            <span className="rounded-full bg-[#d5f1e6] px-3 py-2 text-sm font-bold text-[#18a56a]">
+            <span className="rounded-full bg-purple-50 px-3 py-2 text-sm font-bold text-[#172033]">
               ✓ Verified
             </span>
           </div>
@@ -1218,7 +1232,7 @@ const Aeps = () => {
           type="button"
           onClick={() => setStep(2)}
           disabled={!customerVerified}
-          className="flex min-h-[64px] w-full items-center justify-center gap-3 rounded-[22px] bg-[#315bd1] text-lg font-bold text-white shadow-md disabled:cursor-not-allowed disabled:bg-[#9db1e8] sm:text-xl"
+            className="flex min-h-[52px] w-full max-w-3xl items-center justify-center gap-3 rounded-xl bg-purple-600 px-5 text-sm font-bold text-white shadow-md transition-all hover:-translate-y-0.5 hover:bg-purple-700 disabled:cursor-not-allowed disabled:bg-[#cbd0d6] sm:text-base"
         >
           <ArrowRight className="h-7 w-7" />
           CONTINUE TO BANK SELECTION
@@ -1255,7 +1269,7 @@ const Aeps = () => {
             </h2>
           </div>
 
-          <div className="flex min-h-[72px] items-center gap-3 rounded-[22px] border-2 border-[#315bd1] bg-white px-5">
+          <div className="flex min-h-[72px] w-full max-w-3xl items-center gap-3 rounded-2xl border-2 border-[#172033] bg-white px-5">
             <Search className="h-6 w-6 text-slate-500" />
 
             <input
@@ -1282,7 +1296,7 @@ const Aeps = () => {
                 }
                 className="flex w-full items-center gap-4 border-b border-slate-100 px-6 py-5 text-left hover:bg-slate-50"
               >
-                <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#edf1fc] text-lg font-bold text-[#315bd1]">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-purple-50 text-lg font-bold text-[#172033]">
                   {bank.shortName}
                 </div>
 
@@ -1301,7 +1315,7 @@ const Aeps = () => {
             ))}
 
             {filteredBanks.length === 0 && (
-              <div className="p-8 text-center text-slate-500">
+              <div className="p-6 text-center text-slate-500">
                 No bank found.
               </div>
             )}
@@ -1333,14 +1347,14 @@ const Aeps = () => {
               onClick={() =>
                 setShowBankSelection(true)
               }
-              className="flex min-h-[76px] w-full items-center justify-center gap-4 rounded-[22px] border-2 border-[#c0cceb] bg-transparent text-lg font-bold text-[#315bd1]"
+              className="flex min-h-[76px] w-full items-center justify-center gap-4 rounded-2xl border-2 border-[#cbd3e3] bg-transparent text-lg font-bold text-[#172033]"
             >
               <Building2 className="h-7 w-7" />
               PLEASE SELECT BANK
             </button>
           ) : (
-            <div className="flex min-h-[138px] items-center gap-4 rounded-[22px] border-2 border-slate-200 bg-white p-5">
-              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#edf1fc] text-lg font-bold text-[#315bd1]">
+            <div className="flex min-h-[138px] items-center gap-4 rounded-2xl border-2 border-slate-200 bg-white p-5">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-purple-50 text-lg font-bold text-[#172033]">
                 {selectedBank.shortName}
               </div>
 
@@ -1360,7 +1374,7 @@ const Aeps = () => {
                 onClick={() =>
                   setShowBankSelection(true)
                 }
-                className="text-lg font-bold text-[#315bd1]"
+                className="text-lg font-bold text-[#172033]"
               >
                 Change
               </button>
@@ -1368,7 +1382,7 @@ const Aeps = () => {
           )}
         </section>
 
-        <label className="flex cursor-pointer items-start gap-4 rounded-[22px] border-2 border-slate-200 bg-white p-5">
+        <label className="flex cursor-pointer items-start gap-4 rounded-2xl border-2 border-slate-200 bg-white p-5">
           <input
             type="checkbox"
             checked={consent}
@@ -1377,7 +1391,7 @@ const Aeps = () => {
                 event.target.checked
               )
             }
-            className="mt-1 h-8 w-8 accent-[#315bd1]"
+            className="mt-1 h-8 w-8 accent-[#172033]"
           />
 
           <span className="text-base leading-6 text-slate-800 sm:text-lg">
@@ -1392,7 +1406,7 @@ const Aeps = () => {
           type="button"
           onClick={() => setStep(3)}
           disabled={!selectedBank || !consent}
-          className="flex min-h-[64px] w-full items-center justify-center gap-3 rounded-[22px] bg-[#315bd1] text-lg font-bold text-white shadow-md disabled:bg-[#9db1e8] sm:text-xl"
+          className="flex min-h-[52px] w-full items-center justify-center gap-3 rounded-2xl bg-purple-600 shadow-md transition-all hover:-translate-y-0.5 hover:bg-purple-700 text-lg font-bold text-white shadow-md disabled:bg-[#aab2c0] sm:text-xl"
         >
           <ArrowRight className="h-7 w-7" />
           PROCEED TO REVIEW
@@ -1427,10 +1441,10 @@ const Aeps = () => {
             Collected Information
           </h3>
 
-          <div className="overflow-hidden rounded-[22px] border-2 border-slate-200 bg-white">
+          <div className="overflow-hidden rounded-2xl border-2 border-slate-200 bg-white">
             <div className="flex items-center gap-4 border-b-2 border-slate-200 p-5">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#edf1fc]">
-                <IdCard className="h-7 w-7 text-[#315bd1]" />
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-purple-50">
+                <IdCard className="h-7 w-7 text-[#172033]" />
               </div>
 
               <div className="flex-1">
@@ -1443,22 +1457,22 @@ const Aeps = () => {
                 </p>
               </div>
 
-              <span className="rounded-full bg-[#dff7ec] px-3 py-2 text-sm font-bold text-[#18a56a]">
+              <span className="rounded-full bg-purple-50 px-3 py-2 text-sm font-bold text-[#172033]">
                 ✓ Verified
               </span>
 
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#edf1fc] text-[#315bd1]"
+                className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-50 text-[#172033]"
               >
                 <Edit3 className="h-5 w-5" />
               </button>
             </div>
 
             <div className="flex items-center gap-4 border-b-2 border-slate-200 p-5">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#edf1fc]">
-                <Phone className="h-7 w-7 text-[#315bd1]" />
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-purple-50">
+                <Phone className="h-7 w-7 text-[#172033]" />
               </div>
 
               <div className="flex-1">
@@ -1474,15 +1488,15 @@ const Aeps = () => {
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#edf1fc] text-[#315bd1]"
+                className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-50 text-[#172033]"
               >
                 <Edit3 className="h-5 w-5" />
               </button>
             </div>
 
             <div className="flex items-center gap-4 p-5">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#edf1fc]">
-                <Building2 className="h-7 w-7 text-[#315bd1]" />
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-purple-50">
+                <Building2 className="h-7 w-7 text-[#172033]" />
               </div>
 
               <div className="flex-1">
@@ -1495,14 +1509,14 @@ const Aeps = () => {
                 </p>
               </div>
 
-              <span className="rounded-xl bg-[#edf1fc] px-3 py-2 font-bold text-[#315bd1]">
+              <span className="rounded-xl bg-purple-50 px-3 py-2 font-bold text-[#172033]">
                 {selectedBank?.shortName}
               </span>
 
               <button
                 type="button"
                 onClick={() => setStep(2)}
-                className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#edf1fc] text-[#315bd1]"
+                className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-50 text-[#172033]"
               >
                 <Edit3 className="h-5 w-5" />
               </button>
@@ -1513,7 +1527,7 @@ const Aeps = () => {
         <button
           type="button"
           onClick={() => setStep(4)}
-          className="flex min-h-[64px] w-full items-center justify-center gap-3 rounded-[22px] bg-[#315bd1] text-lg font-bold text-white shadow-md sm:text-xl"
+          className="flex min-h-[52px] w-full items-center justify-center gap-3 rounded-2xl bg-purple-600 shadow-md transition-all hover:-translate-y-0.5 hover:bg-purple-700 text-lg font-bold text-white shadow-md sm:text-xl"
         >
           <ArrowRight className="h-7 w-7" />
           PROCEED TO SERVICES
@@ -1542,32 +1556,32 @@ const Aeps = () => {
       title: "A. Cash Withdrawal",
       description: "Withdraw cash from A/C",
       icon: WalletCards,
-      iconClass: "text-[#315bd1]",
-      bgClass: "bg-[#f2dfc5]",
+      iconClass: "text-[#172033]",
+      bgClass: "bg-purple-50",
     },
     {
       id: "balance-check",
       title: "B. Balance Check",
       description: "Enquire A/C balance",
       icon: Banknote,
-      iconClass: "text-[#08a873]",
-      bgClass: "bg-[#e6e8c9]",
+      iconClass: "text-[#172033]",
+      bgClass: "bg-purple-50",
     },
     {
       id: "mini-statement",
       title: "C. Mini Statement",
       description: "Last 5 transactions",
       icon: ReceiptText,
-      iconClass: "text-[#8c42db]",
-      bgClass: "bg-[#f0d7d5]",
+      iconClass: "text-[#172033]",
+      bgClass: "bg-purple-50",
     },
     {
       id: "balance-withdrawal",
       title: "D. Bal Check + Wdl",
       description: "Check & withdraw",
       icon: ArrowRight,
-      iconClass: "text-[#f15c19]",
-      bgClass: "bg-[#f3dfc8]",
+      iconClass: "text-[#172033]",
+      bgClass: "bg-purple-50",
     },
   ];
 
@@ -1585,7 +1599,7 @@ const Aeps = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+        <div className="grid w-full max-w-3xl grid-cols-1 gap-4 sm:grid-cols-2">
           {services.map((service) => {
             const Icon = service.icon;
 
@@ -1602,14 +1616,14 @@ const Aeps = () => {
                     service.id
                   )
                 }
-                className={`rounded-[22px] border-2 p-5 text-left transition ${
+                className={`rounded-2xl border-2 p-5 text-left transition ${
                   selected
-                    ? "border-[#315bd1] shadow-md"
+                    ? "border-[#172033] shadow-md"
                     : "border-[#d8d8d8]"
-                } bg-[#f4d3a6]`}
+                } bg-white shadow-sm hover:shadow-md transition-shadow hover:-translate-y-0.5 hover:shadow-[0_18px_38px_-24px_rgba(15,23,42,0.45)]`}
               >
                 <div
-                  className={`flex h-16 w-16 items-center justify-center rounded-2xl ${service.bgClass}`}
+                  className={`flex h-12 w-12 items-center justify-center rounded-2xl ${service.bgClass}`}
                 >
                   <Icon
                     className={`h-8 w-8 ${service.iconClass}`}
@@ -1677,24 +1691,24 @@ const Aeps = () => {
 
     return (
       <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 px-4">
-        <div className="w-full max-w-xl rounded-[22px] bg-white p-8 text-center shadow-2xl sm:p-10">
-          <h2 className="text-left text-2xl font-bold text-slate-900 sm:text-3xl">
+        <div className="w-full max-w-sm overflow-hidden rounded-2xl border border-purple-100 bg-white p-5 text-center shadow-md sm:p-6">
+          <h2 className="text-left text-2xl font-bold text-slate-900 sm:text-2xl">
             {title}
           </h2>
 
-          <div className="mx-auto mt-10 flex h-40 w-40 items-center justify-center rounded-full bg-[#edf1fc]">
-            <Fingerprint className="h-24 w-24 text-[#315bd1]" />
+          <div className="mx-auto mt-7 flex h-28 w-28 items-center justify-center rounded-full bg-purple-50">
+            <Fingerprint className="h-12 w-12 text-purple-600" />
           </div>
 
-          <h3 className="mt-8 text-xl font-bold text-[#4d596d] sm:text-2xl">
+          <h3 className="mt-6 text-lg font-bold text-[#171717] sm:text-xl">
             Capturing Fingerprint...
           </h3>
 
-          <p className="mt-3 text-lg text-slate-500">
+          <p className="mt-2 text-sm text-slate-500">
             Place finger on Mantra MFS100
           </p>
 
-          <div className="mx-auto mt-8 h-12 w-12 animate-spin rounded-full border-4 border-slate-200 border-t-[#315bd1]" />
+          <div className="mx-auto mt-6 h-9 w-9 animate-spin rounded-full border-4 border-slate-200 border-t-[#7c3aed]" />
         </div>
       </div>
     );
@@ -1726,7 +1740,7 @@ const Aeps = () => {
 
     return (
       <div className="fixed inset-0 z-[100] flex items-end justify-center bg-black/50 sm:items-center">
-        <div className="w-full max-w-2xl rounded-t-[32px] bg-[#f7f7ff] p-7 shadow-2xl sm:rounded-[22px] sm:p-10">
+        <div className="w-full max-w-md overflow-hidden rounded-t-2xl border border-purple-100 bg-white p-5 shadow-md sm:rounded-2xl sm:p-6">
           <div className="mx-auto mb-7 h-1.5 w-16 rounded-full bg-slate-200 sm:hidden" />
 
           <h2 className="text-2xl font-bold text-slate-900">
@@ -1738,8 +1752,8 @@ const Aeps = () => {
             Mobile OTP + Biometric validation
           </p>
 
-          <div className="mt-8 flex min-h-[108px] items-center rounded-[22px] border-2 border-slate-200 bg-white px-7">
-            <span className="text-3xl font-bold text-[#315bd1]">
+          <div className="mt-6 flex min-h-[68px] items-center rounded-xl border border-slate-200 bg-[#f8f5ff] px-4">
+            <span className="text-2xl font-bold text-purple-600">
               ₹
             </span>
 
@@ -1753,11 +1767,11 @@ const Aeps = () => {
                   )
                 )
               }
-              className="ml-2 w-full bg-transparent text-3xl font-bold text-slate-900 outline-none"
+              className="ml-2 w-full bg-transparent text-2xl font-bold text-slate-900 outline-none"
             />
           </div>
 
-          <div className="mt-7 grid grid-cols-4 gap-3">
+          <div className="mt-5 grid grid-cols-4 gap-2">
             {amountOptions.map(
               (amount) => {
                 const active =
@@ -1773,9 +1787,9 @@ const Aeps = () => {
                         amount
                       )
                     }
-                    className={`min-h-[64px] rounded-2xl border-2 px-2 text-base font-semibold sm:text-lg ${
+                    className={`min-h-[48px] rounded-xl border px-2 text-sm font-semibold sm:text-base ${
                       active
-                        ? "border-transparent bg-[#e1e9ff] text-[#315bd1]"
+                        ? "border-[#7c3aed] bg-purple-50 text-purple-600"
                         : "border-slate-200 bg-white text-slate-800"
                     }`}
                   >
@@ -1790,20 +1804,20 @@ const Aeps = () => {
           </div>
 
           {requiresOtp ? (
-            <div className="mt-7 flex items-start gap-4 rounded-[22px] border-2 border-[#f1d09e] bg-[#fff2dc] p-5">
-              <LockKeyhole className="mt-1 h-7 w-7 shrink-0 text-[#ef9914]" />
+            <div className="mt-7 flex items-start gap-4 rounded-2xl border-2 border-[#d8deec] bg-purple-50 p-5">
+              <LockKeyhole className="mt-1 h-7 w-7 shrink-0 text-[#172033]" />
 
-              <p className="text-base font-semibold text-[#e99a1d] sm:text-lg">
+              <p className="text-base font-semibold text-[#172033] sm:text-lg">
                 Amount is &gt; ₹5,000: Both
                 Customer OTP and Fingerprint
                 will be required.
               </p>
             </div>
           ) : (
-            <div className="mt-7 flex items-start gap-4 rounded-[22px] border-2 border-[#c9d4f7] bg-[#edf1ff] p-5">
-              <Fingerprint className="mt-1 h-7 w-7 shrink-0 text-[#315bd1]" />
+            <div className="mt-7 flex items-start gap-4 rounded-2xl border-2 border-[#d8deec] bg-purple-50 p-5">
+              <Fingerprint className="mt-1 h-7 w-7 shrink-0 text-[#172033]" />
 
-              <p className="text-base font-semibold text-[#315bd1] sm:text-lg">
+              <p className="text-base font-semibold text-[#172033] sm:text-lg">
                 Amount is ≤ ₹5,000: Only
                 Fingerprint Biometric will be
                 required.
@@ -1819,7 +1833,7 @@ const Aeps = () => {
             disabled={
               withdrawalAmount <= 0
             }
-            className="mt-8 flex min-h-[68px] w-full items-center justify-center rounded-[22px] bg-[#315bd1] text-xl font-bold text-white shadow-md disabled:opacity-50"
+            className="mt-6 flex min-h-[52px] w-full items-center justify-center rounded-xl bg-purple-600 text-base font-bold text-white shadow-md hover:bg-purple-700 disabled:opacity-50"
           >
             CONFIRM AMOUNT
           </button>
@@ -1850,13 +1864,13 @@ const Aeps = () => {
 
     return (
       <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 px-4">
-        <div className="w-full max-w-xl rounded-[22px] bg-white p-8 shadow-2xl sm:p-10">
+        <div className="w-full max-w-lg overflow-hidden rounded-[28px] border border-white bg-white p-7 shadow-[0_30px_80px_rgba(15,23,42,0.18)] sm:p-6">
           <div className="flex items-center gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#fff0d9]">
-              <ShieldCheck className="h-7 w-7 text-[#ee9914]" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-purple-50">
+              <ShieldCheck className="h-7 w-7 text-[#172033]" />
             </div>
 
-            <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl">
+            <h2 className="text-2xl font-bold text-slate-900 sm:text-2xl">
               Customer OTP Required
             </h2>
           </div>
@@ -1867,7 +1881,7 @@ const Aeps = () => {
             require OTP verification.
           </p>
 
-          <div className="mt-6 inline-flex rounded-2xl bg-[#fff0db] px-5 py-3 text-base font-bold text-[#995d19]">
+          <div className="mt-6 inline-flex rounded-2xl bg-purple-50 px-5 py-3 text-base font-bold text-[#172033]">
             Amount:{" "}
             {formatCurrency(
               withdrawalAmount
@@ -1891,7 +1905,7 @@ const Aeps = () => {
                 setModalType("");
                 setOtp("");
               }}
-              className="px-4 py-3 text-lg font-bold text-[#315bd1]"
+              className="px-4 py-3 text-lg font-bold text-[#172033]"
             >
               Cancel
             </button>
@@ -1902,7 +1916,7 @@ const Aeps = () => {
                 handleVerifyOtp
               }
               disabled={otp.length !== 6}
-              className="min-h-[64px] min-w-[190px] rounded-[22px] bg-[#315bd1] px-6 text-lg font-bold text-white shadow-md disabled:bg-[#9db1e8]"
+              className="min-h-[52px] min-w-[190px] rounded-2xl bg-purple-600 px-6 text-lg font-bold text-white shadow-md hover:bg-purple-700 disabled:bg-[#aab2c0]"
             >
               VERIFY OTP
             </button>
@@ -1945,7 +1959,7 @@ const Aeps = () => {
     valueClass = "text-slate-900"
   ) => {
     return (
-      <div className="flex items-center justify-between gap-6">
+      <div className="flex items-center justify-between gap-4">
         <span className="text-base text-slate-600 sm:text-lg">
           {label}
         </span>
@@ -1969,10 +1983,10 @@ const Aeps = () => {
     transactions: Transaction[]
   ) => {
     return (
-      <div className="mt-8 rounded-[22px] border-2 border-slate-200 bg-white p-6 sm:p-8">
+      <div className="mt-8 rounded-2xl border-2 border-slate-200 bg-white p-6 sm:p-6">
         <div className="flex items-center gap-4 border-b border-slate-200 pb-5">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#edf1fc]">
-            <FileText className="h-7 w-7 text-[#315bd1]" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-purple-50">
+            <FileText className="h-7 w-7 text-[#172033]" />
           </div>
 
           <h3 className="text-xl font-bold text-slate-900 sm:text-2xl">
@@ -2002,7 +2016,7 @@ const Aeps = () => {
                     className={`text-base font-bold sm:text-xl ${
                       transaction.type ===
                       "CREDIT"
-                        ? "text-[#19aa6d]"
+                        ? "text-[#172033]"
                         : "text-slate-900"
                     }`}
                   >
@@ -2013,7 +2027,7 @@ const Aeps = () => {
                     className={`mt-1 inline-block rounded-lg px-2.5 py-1 text-xs font-bold ${
                       transaction.type ===
                       "CREDIT"
-                        ? "bg-[#dff7ec] text-[#18a56a]"
+                        ? "bg-purple-50 text-[#172033]"
                         : "bg-[#e8e8ee] text-slate-700"
                     }`}
                   >
@@ -2051,7 +2065,7 @@ const Aeps = () => {
 
     return (
       <div className="">
-        <div className="flex items-center gap-3 rounded-2xl border border-white/80 bg-white px-4 py-3 shadow-[0_8px_24px_-18px_rgba(15,23,42,0.4)] sm:px-5">
+        <div className="mx-auto flex w-full max-w-2xl items-center gap-3 rounded-2xl border border-white bg-white px-4 py-3 shadow-[0_14px_40px_-24px_rgba(15,23,42,0.45)] sm:px-5">
           <button
             type="button"
             onClick={
@@ -2067,51 +2081,51 @@ const Aeps = () => {
           </h1>
         </div>
 
-        <main className="px-4 py-8 sm:px-6">
-          <div className="mx-auto w-full max-w-3xl">
+        <main className="px-3 py-5 sm:px-6">
+          <div className="mx-auto w-full max-w-2xl rounded-[30px] border border-white bg-white/60 p-4 shadow-[0_25px_70px_-35px_rgba(15,23,42,0.25)] sm:p-6">
             <div className="text-center">
-              <div className="mx-auto flex h-32 w-32 items-center justify-center rounded-full bg-[#dff7ec]">
-                <Check className="h-20 w-20 text-[#19b86d]" />
+              <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-purple-50">
+                <Check className="h-10 w-10 text-[#172033]" />
               </div>
 
-              <h2 className="mt-8 text-3xl font-bold text-[#19aa6d] sm:text-4xl">
+              <h2 className="mt-4 text-xl font-bold text-[#172033] sm:text-2xl">
                 {getReceiptTitle(
                   receiptData.receiptType
                 )}
               </h2>
 
-              <p className="mt-3 text-xl text-slate-700 sm:text-2xl">
+              <p className="mt-1 text-lg text-slate-700 sm:text-xl">
                 {receiptData.bankName}
               </p>
             </div>
 
-            <div className="mt-10 rounded-[22px] border-2 border-slate-200 bg-white p-7 shadow-sm sm:p-9">
+            <div className="mt-8 rounded-[20px] border border-slate-200/80 bg-white p-5 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.35)] sm:p-7">
               {isWithdrawal && (
                 <>
-                  <div className="text-center">
-                    <p className="text-4xl font-bold text-slate-900 sm:text-5xl">
+                  <div className="text-center rounded-[16px] bg-[#f8f9fc] border border-slate-100 p-4 shadow-sm sm:p-5">
+                    <p className="text-3xl font-bold text-slate-900 sm:text-4xl">
                       ₹
                       {receiptData.amount.toFixed(
                         2
                       )}
                     </p>
 
-                    <p className="mt-2 text-lg text-slate-600 sm:text-xl">
+                    <p className="mt-1 text-sm font-medium text-slate-500 sm:text-base">
                       Amount Withdrawn
                     </p>
                   </div>
 
-                  <div className="my-7 border-t border-slate-200" />
+                  <div className="my-6 border-t border-slate-100" />
                 </>
               )}
 
-              <div className="space-y-6">
+              <div className="grid grid-cols-1 gap-x-10 gap-y-6 md:grid-cols-2">
                 {renderReceiptRow(
                   "Account Balance",
                   formatCurrency(
                     receiptData.balance
                   ),
-                  "text-[#19aa6d]"
+                  "text-[#172033]"
                 )}
 
                 {renderReceiptRow(
@@ -2152,7 +2166,7 @@ const Aeps = () => {
                 {renderReceiptRow(
                   "Transaction Status",
                   receiptData.status,
-                  "text-[#19aa6d]"
+                  "text-[#172033]"
                 )}
               </div>
             </div>
@@ -2168,7 +2182,7 @@ const Aeps = () => {
                 onClick={
                   handlePrintReceipt
                 }
-                className="flex min-h-[68px] w-full items-center justify-center gap-3 rounded-[22px] border-2 border-[#bdc9eb] bg-transparent text-xl font-bold text-[#315bd1]"
+                className="flex min-h-[68px] w-full items-center justify-center gap-3 rounded-2xl border-2 border-[#cbd3e3] bg-transparent text-xl font-bold text-[#172033]"
               >
                 <Printer className="h-7 w-7" />
                 PRINT RECEIPT
@@ -2181,7 +2195,7 @@ const Aeps = () => {
                   onClick={
                     handleStartNewTransaction
                   }
-                  className="flex min-h-[68px] w-full items-center justify-center gap-3 rounded-[22px] bg-[#315bd1] text-xl font-bold text-white shadow-md"
+                  className="flex min-h-[68px] w-full items-center justify-center gap-3 rounded-2xl bg-purple-600 transition hover:bg-purple-700 text-xl font-bold text-white shadow-md"
                 >
                   <RefreshCw className="h-7 w-7" />
                   START TRANSACTION
@@ -2192,7 +2206,7 @@ const Aeps = () => {
                   onClick={
                     handleReceiptHome
                   }
-                  className="flex min-h-[68px] w-full items-center justify-center gap-3 rounded-[22px] bg-[#315bd1] text-xl font-bold text-white shadow-md"
+                  className="flex min-h-[68px] w-full items-center justify-center gap-3 rounded-2xl bg-purple-600 transition hover:bg-purple-700 text-xl font-bold text-white shadow-md"
                 >
                   <RefreshCw className="h-7 w-7" />
                   Home
@@ -2216,9 +2230,10 @@ const Aeps = () => {
   }
 
   return (
-    <div className="">
+    <div className="min-h-screen bg-slate-50 px-3 py-4 sm:px-5 sm:py-6 lg:px-5">
+      <div className="mx-auto w-full max-w-3xl">
       {/* Page Header */}
-      <div className="hp-page-head mx-auto w-full max-w-5xl">
+      <div className="hp-page-head mx-auto w-full max-w-3xl">
         <button
           type="button"
           onClick={handleBack}
@@ -2233,21 +2248,49 @@ const Aeps = () => {
             Aadhaar ATM
           </p>
           <h1 className="text-lg font-bold tracking-tight text-slate-900 sm:text-xl">
-            Withdraw Money
+            {activeTab === "withdraw" ? "Withdraw Money" : "Cash Deposit"}
           </h1>
         </div>
       </div>
 
-      {/* Progress */}
-      {step > 0 && (
-        <div className="mx-auto mt-4 w-full max-w-5xl rounded-[22px] border border-white/80 bg-white px-4 py-4">
-          <ProgressHeader step={step} />
-        </div>
-      )}
+      {/* Tabs */}
+      <div className="mx-auto mt-4 flex w-full max-w-3xl items-center gap-2 rounded-2xl bg-[#e3e8f2] p-1.5 shadow-sm">
+        <button
+          onClick={() => setActiveTab("withdraw")}
+          className={`flex-1 rounded-xl py-2.5 text-center text-sm font-bold transition-all sm:text-base ${
+            activeTab === "withdraw"
+              ? "bg-white text-slate-900 shadow-sm"
+              : "text-slate-500 hover:text-slate-700"
+          }`}
+        >
+          Withdraw
+        </button>
+        <button
+          onClick={() => setActiveTab("deposit")}
+          className={`flex-1 rounded-xl py-2.5 text-center text-sm font-bold transition-all sm:text-base ${
+            activeTab === "deposit"
+              ? "bg-white text-slate-900 shadow-sm"
+              : "text-slate-500 hover:text-slate-700"
+          }`}
+        >
+          Deposit
+        </button>
+      </div>
+
+      {activeTab === "deposit" ? (
+        <AepsDeposit />
+      ) : (
+        <>
+          {/* Progress */}
+          {step > 0 && (
+            <div className="mx-auto mt-4 w-full max-w-3xl rounded-2xl border border-white bg-white px-4 py-4 shadow-sm border-slate-100 sm:px-6">
+              <ProgressHeader step={step} />
+            </div>
+          )}
 
       {/* Content */}
-      <main className="mt-4">
-        <div className="mx-auto w-full max-w-5xl space-y-5">
+      <main className="mt-5">
+        <div className="mx-auto w-full max-w-3xl space-y-5">
           {step === 0 &&
             renderRetailerAuth()}
 
@@ -2274,6 +2317,9 @@ const Aeps = () => {
       {renderOtpModal()}
 
       {renderBiometricModal()}
+        </>
+      )}
+      </div>
     </div>
   );
 };

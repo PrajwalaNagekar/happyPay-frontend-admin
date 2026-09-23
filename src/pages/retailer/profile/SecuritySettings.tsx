@@ -54,7 +54,7 @@ const PasswordField = ({
           onChange={(event) => onChange(event.target.value)}
           placeholder={placeholder}
           autoComplete="new-password"
-          className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 pr-12 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-[#315bd1] focus:ring-2 focus:ring-[#315bd1]/10"
+          className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 pr-12 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-[#7c3aed] focus:ring-2 focus:ring-[#7c3aed]/10"
         />
 
         <button
@@ -104,7 +104,7 @@ const PinField = ({
           }}
           placeholder={placeholder}
           autoComplete="off"
-          className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 pr-12 text-sm tracking-[0.3em] text-slate-800 outline-none transition placeholder:text-slate-400 placeholder:tracking-normal focus:border-[#315bd1] focus:ring-2 focus:ring-[#315bd1]/10"
+          className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 pr-12 text-sm tracking-[0.3em] text-slate-800 outline-none transition placeholder:text-slate-400 placeholder:tracking-normal focus:border-[#7c3aed] focus:ring-2 focus:ring-[#7c3aed]/10"
         />
 
         <button
@@ -241,7 +241,7 @@ const SecuritySettings = () => {
   };
 
   return (
-    <main className="px-1 pb-6 pt-1">
+    <main className="px-4 pb-6 pt-4 sm:px-6">
       <div className="mx-auto w-full max-w-5xl">
 
         {/* =========================
@@ -252,7 +252,7 @@ const SecuritySettings = () => {
           <button
             type="button"
             onClick={() => navigate("/retailer/profile")}
-            className="mb-4 inline-flex items-center gap-2 text-sm font-semibold text-[#315bd1] transition hover:text-[#274dbd]"
+            className="mb-4 inline-flex items-center gap-2 text-sm font-semibold text-[#7c3aed] transition hover:text-[#274dbd]"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Profile
@@ -276,7 +276,7 @@ const SecuritySettings = () => {
 
             <div className="flex items-center gap-4">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#edf1fc]">
-                <ShieldCheck className="h-5 w-5 text-[#315bd1]" />
+                <ShieldCheck className="h-5 w-5 text-[#7c3aed]" />
               </div>
 
               <div>
@@ -312,7 +312,7 @@ const SecuritySettings = () => {
               <div className="flex items-start gap-4">
 
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#edf1fc]">
-                  <LockKeyhole className="h-4.5 h-[18px] w-[18px] text-[#315bd1]" />
+                  <LockKeyhole className="h-4.5 h-[18px] w-[18px] text-[#7c3aed]" />
                 </div>
 
                 <div>
@@ -339,7 +339,7 @@ const SecuritySettings = () => {
                   setShowPasswordForm((previous) => !previous);
                   setPasswordMessage("");
                 }}
-                className="w-full rounded-xl border border-[#315bd1] px-5 py-2.5 text-sm font-semibold text-[#315bd1] transition hover:bg-[#315bd1] hover:text-white sm:w-auto"
+                className="w-full rounded-xl border border-[#7c3aed] px-5 py-2.5 text-sm font-semibold text-[#7c3aed] transition hover:bg-[#7c3aed] hover:text-white sm:w-auto"
               >
                 {showPasswordForm
                   ? "Cancel"
@@ -427,7 +427,7 @@ const SecuritySettings = () => {
                         "successfully",
                       )
                         ? "bg-green-50 text-green-700"
-                        : "bg-red-50 text-red-600"
+                        : "bg-purple-50 text-purple-600"
                     }`}
                   >
                     {passwordMessage}
@@ -452,7 +452,7 @@ const SecuritySettings = () => {
                   <button
                     type="button"
                     onClick={handlePasswordUpdate}
-                    className="rounded-xl bg-[#315bd1] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#274dbd]"
+                    className="rounded-xl bg-[#7c3aed] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#274dbd]"
                   >
                     Update Password
                   </button>
@@ -477,7 +477,7 @@ const SecuritySettings = () => {
               <div className="flex items-start gap-4">
 
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#edf1fc]">
-                  <KeyRound className="h-4.5 h-[18px] w-[18px] text-[#315bd1]" />
+                  <KeyRound className="h-4.5 h-[18px] w-[18px] text-[#7c3aed]" />
                 </div>
 
                 <div>
@@ -504,7 +504,7 @@ const SecuritySettings = () => {
                   setShowPinForm((previous) => !previous);
                   setPinMessage("");
                 }}
-                className="w-full rounded-xl border border-[#315bd1] px-5 py-2.5 text-sm font-semibold text-[#315bd1] transition hover:bg-[#315bd1] hover:text-white sm:w-auto"
+                className="w-full rounded-xl border border-[#7c3aed] px-5 py-2.5 text-sm font-semibold text-[#7c3aed] transition hover:bg-[#7c3aed] hover:text-white sm:w-auto"
               >
                 {showPinForm ? "Cancel" : "Change PIN"}
               </button>
@@ -590,7 +590,7 @@ const SecuritySettings = () => {
                         "successfully",
                       )
                         ? "bg-green-50 text-green-700"
-                        : "bg-red-50 text-red-600"
+                        : "bg-purple-50 text-purple-600"
                     }`}
                   >
                     {pinMessage}
@@ -615,7 +615,7 @@ const SecuritySettings = () => {
                   <button
                     type="button"
                     onClick={handlePinUpdate}
-                    className="rounded-xl bg-[#315bd1] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#274dbd]"
+                    className="rounded-xl bg-[#7c3aed] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#274dbd]"
                   >
                     Update PIN
                   </button>
@@ -637,7 +637,7 @@ const SecuritySettings = () => {
           <div className="flex items-start gap-4">
 
             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#edf1fc]">
-              <Smartphone className="h-4.5 h-[18px] w-[18px] text-[#315bd1]" />
+              <Smartphone className="h-4.5 h-[18px] w-[18px] text-[#7c3aed]" />
             </div>
 
             <div className="min-w-0 flex-1">
@@ -666,7 +666,7 @@ const SecuritySettings = () => {
 
                 <div className="flex items-start gap-3">
 
-                  <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-[#315bd1]" />
+                  <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-[#7c3aed]" />
 
                   <div>
                     <p className="text-sm font-semibold text-[#172033]">
@@ -696,7 +696,7 @@ const SecuritySettings = () => {
           <div className="flex items-start gap-4">
 
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white">
-              <ShieldCheck className="h-5 w-5 text-[#315bd1]" />
+              <ShieldCheck className="h-5 w-5 text-[#7c3aed]" />
             </div>
 
             <div>

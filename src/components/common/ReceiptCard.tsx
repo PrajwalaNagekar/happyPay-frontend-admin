@@ -36,8 +36,8 @@ export default function ReceiptCard({
       defaultMessage: "Your transaction is currently being processed.",
     },
     failed: {
-      iconClass: "bg-red-50 text-red-600",
-      titleClass: "text-red-600",
+      iconClass: "bg-purple-50 text-purple-600",
+      titleClass: "text-purple-600",
       defaultMessage: "Your transaction could not be completed.",
     },
   };

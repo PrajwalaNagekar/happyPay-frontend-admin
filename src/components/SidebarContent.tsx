@@ -11,6 +11,8 @@ import {
   Fingerprint,
   Send,
   Banknote,
+  IdCard,
+  QrCode,
   ChevronRight,
 } from "lucide-react";
 
@@ -45,9 +47,9 @@ const SidebarContent = ({
   return (
     <div className="flex h-full w-full flex-col bg-white text-[#1f2937]">
       {/* BRAND */}
-      <div className="flex h-[76px] shrink-0 items-center border-b border-[#e5e7eb] px-5">
+      <div className="hp-retailer-brand flex h-[76px] shrink-0 items-center border-b border-[#f1d9dd] px-5">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#172033]">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#7c3aed]">
             <span className="text-base font-bold text-white">H</span>
           </div>
 
@@ -56,7 +58,7 @@ const SidebarContent = ({
               HappyPay
             </h1>
 
-            <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.16em] text-[#8992a3]">
+            <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.16em] text-[#a05b67]">
               Retailer Portal
             </p>
           </div>
@@ -84,7 +86,8 @@ const SidebarContent = ({
           <SidebarItem
             label="Wallet"
             icon={<Wallet />}
-            onClick={onNavigate}
+            active={isActive("/retailer/wallet")}
+            onClick={() => goTo("/retailer/wallet")}
           />
         </SidebarSection>
 
@@ -109,6 +112,20 @@ const SidebarContent = ({
             icon={<Banknote />}
             active={isActive("/retailer/cms")}
             onClick={() => goTo("/retailer/cms")}
+          />
+
+          <SidebarItem
+            label="Aadhaar Pay"
+            icon={<IdCard />}
+            active={isActive("/retailer/aadhaar-pay")}
+            onClick={() => goTo("/retailer/aadhaar-pay")}
+          />
+
+          <SidebarItem
+            label="UPI Cash Point"
+            icon={<QrCode />}
+            active={isActive("/retailer/upi-cash-point")}
+            onClick={() => goTo("/retailer/upi-cash-point")}
           />
         </SidebarSection>
 
@@ -210,16 +227,16 @@ const SidebarItem = ({
       onClick={onClick}
       className={`group flex h-[46px] w-full items-center justify-between rounded-lg px-3 transition-all duration-200 ${
         active
-          ? "bg-[#172033] text-white shadow-[0_6px_16px_rgba(23,32,51,0.18)]"
-          : "text-[#6b7280] hover:bg-[#f7f7f7] hover:text-[#1f2937]"
+          ? "bg-[#7c3aed] text-white shadow-[0_6px_16px_rgba(124,58,237,0.2)]"
+          : "text-[#6b7280] hover:bg-[#f8f5ff] hover:text-[#1f2937]"
       }`}
     >
       <div className="flex min-w-0 items-center gap-3">
         <div
           className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
             active
-              ? "bg-white/10 text-white"
-              : "text-[#9ca3af] group-hover:text-[#4b5563]"
+              ? "bg-white/15 text-white"
+              : "text-[#9ca3af] group-hover:text-[#7c3aed]"
           }`}
         >
           <span className="[&>svg]:h-[16px] [&>svg]:w-[16px]">

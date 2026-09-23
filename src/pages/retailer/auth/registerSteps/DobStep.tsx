@@ -30,7 +30,7 @@ const DobStep = () => {
             }
             placeholder="DD/MM/YYYY"
             inputMode="numeric"
-            className="h-[52px] w-full rounded-xl border border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-5 text-sm font-medium text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-2 focus:ring-[#315bd1]/10"
+            className="h-[52px] w-full rounded-xl border border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-5 text-sm font-medium text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#7c3aed] focus:bg-white focus:ring-2 focus:ring-[#7c3aed]/10"
           />
         </div>
       </div>
@@ -55,7 +55,7 @@ const DobStep = () => {
       <div className="flex items-start gap-3 rounded-xl border border-[#d9e0f5] bg-[#f1f4ff] px-4 py-3.5">
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#e4e9ff]">
           <ArrowLeftRight
-            className="h-5 w-5 text-[#315bd1]"
+            className="h-5 w-5 text-[#7c3aed]"
             strokeWidth={2}
           />
         </div>

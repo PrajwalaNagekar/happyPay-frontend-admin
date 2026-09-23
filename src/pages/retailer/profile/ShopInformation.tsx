@@ -233,7 +233,7 @@ export default function ShopInformation() {
   };
 
   return (
-    <div className="px-1 pb-6">
+    <div className="px-4 pb-6 sm:px-6">
       {/* ========================================================
           HIDDEN FILE INPUT
       ======================================================== */}
@@ -251,7 +251,7 @@ export default function ShopInformation() {
             HEADER
         ====================================================== */}
 
-        <header className="mb-2 flex items-center justify-between py-3">
+        <header className="mb-4 flex min-h-14 items-center justify-between rounded-2xl border border-white/80 bg-white/90 px-3 py-2 shadow-[0_8px_24px_-18px_rgba(15,23,42,0.4)] backdrop-blur-md">
           <button
             type="button"
             onClick={() =>
@@ -271,7 +271,7 @@ export default function ShopInformation() {
         </header>
 
         <main
-          className="space-y-5 pt-3"
+          className="space-y-6"
           onClick={closeDropdowns}
         >
           {/* ====================================================
@@ -280,7 +280,7 @@ export default function ShopInformation() {
 
           <section className="rounded-[22px] border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
             <div className="flex items-center gap-4">
-              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#e8f1f5] text-[#315bd1]">
+              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#e8f1f5] text-[#7c3aed]">
                 <Store size={30} />
               </div>
 
@@ -328,7 +328,7 @@ export default function ShopInformation() {
               Shop Name
             </label>
 
-            <div className="mt-3 flex min-h-12 items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
+            <div className="mt-3 flex min-h-12 items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#7c3aed] focus-within:ring-1 focus-within:ring-[#7c3aed]">
               <Store
                 size={27}
                 className="shrink-0 text-slate-400"
@@ -368,7 +368,7 @@ export default function ShopInformation() {
                 }}
                 className={`flex min-h-12 w-full items-center gap-4 rounded-2xl border bg-slate-50/80 px-5 text-left ${
                   showCategoryDropdown
-                    ? "border-[#315bd1] ring-1 ring-[#315bd1]"
+                    ? "border-[#7c3aed] ring-1 ring-[#7c3aed]"
                     : "border-slate-200"
                 }`}
               >
@@ -441,7 +441,7 @@ export default function ShopInformation() {
                 }}
                 className={`flex min-h-12 w-full items-center gap-4 rounded-2xl border bg-slate-50/80 px-5 text-left ${
                   showPropertyDropdown
-                    ? "border-[#315bd1] ring-1 ring-[#315bd1]"
+                    ? "border-[#7c3aed] ring-1 ring-[#7c3aed]"
                     : "border-slate-200"
                 }`}
               >
@@ -525,7 +525,7 @@ export default function ShopInformation() {
               </span>
             </div>
 
-            <div className="mt-3 flex min-h-12 items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
+            <div className="mt-3 flex min-h-12 items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#7c3aed] focus-within:ring-1 focus-within:ring-[#7c3aed]">
               <Mail
                 size={27}
                 className="shrink-0 text-slate-400"
@@ -560,7 +560,7 @@ export default function ShopInformation() {
               </span>
             </div>
 
-            <div className="mt-3 flex min-h-12 items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
+            <div className="mt-3 flex min-h-12 items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#7c3aed] focus-within:ring-1 focus-within:ring-[#7c3aed]">
               <Phone
                 size={27}
                 className="shrink-0 text-slate-400"
@@ -607,7 +607,7 @@ export default function ShopInformation() {
               Complete Shop Address
             </label>
 
-            <div className="mt-3 flex min-h-14 items-start gap-4 rounded-2xl border border-slate-200 bg-slate-50/80 px-5 py-4 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
+            <div className="mt-3 flex min-h-14 items-start gap-4 rounded-2xl border border-slate-200 bg-slate-50/80 px-5 py-4 transition focus-within:border-[#7c3aed] focus-within:ring-1 focus-within:ring-[#7c3aed]">
               <MapPin
                 size={28}
                 className="mt-1 shrink-0 text-slate-400"
@@ -635,7 +635,7 @@ export default function ShopInformation() {
                   Pincode
                 </label>
 
-                <div className="mt-3 flex min-h-12 items-center rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
+                <div className="mt-3 flex min-h-12 items-center rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#7c3aed] focus-within:ring-1 focus-within:ring-[#7c3aed]">
                   <input
                     type="text"
                     value={pincode}
@@ -662,7 +662,7 @@ export default function ShopInformation() {
                   City
                 </label>
 
-                <div className="mt-3 flex min-h-12 items-center rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
+                <div className="mt-3 flex min-h-12 items-center rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#7c3aed] focus-within:ring-1 focus-within:ring-[#7c3aed]">
                   <input
                     type="text"
                     value={city}
@@ -683,7 +683,7 @@ export default function ShopInformation() {
                   State
                 </label>
 
-                <div className="mt-3 flex min-h-12 items-center rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
+                <div className="mt-3 flex min-h-12 items-center rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#7c3aed] focus-within:ring-1 focus-within:ring-[#7c3aed]">
                   <input
                     type="text"
                     value={state}
@@ -703,9 +703,9 @@ export default function ShopInformation() {
             <button
               type="button"
               disabled={isSaving}
-              className="mt-5 flex min-h-14 w-full items-center gap-4 rounded-2xl border border-[#c8d2eb] bg-[#eef2ff] px-5 text-left transition hover:bg-[#e7ecff] disabled:cursor-not-allowed disabled:opacity-70"
+              className="mt-5 flex min-h-14 w-full items-center gap-4 rounded-2xl border border-[#c8d2eb] bg-[#f8f5ff] px-5 text-left transition hover:bg-[#e7ecff] disabled:cursor-not-allowed disabled:opacity-70"
             >
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#d8e2ff] text-[#315bd1]">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#d8e2ff] text-[#7c3aed]">
                 <MapPinned size={27} />
               </div>
 
@@ -719,7 +719,7 @@ export default function ShopInformation() {
                 </p>
               </div>
 
-              <span className="text-3xl font-light text-[#315bd1]">
+              <span className="text-3xl font-light text-[#7c3aed]">
                 ›
               </span>
             </button>
@@ -774,7 +774,7 @@ export default function ShopInformation() {
                       handleReplace(label)
                     }
                     disabled={isSaving}
-                    className="shrink-0 text-sm font-bold text-[#315bd1] disabled:opacity-50 sm:text-base"
+                    className="shrink-0 text-sm font-bold text-[#7c3aed] disabled:opacity-50 sm:text-base"
                   >
                     Replace
                   </button>
@@ -820,7 +820,7 @@ export default function ShopInformation() {
                 }}
                 className={`flex min-h-12 w-full items-center gap-4 rounded-2xl border bg-slate-50/80 px-5 text-left ${
                   showProofDropdown
-                    ? "border-[#315bd1] ring-1 ring-[#315bd1]"
+                    ? "border-[#7c3aed] ring-1 ring-[#7c3aed]"
                     : "border-slate-200"
                 }`}
               >
@@ -877,7 +877,7 @@ export default function ShopInformation() {
               GSTIN / Business Registration Number
             </label>
 
-            <div className="mt-3 flex min-h-12 items-center rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
+            <div className="mt-3 flex min-h-12 items-center rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#7c3aed] focus-within:ring-1 focus-within:ring-[#7c3aed]">
               <input
                 value={gstNumber}
                 onChange={(event) =>
@@ -915,7 +915,7 @@ export default function ShopInformation() {
                   handleReplace("GST Certificate")
                 }
                 disabled={isSaving}
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#315bd1] text-white transition hover:bg-[#274dbd] disabled:cursor-not-allowed disabled:opacity-60"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#7c3aed] text-white transition hover:bg-[#274dbd] disabled:cursor-not-allowed disabled:opacity-60"
                 aria-label="Replace business proof"
               >
                 <Upload size={22} />
@@ -949,7 +949,7 @@ export default function ShopInformation() {
               ${
                 isSaving
                   ? "cursor-wait bg-[#274dbd]"
-                  : "bg-[#315bd1] hover:bg-[#274dbd]"
+                  : "bg-[#7c3aed] hover:bg-[#274dbd]"
               }
             `}
           >

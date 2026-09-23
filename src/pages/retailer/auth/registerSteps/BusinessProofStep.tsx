@@ -49,7 +49,7 @@ const BusinessProofStep = () => {
       <button
         type="button"
         onClick={() => handlePhotoAction("Inside Shop")}
-        className="group flex w-full items-center gap-4 rounded-xl border border-[#dfe1e6] bg-[#fafbfd] px-4 py-4 text-left transition hover:border-[#315bd1] hover:bg-[#f7f9ff]"
+        className="group flex w-full items-center gap-4 rounded-xl border border-[#dfe1e6] bg-[#fafbfd] px-4 py-4 text-left transition hover:border-[#7c3aed] hover:bg-[#f7f9ff]"
       >
         <div className="flex h-12 w-14 shrink-0 items-center justify-center rounded-xl bg-[#e7f8f3]">
           <Camera
@@ -80,7 +80,7 @@ const BusinessProofStep = () => {
       <button
         type="button"
         onClick={() => handlePhotoAction("Outside Shop")}
-        className="group flex w-full items-center gap-4 rounded-xl border border-[#dfe1e6] bg-[#fafbfd] px-4 py-4 text-left transition hover:border-[#315bd1] hover:bg-[#f7f9ff]"
+        className="group flex w-full items-center gap-4 rounded-xl border border-[#dfe1e6] bg-[#fafbfd] px-4 py-4 text-left transition hover:border-[#7c3aed] hover:bg-[#f7f9ff]"
       >
         <div className="flex h-12 w-14 shrink-0 items-center justify-center rounded-xl bg-[#e7f8f3]">
           <Camera
@@ -111,7 +111,7 @@ const BusinessProofStep = () => {
       <button
         type="button"
         onClick={() => handlePhotoAction("Shop Location")}
-        className="group flex w-full items-center gap-4 rounded-xl border border-[#dfe1e6] bg-[#fafbfd] px-4 py-4 text-left transition hover:border-[#315bd1] hover:bg-[#f7f9ff]"
+        className="group flex w-full items-center gap-4 rounded-xl border border-[#dfe1e6] bg-[#fafbfd] px-4 py-4 text-left transition hover:border-[#7c3aed] hover:bg-[#f7f9ff]"
       >
         <div className="flex h-12 w-14 shrink-0 items-center justify-center rounded-xl bg-[#e7f8f3]">
           <Camera
@@ -155,9 +155,9 @@ const BusinessProofStep = () => {
             onChange={(event) =>
               setBusinessProof(event.target.value)
             }
-            className={`h-[52px] w-full appearance-none rounded-xl border bg-[#fafbfd] pl-11 pr-12 text-sm font-medium outline-none transition focus:border-[#315bd1] focus:bg-white focus:ring-2 focus:ring-[#315bd1]/10 ${
+            className={`h-[52px] w-full appearance-none rounded-xl border bg-[#fafbfd] pl-11 pr-12 text-sm font-medium outline-none transition focus:border-[#7c3aed] focus:bg-white focus:ring-2 focus:ring-[#7c3aed]/10 ${
               businessProof
-                ? "border-[#315bd1] text-[#172033]"
+                ? "border-[#7c3aed] text-[#172033]"
                 : "border-[#dfe1e6] text-[#a1a8b5]"
             }`}
           >
@@ -186,7 +186,7 @@ const BusinessProofStep = () => {
         className={`group flex w-full items-center gap-4 rounded-xl border px-4 py-4 text-left transition ${
           businessProofFile
             ? "border-[#b9e8da] bg-[#f4fcf9]"
-            : "border-[#dfe1e6] bg-[#fafbfd] hover:border-[#315bd1] hover:bg-[#f7f9ff]"
+            : "border-[#dfe1e6] bg-[#fafbfd] hover:border-[#7c3aed] hover:bg-[#f7f9ff]"
         }`}
       >
         <div
@@ -203,7 +203,7 @@ const BusinessProofStep = () => {
             />
           ) : (
             <FileText
-              className="h-5 w-5 text-[#315bd1]"
+              className="h-5 w-5 text-[#7c3aed]"
               strokeWidth={2}
             />
           )}
@@ -229,7 +229,7 @@ const BusinessProofStep = () => {
 
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#eef1ff] transition group-hover:bg-[#e4e9ff]">
           <Upload
-            className="h-4.5 w-4.5 text-[#315bd1]"
+            className="h-4.5 w-4.5 text-[#7c3aed]"
             strokeWidth={2.4}
           />
         </div>

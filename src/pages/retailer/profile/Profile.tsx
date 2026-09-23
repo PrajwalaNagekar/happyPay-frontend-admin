@@ -40,7 +40,7 @@ const Profile = () => {
   ];
 
   return (
-    <div className="px-1 py-1">
+    <div className="px-4 py-4 sm:px-6">
       <div className="mx-auto w-full max-w-5xl">
 
         {/* Header */}
@@ -55,9 +55,9 @@ const Profile = () => {
         </div>
 
         {/* Profile Overview */}
-        {/* Only the color/theme of this card is changed */}
-        <section className="hp-brand mb-5 rounded-[22px] p-5 text-white shadow-[0_16px_36px_-16px_rgba(49,91,209,0.55)]">
-          <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+        <section className="hp-retailer-gradient-card relative mb-6 overflow-hidden rounded-[1.5rem] p-6 text-white">
+          <div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
+          <div className="relative z-10 flex flex-col gap-5 sm:flex-row sm:items-center">
 
             {/* Avatar */}
             <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-white/15">
@@ -114,26 +114,26 @@ const Profile = () => {
                   key={option.path}
                   type="button"
                   onClick={() => navigate(option.path)}
-                  className="hp-card group flex w-full items-center gap-3 rounded-2xl p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-[#315bd1]/30 hover:shadow-[0_14px_28px_-18px_rgba(49,91,209,0.4)]"
+                  className="hp-retailer-card group flex w-full items-center gap-4 rounded-[1.25rem] p-4 text-left transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7c3aed]/50"
                 >
                   {/* Icon */}
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#edf1fc] transition-colors duration-200 group-hover:bg-[#315bd1]">
-                    <Icon className="h-4 w-4 text-[#315bd1] transition-colors duration-200 group-hover:text-white" />
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#f8f5ff] transition-colors duration-300 group-hover:bg-[#7c3aed]">
+                    <Icon className="h-5 w-5 text-[#7c3aed] transition-colors duration-300 group-hover:text-white" />
                   </div>
 
                   {/* Content */}
                   <div className="min-w-0 flex-1">
-                    <h3 className="text-sm font-semibold text-slate-900">
+                    <h3 className="text-[15px] font-bold text-[#0f172a]">
                       {option.title}
                     </h3>
 
-                    <p className="mt-1 text-xs leading-5 text-slate-500">
+                    <p className="mt-1 text-xs leading-5 text-[#64748b]">
                       {option.description}
                     </p>
                   </div>
 
                   {/* Arrow */}
-                  <ChevronRight className="h-5 w-5 shrink-0 text-slate-300 transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-[#315bd1]" />
+                  <ChevronRight className="h-5 w-5 shrink-0 text-slate-300 transition-all duration-300 group-hover:translate-x-1 group-hover:text-[#7c3aed]" />
                 </button>
               );
             })}

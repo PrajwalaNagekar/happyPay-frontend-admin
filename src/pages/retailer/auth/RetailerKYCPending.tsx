@@ -9,7 +9,7 @@ const RetailerKycPending = () => {
   };
 
   return (
-    <div className="hp-canvas flex min-h-screen items-center justify-center px-4">
+    <div className="hp-retailer-canvas flex min-h-screen items-center justify-center px-4">
       <div className="w-full max-w-md rounded-[24px] border border-white/80 bg-white p-8 text-center shadow-[0_24px_60px_-28px_rgba(15,23,42,0.45)]">
         <div className="flex justify-center mb-6">
           <div className="flex h-20 w-20 items-center justify-center rounded-full bg-amber-50 ring-4 ring-amber-100">

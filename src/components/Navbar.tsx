@@ -1,18 +1,27 @@
-import { Bell, Headphones, Search } from "lucide-react";
+import { Bell, Headphones, Menu, Search } from "lucide-react";
 
-const Navbar = () => {
+const Navbar = ({ onOpenSidebar }: { onOpenSidebar?: () => void }) => {
   return (
-    <header className="flex h-16 items-center justify-between gap-3 rounded-[18px] border border-white/80 bg-white/90 px-3 shadow-[0_10px_28px_-20px_rgba(15,23,42,0.45)] backdrop-blur-md sm:px-4 lg:px-5">
+    <header className="hp-retailer-navbar flex h-16 items-center justify-between gap-3 rounded-[18px] border border-white/80 bg-white/95 px-3 shadow-[0_10px_28px_-20px_rgba(15,23,42,0.28)] backdrop-blur-md sm:px-4 lg:px-5">
       {/* LEFT */}
       <div className="flex min-w-0 items-center gap-3">
+        <button
+          type="button"
+          onClick={onOpenSidebar}
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-slate-600 transition hover:bg-[#f8f5ff] hover:text-[#7c3aed] lg:hidden"
+          aria-label="Open retailer navigation"
+        >
+          <Menu className="h-5 w-5" />
+        </button>
+
         <div className="flex min-w-0 items-center gap-3">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#a7aebc]">
               Retailer workspace
             </p>
 
-            <p className="truncate text-sm font-bold tracking-tight text-slate-900">
-              HappyPay operations
+            <p className="truncate text-sm font-bold tracking-tight text-[#171717]">
+              HappyPay banking workspace
             </p>
           </div>
         </div>
@@ -40,7 +49,7 @@ const Navbar = () => {
         {/* SUPPORT */}
         <button
           type="button"
-          className="flex h-10 w-10 items-center justify-center rounded-xl text-slate-500 transition hover:bg-slate-100 hover:text-[#315bd1]"
+          className="flex h-10 w-10 items-center justify-center rounded-xl text-slate-500 transition hover:bg-[#f8f5ff] hover:text-[#7c3aed]"
           aria-label="Support"
         >
           <Headphones className="h-[18px] w-[18px]" />
@@ -49,7 +58,7 @@ const Navbar = () => {
         {/* NOTIFICATIONS */}
         <button
           type="button"
-          className="relative flex h-10 w-10 items-center justify-center rounded-xl text-slate-500 transition hover:bg-slate-100 hover:text-[#315bd1]"
+          className="relative flex h-10 w-10 items-center justify-center rounded-xl text-slate-500 transition hover:bg-[#f8f5ff] hover:text-[#7c3aed]"
           aria-label="Notifications"
         >
           <Bell className="h-[18px] w-[18px]" />
@@ -59,7 +68,7 @@ const Navbar = () => {
 
         {/* RETAILER PROFILE */}
         <div className="ml-1 hidden h-10 items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-2 pr-3 sm:flex">
-          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#edf1fc] text-xs font-bold text-[#315bd1]">
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#f8f5ff] text-xs font-bold text-[#7c3aed]">
             HP
           </div>
 

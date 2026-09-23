@@ -1,8 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL;
-
-if (!API_URL) {
-  throw new Error("VITE_API_URL is not defined");
-}
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:7000";
 
 interface ApiOptions extends RequestInit {
   token?: string;
@@ -30,10 +26,22 @@ export async function apiClient<T>(
     },
   });
 
-  const data = await response.json();
+  const contentType = response.headers.get("content-type") || "";
+  const rawBody = await response.text();
+  let data: T | { message?: string };
+
+  if (contentType.includes("application/json")) {
+    data = rawBody ? (JSON.parse(rawBody) as T) : ({} as T);
+  } else {
+    throw new Error(
+      response.status === 404
+        ? "API endpoint was not found. Restart the backend server."
+        : "The backend returned an unexpected response. Check that the backend is running.",
+    );
+  }
 
   if (!response.ok) {
-    throw new Error(data?.message || "Something went wrong");
+    throw new Error((data as { message?: string })?.message || "Something went wrong");
   }
 
   return data;

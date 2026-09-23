@@ -81,9 +81,9 @@ const BankDetailsStep = () => {
             onChange={(event) =>
               setBankName(event.target.value)
             }
-            className={`h-[54px] w-full appearance-none rounded-xl border bg-[#fafbfd] pl-12 pr-12 text-sm outline-none transition focus:border-[#315bd1] focus:bg-white focus:ring-2 focus:ring-[#315bd1]/10 ${
+            className={`h-[54px] w-full appearance-none rounded-xl border bg-[#fafbfd] pl-12 pr-12 text-sm outline-none transition focus:border-[#7c3aed] focus:bg-white focus:ring-2 focus:ring-[#7c3aed]/10 ${
               bankName
-                ? "border-[#315bd1] font-medium text-[#172033]"
+                ? "border-[#7c3aed] font-medium text-[#172033]"
                 : "border-[#dfe1e6] text-[#a1a8b5]"
             }`}
           >
@@ -124,9 +124,9 @@ const BankDetailsStep = () => {
             placeholder="Enter IFSC code"
             maxLength={11}
             autoComplete="off"
-            className={`h-[54px] w-full rounded-xl border bg-[#fafbfd] pl-12 pr-5 text-sm uppercase tracking-[0.04em] text-[#172033] outline-none transition placeholder:normal-case placeholder:tracking-normal placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-2 focus:ring-[#315bd1]/10 ${
+            className={`h-[54px] w-full rounded-xl border bg-[#fafbfd] pl-12 pr-5 text-sm uppercase tracking-[0.04em] text-[#172033] outline-none transition placeholder:normal-case placeholder:tracking-normal placeholder:text-[#a1a8b5] focus:border-[#7c3aed] focus:bg-white focus:ring-2 focus:ring-[#7c3aed]/10 ${
               ifscCode
-                ? "border-[#315bd1]"
+                ? "border-[#7c3aed]"
                 : "border-[#dfe1e6]"
             }`}
           />
@@ -158,9 +158,9 @@ const BankDetailsStep = () => {
             maxLength={18}
             inputMode="numeric"
             autoComplete="off"
-            className={`h-[54px] w-full rounded-xl border bg-[#fafbfd] pl-12 pr-5 text-sm tracking-[0.08em] text-[#172033] outline-none transition placeholder:tracking-normal placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-2 focus:ring-[#315bd1]/10 ${
+            className={`h-[54px] w-full rounded-xl border bg-[#fafbfd] pl-12 pr-5 text-sm tracking-[0.08em] text-[#172033] outline-none transition placeholder:tracking-normal placeholder:text-[#a1a8b5] focus:border-[#7c3aed] focus:bg-white focus:ring-2 focus:ring-[#7c3aed]/10 ${
               accountNumber
-                ? "border-[#315bd1]"
+                ? "border-[#7c3aed]"
                 : "border-[#dfe1e6]"
             }`}
           />
@@ -187,7 +187,7 @@ const BankDetailsStep = () => {
             maxLength={18}
             inputMode="numeric"
             autoComplete="off"
-            className={`h-[54px] w-full rounded-xl border bg-[#fafbfd] pl-12 pr-12 text-sm tracking-[0.08em] text-[#172033] outline-none transition placeholder:tracking-normal placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-2 focus:ring-[#315bd1]/10 ${
+            className={`h-[54px] w-full rounded-xl border bg-[#fafbfd] pl-12 pr-12 text-sm tracking-[0.08em] text-[#172033] outline-none transition placeholder:tracking-normal placeholder:text-[#a1a8b5] focus:border-[#7c3aed] focus:bg-white focus:ring-2 focus:ring-[#7c3aed]/10 ${
               accountsMatch
                 ? "border-[#08ae82]"
                 : confirmAccountNumber
@@ -216,7 +216,7 @@ const BankDetailsStep = () => {
       <div className="flex items-start gap-3 rounded-xl border border-[#d9e0f5] bg-[#f1f4ff] px-4 py-4">
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#e4e9ff]">
           <ShieldCheck
-            className="h-5 w-5 text-[#315bd1]"
+            className="h-5 w-5 text-[#7c3aed]"
             strokeWidth={2}
           />
         </div>

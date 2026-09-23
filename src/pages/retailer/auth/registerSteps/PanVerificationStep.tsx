@@ -46,7 +46,7 @@ const PanVerificationStep = () => {
         <button
           type="button"
           onClick={() => fileInputRef.current?.click()}
-          className="group flex min-h-[92px] w-full items-center gap-4 rounded-xl border-2 border-dashed border-[#dfe1e6] bg-[#fafbfd] px-4 py-4 text-left transition hover:border-[#315bd1] hover:bg-[#f7f9ff]"
+          className="group flex min-h-[92px] w-full items-center gap-4 rounded-xl border-2 border-dashed border-[#dfe1e6] bg-[#fafbfd] px-4 py-4 text-left transition hover:border-[#7c3aed] hover:bg-[#f7f9ff]"
         >
           <div
             className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${
@@ -60,7 +60,7 @@ const PanVerificationStep = () => {
               />
             ) : (
               <CreditCard
-                className="h-6 w-6 text-[#315bd1]"
+                className="h-6 w-6 text-[#7c3aed]"
                 strokeWidth={2}
               />
             )}
@@ -86,7 +86,7 @@ const PanVerificationStep = () => {
 
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#eef1ff] transition group-hover:bg-[#e4e9ff]">
             <Upload
-              className="h-5 w-5 text-[#315bd1]"
+              className="h-5 w-5 text-[#7c3aed]"
               strokeWidth={2.3}
             />
           </div>
@@ -118,7 +118,7 @@ const PanVerificationStep = () => {
             }
             placeholder="PAN number"
             maxLength={10}
-            className="h-[52px] w-full rounded-xl border border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-5 text-sm font-medium tracking-wide text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-2 focus:ring-[#315bd1]/10"
+            className="h-[52px] w-full rounded-xl border border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-5 text-sm font-medium tracking-wide text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#7c3aed] focus:bg-white focus:ring-2 focus:ring-[#7c3aed]/10"
           />
         </div>
       </div>
@@ -142,7 +142,7 @@ const PanVerificationStep = () => {
               setNameAsPerPan(event.target.value)
             }
             placeholder="Name extracted from PAN"
-            className="h-[52px] w-full rounded-xl border border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-5 text-sm font-medium text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-2 focus:ring-[#315bd1]/10"
+            className="h-[52px] w-full rounded-xl border border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-5 text-sm font-medium text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#7c3aed] focus:bg-white focus:ring-2 focus:ring-[#7c3aed]/10"
           />
         </div>
       </div>
@@ -166,7 +166,7 @@ const PanVerificationStep = () => {
               setDateOfBirth(event.target.value)
             }
             placeholder="DD/MM/YYYY"
-            className="h-[52px] w-full rounded-xl border border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-5 text-sm font-medium text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-2 focus:ring-[#315bd1]/10"
+            className="h-[52px] w-full rounded-xl border border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-5 text-sm font-medium text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#7c3aed] focus:bg-white focus:ring-2 focus:ring-[#7c3aed]/10"
           />
         </div>
       </div>
@@ -190,7 +190,7 @@ const PanVerificationStep = () => {
               setFatherName(event.target.value)
             }
             placeholder="Father's name"
-            className="h-[52px] w-full rounded-xl border border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-5 text-sm font-medium text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-2 focus:ring-[#315bd1]/10"
+            className="h-[52px] w-full rounded-xl border border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-5 text-sm font-medium text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#7c3aed] focus:bg-white focus:ring-2 focus:ring-[#7c3aed]/10"
           />
         </div>
       </div>
@@ -199,13 +199,13 @@ const PanVerificationStep = () => {
       <div className="flex items-start gap-3 rounded-xl border border-[#d9e0f5] bg-[#f1f4ff] px-4 py-3.5">
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#e4e9ff]">
           <Sparkles
-            className="h-4.5 w-4.5 text-[#315bd1]"
+            className="h-4.5 w-4.5 text-[#7c3aed]"
             strokeWidth={2}
           />
         </div>
 
         <div>
-          <p className="text-sm font-semibold text-[#315bd1]">
+          <p className="text-sm font-semibold text-[#7c3aed]">
             Automatic PAN verification
           </p>
 

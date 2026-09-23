@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Fingerprint,
   Send,
@@ -13,23 +13,44 @@ import {
   Smartphone,
   Tv,
   CreditCard,
+  QrCode,
 } from "lucide-react";
+import { getWalletBalance, setWalletBalance } from "../../utils/wallet";
 import { useNavigate } from "react-router-dom";
 
 type ServicePath =
   | "/retailer/aeps"
   | "/retailer/dmt"
-  | "/retailer/cms";
+  | "/retailer/cms"
+  | "/retailer/aadhaar-pay"
+  | "/retailer/upi-cash-point";
 
 type PendingNavigation = ServicePath | null;
 
-type ComingSoonService = "Mobile Recharge" | "DTH" | "PAN Services";
+type ComingSoonService =
+  | "Mobile Recharge"
+  | "DTH"
+  | "PAN Services";
+
+type QuickService = {
+  title: string;
+  description: string;
+  icon: typeof Fingerprint;
+  iconClass: string;
+  bgClass: string;
+  hoverClass: string;
+  cardClass: string;
+  path?: ServicePath;
+  comingSoon?: boolean;
+};
 
 const getToday = (): string => {
   const now = new Date();
+
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, "0");
   const day = String(now.getDate()).padStart(2, "0");
+
   return `${year}-${month}-${day}`;
 };
 
@@ -47,29 +68,57 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const retailerMobile = getLoggedInRetailerMobile();
-  const twoFAStorageKey = `happypay_2fa_completed_${retailerMobile}`;
+
+  const twoFAStorageKey =
+    `happypay_2fa_completed_${retailerMobile}`;
 
   const [activeBanner, setActiveBanner] = useState(0);
   const [showBalance, setShowBalance] = useState(true);
-  const [walletBalance, setWalletBalance] = useState(24580.5);
 
-  const [showAddMoneyModal, setShowAddMoneyModal] = useState(false);
-  const [addMoneyAmount, setAddMoneyAmount] = useState("500");
-  const [showMoneyAddedToast, setShowMoneyAddedToast] = useState(false);
-  const [lastAddedAmount, setLastAddedAmount] = useState(0);
+  const [walletBalance, setWalletBalanceState] =
+    useState(getWalletBalance);
 
-  const [is2FACompleted, setIs2FACompleted] = useState(false);
-  const [show2FAModal, setShow2FAModal] = useState(false);
-  const [isAuthenticating, setIsAuthenticating] = useState(false);
-  const [show2FASuccess, setShow2FASuccess] = useState(false);
-  const [show2FAToast, setShow2FAToast] = useState(false);
+  const [showAddMoneyModal, setShowAddMoneyModal] =
+    useState(false);
+
+  const [addMoneyAmount, setAddMoneyAmount] =
+    useState("500");
+
+  const [showMoneyAddedToast, setShowMoneyAddedToast] =
+    useState(false);
+
+  const [lastAddedAmount, setLastAddedAmount] =
+    useState(0);
+
+  const [is2FACompleted, setIs2FACompleted] =
+    useState(false);
+
+  const [show2FAModal, setShow2FAModal] =
+    useState(false);
+
+  const [isAuthenticating, setIsAuthenticating] =
+    useState(false);
+
+  const [show2FASuccess, setShow2FASuccess] =
+    useState(false);
+
+  const [show2FAToast, setShow2FAToast] =
+    useState(false);
+
   const [pendingNavigation, setPendingNavigation] =
     useState<PendingNavigation>(null);
+
   const [aadhaar, setAadhaar] = useState("");
 
-  const [showComingSoonModal, setShowComingSoonModal] = useState(false);
+  const [showComingSoonModal, setShowComingSoonModal] =
+    useState(false);
+
   const [comingSoonService, setComingSoonService] =
     useState<ComingSoonService | null>(null);
+
+  /* =========================================================
+     BANNERS
+  ========================================================= */
 
   const banners = useMemo(
     () => [
@@ -81,35 +130,42 @@ const Dashboard = () => {
     [],
   );
 
+  /* =========================================================
+     MASKED MOBILE
+  ========================================================= */
+
   const maskedMobile =
     retailerMobile.length === 10
-      ? `+91 ${retailerMobile.slice(0, 2)}XXXXXX${retailerMobile.slice(-2)}`
+      ? `+91 ${retailerMobile.slice(
+          0,
+          2,
+        )}XXXXXX${retailerMobile.slice(-2)}`
       : "Registered mobile number";
 
-  const checkDaily2FA = useCallback(() => {
-    if (!retailerMobile) {
-      setIs2FACompleted(false);
-      setShow2FAModal(false);
-      return;
-    }
-
-    const completedDate = localStorage.getItem(twoFAStorageKey);
-
-    if (completedDate === getToday()) {
-      setIs2FACompleted(true);
-      setShow2FAModal(false);
-    } else {
-      setIs2FACompleted(false);
-      setShow2FAModal(true);
-    }
-  }, [
-    retailerMobile,
-    twoFAStorageKey,
-    setIs2FACompleted,
-    setShow2FAModal,
-  ]);
+  /* =========================================================
+     DAILY 2FA CHECK
+  ========================================================= */
 
   useEffect(() => {
+    const checkDaily2FA = () => {
+      if (!retailerMobile) {
+        setIs2FACompleted(false);
+        setShow2FAModal(false);
+        return;
+      }
+
+      const completedDate =
+        localStorage.getItem(twoFAStorageKey);
+
+      if (completedDate === getToday()) {
+        setIs2FACompleted(true);
+        setShow2FAModal(false);
+      } else {
+        setIs2FACompleted(false);
+        setShow2FAModal(true);
+      }
+    };
+
     const initialCheck = window.setTimeout(() => {
       checkDaily2FA();
     }, 0);
@@ -122,12 +178,17 @@ const Dashboard = () => {
       window.clearTimeout(initialCheck);
       window.clearInterval(interval);
     };
-  }, [checkDaily2FA]);
+  }, [retailerMobile, twoFAStorageKey]);
+
+  /* =========================================================
+     BANNER SCROLL
+  ========================================================= */
 
   const handleBannerScroll = (
     event: React.UIEvent<HTMLDivElement>,
   ) => {
     const container = event.currentTarget;
+
     const children = Array.from(
       container.children,
     ) as HTMLElement[];
@@ -156,6 +217,7 @@ const Dashboard = () => {
   const goToBanner = (index: number) => {
     const container =
       document.getElementById("dashboard-banners");
+
     const banner = document.getElementById(
       `dashboard-banner-${index}`,
     );
@@ -172,6 +234,10 @@ const Dashboard = () => {
     setActiveBanner(index);
   };
 
+  /* =========================================================
+     AADHAAR
+  ========================================================= */
+
   const handleAadhaarChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
@@ -181,6 +247,10 @@ const Dashboard = () => {
 
     setAadhaar(value);
   };
+
+  /* =========================================================
+     SERVICE NAVIGATION
+  ========================================================= */
 
   const handleServiceClick = (path: ServicePath) => {
     if (is2FACompleted) {
@@ -200,19 +270,15 @@ const Dashboard = () => {
     setShowComingSoonModal(true);
   };
 
+  /* =========================================================
+     START 2FA
+  ========================================================= */
+
   const handleStart2FA = () => {
     if (aadhaar.length !== 12) {
       return;
     }
 
-    /*
-     * Same biometric UX used in AEPS:
-     * show fingerprint capture first, then complete
-     * the authentication step.
-     *
-     * This is the existing AEPS-style frontend simulation.
-     * Aeps.tsx is not modified.
-     */
     setIsAuthenticating(true);
     setShow2FASuccess(false);
 
@@ -243,6 +309,10 @@ const Dashboard = () => {
     setPendingNavigation(null);
   };
 
+  /* =========================================================
+     REDIRECT AFTER 2FA
+  ========================================================= */
+
   useEffect(() => {
     if (!show2FASuccess) {
       return;
@@ -261,7 +331,15 @@ const Dashboard = () => {
     return () => {
       window.clearTimeout(timer);
     };
-  }, [show2FASuccess, pendingNavigation, navigate]);
+  }, [
+    show2FASuccess,
+    pendingNavigation,
+    navigate,
+  ]);
+
+  /* =========================================================
+     ADD MONEY
+  ========================================================= */
 
   const handleAddMoney = () => {
     const numericAmount = Number(addMoneyAmount);
@@ -270,7 +348,15 @@ const Dashboard = () => {
       return;
     }
 
-    setWalletBalance((previous) => previous + numericAmount);
+    setWalletBalanceState((previous) => {
+      const nextBalance =
+        previous + numericAmount;
+
+      setWalletBalance(nextBalance);
+
+      return nextBalance;
+    });
+
     setLastAddedAmount(numericAmount);
     setShowAddMoneyModal(false);
     setAddMoneyAmount("500");
@@ -291,69 +377,120 @@ const Dashboard = () => {
     setAddMoneyAmount(value);
   };
 
-  const quickServices = [
+  /* =========================================================
+     QUICK SERVICES
+  ========================================================= */
+
+  const quickServices: QuickService[] = [
     {
       title: "AEPS",
       description: "Aadhaar ATM",
       icon: Fingerprint,
-      iconClass: "text-[#315bd1]",
-      bgClass: "bg-[#edf1fc]",
-      path: "/retailer/aeps" as ServicePath,
+      iconClass: "text-[#2563eb]",
+      bgClass: "bg-[#e8f0ff]",
+      hoverClass: "hover:bg-[#e8f0ff]",
+      cardClass:
+        "bg-[#f4f7ff] border-[#dce6ff] hover:bg-[#edf3ff]",
+      path: "/retailer/aeps",
     },
     {
       title: "DMT",
       description: "Send Money",
       icon: Send,
-      iconClass: "text-[#7c3aed]",
-      bgClass: "bg-[#f3eaff]",
-      path: "/retailer/dmt" as ServicePath,
+      iconClass: "text-[#9333ea]",
+      bgClass: "bg-[#f3e8ff]",
+      hoverClass: "hover:bg-[#f3e8ff]",
+      cardClass:
+        "bg-[#faf5ff] border-[#eadcff] hover:bg-[#f7efff]",
+      path: "/retailer/dmt",
     },
     {
       title: "CMS",
       description: "Cash Management",
       icon: WalletCards,
-      iconClass: "text-[#08a873]",
-      bgClass: "bg-[#e5f8f1]",
-      path: "/retailer/cms" as ServicePath,
+      iconClass: "text-[#059669]",
+      bgClass: "bg-[#e5f8f0]",
+      hoverClass: "hover:bg-[#e5f8f0]",
+      cardClass:
+        "bg-[#f2fcf8] border-[#d8f3e8] hover:bg-[#eafaf3]",
+      path: "/retailer/cms",
+    },
+    {
+      title: "Aadhaar Pay",
+      description: "Aadhaar Payment",
+      icon: IdCard,
+      iconClass: "text-[#dc2626]",
+      bgClass: "bg-[#ffe8eb]",
+      hoverClass: "hover:bg-[#ffe8eb]",
+      cardClass:
+        "bg-[#fff5f6] border-[#ffe0e4] hover:bg-[#ffedef]",
+      path: "/retailer/aadhaar-pay",
+    },
+    {
+      title: "UPI Cash Point",
+      description: "UPI Withdrawal",
+      icon: QrCode,
+      iconClass: "text-[#0891b2]",
+      bgClass: "bg-[#e3f8fc]",
+      hoverClass: "hover:bg-[#e3f8fc]",
+      cardClass:
+        "bg-[#f2fcfe] border-[#d8f3f8] hover:bg-[#e8fafd]",
+      path: "/retailer/upi-cash-point",
     },
     {
       title: "Mobile Recharge",
       description: "Recharge Mobile",
       icon: Smartphone,
-      iconClass: "text-[#315bd1]",
-      bgClass: "bg-[#edf1fc]",
+      iconClass: "text-[#ea580c]",
+      bgClass: "bg-[#fff0e5]",
+      hoverClass: "hover:bg-[#fff0e5]",
+      cardClass:
+        "bg-[#fff8f2] border-[#ffe8d8] hover:bg-[#fff3e9]",
       comingSoon: true,
     },
     {
       title: "DTH",
       description: "DTH Recharge",
       icon: Tv,
-      iconClass: "text-[#7c3aed]",
-      bgClass: "bg-[#f3eaff]",
+      iconClass: "text-[#db2777]",
+      bgClass: "bg-[#fce7f3]",
+      hoverClass: "hover:bg-[#fce7f3]",
+      cardClass:
+        "bg-[#fff5fa] border-[#f9dce9] hover:bg-[#fff0f7]",
       comingSoon: true,
     },
     {
       title: "PAN Services",
       description: "PAN Card Services",
       icon: CreditCard,
-      iconClass: "text-[#08a873]",
-      bgClass: "bg-[#e5f8f1]",
+      iconClass: "text-[#ca8a04]",
+      bgClass: "bg-[#fef9c3]",
+      hoverClass: "hover:bg-[#fef9c3]",
+      cardClass:
+        "bg-[#fffef0] border-[#f7edaa] hover:bg-[#fffce0]",
       comingSoon: true,
     },
   ];
 
   return (
-    <div className="min-h-full bg-[#eef2f7]">
+    <div className="min-h-full bg-transparent">
+
+      {/* =====================================================
+          2FA TOAST
+      ====================================================== */}
+
       {show2FAToast && (
         <div className="fixed right-4 top-4 z-[100] animate-in slide-in-from-right-5 duration-300 sm:right-6 sm:top-6">
           <div className="flex items-center gap-3 rounded-2xl border border-[#dfe1e6] bg-white px-4 py-3.5 shadow-[0_18px_45px_-25px_rgba(23,32,51,0.35)]">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#e7f8f3]">
               <CheckCircle2 className="h-5 w-5 text-[#08ae82]" />
             </div>
+
             <div>
               <p className="text-sm font-bold text-[#172033]">
                 2FA Completed
               </p>
+
               <p className="text-xs text-[#8992a3]">
                 Your daily 2FA is successfully completed.
               </p>
@@ -362,19 +499,28 @@ const Dashboard = () => {
         </div>
       )}
 
+      {/* =====================================================
+          MONEY ADDED TOAST
+      ====================================================== */}
+
       {showMoneyAddedToast && (
         <div className="fixed right-4 top-4 z-[100] animate-in slide-in-from-right-5 duration-300 sm:right-6 sm:top-6">
           <div className="flex items-center gap-3 rounded-2xl border border-[#dfe1e6] bg-white px-4 py-3.5 shadow-[0_18px_45px_-25px_rgba(23,32,51,0.35)]">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#eef1ff]">
               <WalletCards className="h-5 w-5 text-[#315bd1]" />
             </div>
+
             <div>
               <p className="text-sm font-bold text-[#172033]">
                 Money Added!
               </p>
+
               <p className="text-xs text-[#8992a3]">
-                ₹{lastAddedAmount.toLocaleString("en-IN")} added to your
-                wallet.
+                ₹
+                {lastAddedAmount.toLocaleString(
+                  "en-IN",
+                )}{" "}
+                added to your wallet.
               </p>
             </div>
           </div>
@@ -383,7 +529,11 @@ const Dashboard = () => {
 
       <main className="px-3 pb-8 pt-4 sm:px-5 sm:pt-5">
         <div className="mx-auto w-full max-w-6xl">
-          {/* BANNER */}
+
+          {/* =================================================
+              BANNER
+          ================================================== */}
+
           <section>
             <div
               id="dashboard-banners"
@@ -400,7 +550,7 @@ const Dashboard = () => {
                   <img
                     src={banner}
                     alt={`HappyPay banner ${index + 1}`}
-                    className="h-[160px] w-full object-cover sm:h-[180px] lg:h-[200px]"
+                    className="h-[128px] w-full object-cover sm:h-[148px] lg:h-[164px]"
                   />
                 </div>
               ))}
@@ -423,97 +573,149 @@ const Dashboard = () => {
             </div>
           </section>
 
-          {/* BALANCE */}
-          <section className="mt-5 overflow-hidden rounded-[28px] bg-[#172033] p-5 text-white shadow-[0_22px_50px_-28px_rgba(23,32,51,0.5)] sm:p-6">
-            <div className="relative">
-              <div className="pointer-events-none absolute -right-8 -top-10 h-40 w-40 rounded-full bg-[#315bd1]/20" />
+          {/* =================================================
+              BALANCE + ACCOUNT SNAPSHOT
+          ================================================== */}
 
-              <div className="relative flex items-start justify-between gap-4">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <p className="text-xs font-medium text-white/65 sm:text-sm">
-                      Available Balance
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setShowBalance((previous) => !previous)
-                      }
-                      className="text-white/65 transition hover:text-white"
-                      aria-label={
-                        showBalance
-                          ? "Hide balance"
-                          : "Show balance"
-                      }
-                    >
-                      {showBalance ? (
-                        <Eye className="h-4 w-4" />
-                      ) : (
-                        <EyeOff className="h-4 w-4" />
-                      )}
-                    </button>
+          <div className="mt-5 grid gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(240px,0.6fr)]">
+
+            {/* =================================================
+                LIGHT PURPLE BALANCE CARD
+            ================================================== */}
+
+            <section className="relative overflow-hidden rounded-[1.5rem] border border-[#e5d9ff] bg-gradient-to-br from-[#eee7ff] via-[#e8ddff] to-[#f3edff] px-5 py-4 shadow-[0_12px_30px_-20px_rgba(124,58,237,0.25)] sm:px-6 sm:py-5">
+
+              {/* Decorative circles */}
+
+              <div className="pointer-events-none absolute -right-8 -top-10 h-24 w-24 rounded-full bg-[#d8c5ff]/40 blur-xl" />
+
+              <div className="pointer-events-none absolute -bottom-8 -left-6 h-20 w-20 rounded-full bg-[#d8c5ff]/30 blur-lg" />
+
+              <div className="relative z-10">
+
+                <div className="relative flex items-start justify-between gap-4">
+
+                  <div>
+                    <div className="flex items-center gap-2">
+
+                      <p className="text-[12px] font-semibold uppercase tracking-wide text-[#6d5a96] sm:text-xs">
+                        Available Balance
+                      </p>
+
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setShowBalance(
+                            (previous) =>
+                              !previous,
+                          )
+                        }
+                        className="text-[#8066b5] transition hover:text-[#63449b]"
+                        aria-label={
+                          showBalance
+                            ? "Hide balance"
+                            : "Show balance"
+                        }
+                      >
+                        {showBalance ? (
+                          <Eye className="h-4 w-4" />
+                        ) : (
+                          <EyeOff className="h-4 w-4" />
+                        )}
+                      </button>
+
+                    </div>
+
+                    <h2 className="mt-1 text-2xl font-bold tracking-tight text-[#5b21b6] sm:text-3xl">
+                      {showBalance
+                        ? `₹${walletBalance.toLocaleString(
+                            "en-IN",
+                            {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            },
+                          )}`
+                        : "₹••••••"}
+                    </h2>
                   </div>
 
-                  <h2 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">
-                    {showBalance
-                      ? `₹${walletBalance.toLocaleString("en-IN", {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}`
-                      : "₹••••••"}
-                  </h2>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setShowAddMoneyModal(true)
+                    }
+                    className="flex shrink-0 items-center gap-1.5 rounded-xl bg-[#8b5cf6] px-3 py-2 text-[11px] font-bold text-white shadow-[0_8px_18px_-10px_rgba(124,58,237,0.6)] transition hover:scale-105 hover:bg-[#7c3aed] sm:px-4 sm:py-2.5"
+                  >
+                    <Plus className="h-4 w-4" />
+                    ADD MONEY
+                  </button>
+
                 </div>
-
-                <button
-                  type="button"
-                  onClick={() => setShowAddMoneyModal(true)}
-                  className="flex shrink-0 items-center gap-1.5 rounded-xl bg-white px-3 py-2.5 text-xs font-bold text-[#315bd1] shadow-sm transition hover:bg-[#f5f7fb] sm:px-4"
-                >
-                  <Plus className="h-4 w-4" />
-                  ADD MONEY
-                </button>
               </div>
+            </section>
 
-              <div className="relative mt-5 grid max-w-xl grid-cols-2 border-t border-white/10 pt-4">
-                <div className="border-r border-white/20 pr-4">
-                  <p className="text-xs text-white/55">
+            {/* =================================================
+                ACCOUNT SNAPSHOT
+            ================================================== */}
+
+            <section className="hp-retailer-card flex flex-col justify-center p-4 sm:p-5">
+
+              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#7c3aed]">
+                Account Snapshot
+              </p>
+
+              <div className="mt-3 grid grid-cols-2 gap-3 lg:grid-cols-1">
+
+                <div className="rounded-xl bg-[#f8f5ff] p-3 transition hover:bg-[#f3eaff]">
+                  <p className="text-xs font-medium text-[#64748b]">
                     Today's Earnings
                   </p>
-                  <p className="mt-1 text-base font-bold text-white">
+
+                  <p className="mt-1 text-lg font-bold text-[#0f172a]">
                     ₹1,250.00
                   </p>
                 </div>
 
-                <div className="pl-4">
-                  <p className="text-xs text-white/55">
+                <div className="rounded-xl bg-[#f8f5ff] p-3 transition hover:bg-[#f3eaff]">
+                  <p className="text-xs font-medium text-[#64748b]">
                     Retailer ID
                   </p>
-                  <p className="mt-1 text-base font-bold text-white">
+
+                  <p className="mt-1 text-lg font-bold text-[#0f172a]">
                     HP100245
                   </p>
                 </div>
-              </div>
-            </div>
-          </section>
 
-          {/* QUICK SERVICES */}
-          <section className="mt-6 rounded-[28px] border border-[#dfe1e6] bg-white p-5 shadow-[0_18px_45px_-30px_rgba(23,32,51,0.35)] sm:p-6">
-            <div className="mb-4 flex items-end justify-between">
+              </div>
+            </section>
+          </div>
+
+          {/* =================================================
+              QUICK SERVICES
+          ================================================== */}
+
+          <section className="hp-retailer-glass mt-6 rounded-[1.5rem] p-5 sm:p-6">
+
+            <div className="mb-6 flex items-end justify-between">
+
               <div>
-                <h2 className="text-xl font-bold tracking-tight text-[#172033] sm:text-2xl">
+                <h2 className="text-xl font-bold tracking-tight text-[#0f172a] sm:text-2xl">
                   Quick Services
                 </h2>
-                <p className="mt-1 text-xs text-[#8992a3] sm:text-sm">
+
+                <p className="mt-1.5 text-xs text-[#64748b] sm:text-sm">
                   Access your financial services
                 </p>
               </div>
 
-              <span className="rounded-full bg-[#eef1ff] px-3 py-1 text-[10px] font-semibold text-[#315bd1] sm:text-xs">
-                6 Services
+              <span className="rounded-full bg-[#f3eaff] px-3 py-1.5 text-[11px] font-bold text-[#7c3aed] shadow-sm sm:text-xs">
+                8 Services
               </span>
+
             </div>
 
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+
               {quickServices.map((service) => {
                 const Icon = service.icon;
 
@@ -521,51 +723,77 @@ const Dashboard = () => {
                   <button
                     key={service.title}
                     type="button"
+                    title={service.description}
                     onClick={() => {
                       if (service.comingSoon) {
                         handleComingSoonClick(
                           service.title as ComingSoonService,
                         );
                       } else if (service.path) {
-                        handleServiceClick(service.path);
+                        handleServiceClick(
+                          service.path,
+                        );
                       }
                     }}
-                    className="group flex min-h-[142px] min-w-0 flex-col items-center justify-center rounded-2xl border border-[#e3e6eb] bg-[#fafbfd] px-2 py-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#315bd1]/30 hover:bg-white hover:shadow-[0_14px_30px_-20px_rgba(49,91,209,0.35)]"
+                    className={`group relative flex min-h-[120px] min-w-0 flex-col items-center justify-center rounded-2xl border p-3 shadow-[0_8px_25px_-18px_rgba(23,32,51,0.25)] transition-all duration-300 hover:-translate-y-1.5 ${service.cardClass} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7c3aed]/50`}
                   >
+
+                    {/* ICON */}
+
                     <div
-                      className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${service.bgClass} transition-transform duration-200 group-hover:scale-105`}
+                      className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${service.bgClass} ${service.hoverClass} transition-all duration-200 group-hover:scale-110`}
                     >
                       <Icon
                         className={`h-6 w-6 ${service.iconClass}`}
                       />
                     </div>
 
+                    {/* TITLE */}
+
                     <h3 className="mt-2.5 text-center text-xs font-bold leading-tight text-slate-800 sm:text-sm">
                       {service.title}
                     </h3>
 
+                    {/* DESCRIPTION */}
+
                     <p className="mt-1 text-center text-[10px] leading-tight text-[#8992a3] sm:text-[11px]">
                       {service.description}
                     </p>
+
+                    {/* TOOLTIP */}
+
+                    <span className="pointer-events-none absolute -top-2 left-1/2 z-10 w-max max-w-[150px] -translate-x-1/2 -translate-y-full rounded-lg bg-[#171717] px-2.5 py-1.5 text-[10px] font-semibold text-white opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100 after:absolute after:left-1/2 after:top-full after:-translate-x-1/2 after:border-4 after:border-transparent after:border-t-[#171717]">
+                      {service.description}
+                    </span>
+
                   </button>
                 );
               })}
+
             </div>
           </section>
+
         </div>
       </main>
 
-      {/* SERVICE COMING SOON MODAL */}
+      {/* =====================================================
+          COMING SOON MODAL
+      ====================================================== */}
+
       {showComingSoonModal && (
         <div
-          className="fixed inset-0 z-[70] flex items-center justify-center bg-[#172033]/55 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-[#4b0b18]/40 p-4 backdrop-blur-sm"
           onMouseDown={(event) => {
-            if (event.target === event.currentTarget) {
+            if (
+              event.target === event.currentTarget
+            ) {
               setShowComingSoonModal(false);
             }
           }}
         >
-          <div className="w-full max-w-sm rounded-[28px] border border-[#dfe1e6] bg-white p-6 text-center shadow-[0_25px_70px_-30px_rgba(23,32,51,0.5)]">
+
+          <div className="w-full max-w-xs rounded-2xl border border-[#f1d9dd] bg-white p-5 text-center shadow-[0_22px_55px_-28px_rgba(128,20,42,0.35)]">
+
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#eef1ff]">
               <WalletCards className="h-8 w-8 text-[#315bd1]" />
             </div>
@@ -582,56 +810,79 @@ const Dashboard = () => {
 
             <button
               type="button"
-              onClick={() => setShowComingSoonModal(false)}
+              onClick={() =>
+                setShowComingSoonModal(false)
+              }
               className="mt-5 flex h-11 w-full items-center justify-center rounded-xl bg-[#315bd1] text-sm font-bold text-white transition hover:bg-[#274dbd] hover:shadow-[0_10px_25px_-12px_rgba(49,91,209,0.8)]"
             >
               OK
             </button>
+
           </div>
         </div>
       )}
 
-      {/* ADD MONEY MODAL */}
+      {/* =====================================================
+          ADD MONEY MODAL
+      ====================================================== */}
+
       {showAddMoneyModal && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#172033]/55 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#4b0b18]/40 p-4 backdrop-blur-sm"
           onMouseDown={(event) => {
-            if (event.target === event.currentTarget) {
+            if (
+              event.target === event.currentTarget
+            ) {
               setShowAddMoneyModal(false);
             }
           }}
         >
-          <div className="w-full max-w-sm overflow-hidden rounded-[28px] border border-[#dfe1e6] bg-white shadow-[0_25px_70px_-30px_rgba(23,32,51,0.5)]">
+
+          <div className="w-full max-w-xs overflow-hidden rounded-2xl border border-[#f1d9dd] bg-white shadow-[0_22px_55px_-28px_rgba(128,20,42,0.35)]">
+
             <div className="flex items-center justify-between border-b border-[#edf0f4] px-5 py-4">
+
               <div className="flex items-center gap-3">
+
                 <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#eef1ff]">
                   <WalletCards className="h-5 w-5 text-[#315bd1]" />
                 </div>
 
                 <div>
+
                   <h2 className="text-sm font-bold text-[#172033]">
                     Add Money to Wallet
                   </h2>
+
                   <p className="text-xs text-[#8992a3]">
                     Current: ₹
-                    {walletBalance.toLocaleString("en-IN", {
-                      minimumFractionDigits: 2,
-                    })}
+                    {walletBalance.toLocaleString(
+                      "en-IN",
+                      {
+                        minimumFractionDigits: 2,
+                      },
+                    )}
                   </p>
+
                 </div>
               </div>
 
               <button
                 type="button"
-                onClick={() => setShowAddMoneyModal(false)}
+                onClick={() =>
+                  setShowAddMoneyModal(false)
+                }
                 className="flex h-8 w-8 items-center justify-center rounded-lg text-[#8992a3] transition hover:bg-[#f5f7fb]"
               >
                 <X className="h-4 w-4" />
               </button>
+
             </div>
 
             <div className="px-5 py-6">
+
               <div className="flex items-center gap-2 rounded-xl border-2 border-[#dfe1e6] bg-[#fafbfd] px-4 py-3 focus-within:border-[#315bd1] focus-within:bg-white">
+
                 <span className="text-2xl font-semibold text-slate-300">
                   ₹
                 </span>
@@ -645,9 +896,11 @@ const Dashboard = () => {
                   placeholder="0"
                   className="min-w-0 flex-1 bg-transparent text-2xl font-bold text-[#315bd1] outline-none placeholder:text-[#b2b8c3]"
                 />
+
               </div>
 
               <div className="mt-3 grid grid-cols-4 gap-2">
+
                 {["500", "1000", "2000", "5000"].map(
                   (amount) => (
                     <button
@@ -666,6 +919,7 @@ const Dashboard = () => {
                     </button>
                   ),
                 )}
+
               </div>
 
               <button
@@ -679,9 +933,9 @@ const Dashboard = () => {
               >
                 Add ₹
                 {addMoneyAmount
-                  ? Number(addMoneyAmount).toLocaleString(
-                      "en-IN",
-                    )
+                  ? Number(
+                      addMoneyAmount,
+                    ).toLocaleString("en-IN")
                   : "0"}{" "}
                 to Wallet
               </button>
@@ -695,15 +949,19 @@ const Dashboard = () => {
               >
                 Cancel
               </button>
+
             </div>
           </div>
         </div>
       )}
 
-      {/* DAILY 2FA MODAL */}
+      {/* =====================================================
+          DAILY 2FA MODAL
+      ====================================================== */}
+
       {show2FAModal && (
         <div
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-[#172033]/60 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-[#4b0b18]/40 p-4 backdrop-blur-sm"
           onMouseDown={(event) => {
             if (
               event.target === event.currentTarget &&
@@ -714,10 +972,15 @@ const Dashboard = () => {
             }
           }}
         >
-          <div className="w-full max-w-xl overflow-hidden rounded-[28px] border border-[#dfe1e6] bg-white shadow-[0_25px_70px_-30px_rgba(23,32,51,0.55)]">
+
+          <div className="w-full max-w-lg overflow-hidden rounded-2xl border border-[#f1d9dd] bg-white shadow-[0_22px_55px_-28px_rgba(128,20,42,0.35)]">
+
             <div className="border-b border-[#edf0f4] px-6 py-5">
+
               <div className="flex items-start justify-between">
+
                 <div>
+
                   <h2 className="text-xl font-bold text-[#172033]">
                     {show2FASuccess
                       ? "2FA Authentication Successful"
@@ -729,6 +992,7 @@ const Dashboard = () => {
                       ? "Your daily biometric authentication has been completed."
                       : "Complete your daily authentication to continue."}
                   </p>
+
                 </div>
 
                 {!isAuthenticating &&
@@ -741,15 +1005,15 @@ const Dashboard = () => {
                       <X className="h-5 w-5" />
                     </button>
                   )}
+
               </div>
             </div>
 
             <div className="max-h-[80vh] overflow-y-auto p-6">
+
               {isAuthenticating ? (
-                /* ==================================================
-                   SAME BIOMETRIC CAPTURE UI AS AEPS
-                ================================================== */
                 <div className="w-full rounded-[22px] bg-white p-8 text-center sm:p-10">
+
                   <div className="mx-auto flex h-40 w-40 items-center justify-center rounded-full bg-[#edf1fc]">
                     <Fingerprint className="h-24 w-24 text-[#315bd1]" />
                   </div>
@@ -763,12 +1027,12 @@ const Dashboard = () => {
                   </p>
 
                   <div className="mx-auto mt-8 h-12 w-12 animate-spin rounded-full border-4 border-slate-200 border-t-[#315bd1]" />
+
                 </div>
               ) : show2FASuccess ? (
-                /* ==================================================
-                   SUCCESS
-                ================================================== */
+
                 <div className="flex flex-col items-center py-7 text-center">
+
                   <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-[#e7f8f3]">
                     <CheckCircle2 className="h-12 w-12 text-[#08ae82]" />
                   </div>
@@ -787,19 +1051,21 @@ const Dashboard = () => {
                       Redirecting you to the selected service...
                     </p>
                   )}
+
                 </div>
               ) : (
+
                 <>
-                  {/* ==================================================
-                     PENDING
-                  ================================================== */}
                   <div className="rounded-2xl border border-[#f3d6a5] bg-[#fff8ed] p-4">
+
                     <div className="flex items-start gap-3">
+
                       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#fff0d8]">
                         <ShieldCheck className="h-5 w-5 text-[#e69a22]" />
                       </div>
 
                       <div className="min-w-0">
+
                         <h3 className="text-sm font-bold text-[#172033]">
                           Your 2FA is pending
                         </h3>
@@ -809,14 +1075,13 @@ const Dashboard = () => {
                           required before accessing financial
                           services.
                         </p>
+
                       </div>
                     </div>
                   </div>
 
-                  {/* ==================================================
-                     MOBILE NUMBER
-                  ================================================== */}
                   <div className="mt-4 rounded-xl border border-[#dfe1e6] bg-[#fafbfd] p-4">
+
                     <p className="text-xs font-medium text-[#8992a3]">
                       Registered Mobile Number
                     </p>
@@ -824,12 +1089,11 @@ const Dashboard = () => {
                     <p className="mt-1 text-sm font-bold tracking-wide text-[#172033]">
                       {maskedMobile}
                     </p>
+
                   </div>
 
-                  {/* ==================================================
-                     AADHAAR
-                  ================================================== */}
                   <div className="mt-5">
+
                     <label
                       htmlFor="dashboard-aadhaar"
                       className="mb-2 block text-sm font-semibold text-[#172033]"
@@ -838,6 +1102,7 @@ const Dashboard = () => {
                     </label>
 
                     <div className="flex min-h-[56px] items-center gap-3 rounded-xl border border-[#dfe1e6] bg-[#fafbfd] px-4 transition focus-within:border-[#315bd1] focus-within:bg-white">
+
                       <IdCard className="h-5 w-5 shrink-0 text-[#8992a3]" />
 
                       <input
@@ -855,19 +1120,20 @@ const Dashboard = () => {
                       <span className="text-xs text-[#8992a3]">
                         {aadhaar.length}/12
                       </span>
+
                     </div>
                   </div>
 
-                  {/* ==================================================
-                     BIOMETRIC DEVICE
-                  ================================================== */}
                   <div className="mt-4 rounded-xl border border-[#d9e0f5] bg-[#f1f4ff] p-4">
+
                     <div className="flex items-center gap-3">
+
                       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#315bd1]">
                         <Fingerprint className="h-6 w-6 text-white" />
                       </div>
 
                       <div>
+
                         <p className="text-sm font-bold text-[#172033]">
                           Mantra MFS100
                         </p>
@@ -876,13 +1142,11 @@ const Dashboard = () => {
                           <span className="h-2 w-2 rounded-full bg-[#08ae82]" />
                           RD Service Active
                         </p>
+
                       </div>
                     </div>
                   </div>
 
-                  {/* ==================================================
-                     COMPLETE 2FA
-                  ================================================== */}
                   <button
                     type="button"
                     onClick={handleStart2FA}
@@ -902,6 +1166,7 @@ const Dashboard = () => {
                   </p>
                 </>
               )}
+
             </div>
           </div>
         </div>

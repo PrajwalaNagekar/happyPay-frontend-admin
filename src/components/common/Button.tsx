@@ -23,13 +23,13 @@ export default function Button({
 
   const variantClasses = {
     primary:
-      "hp-brand text-white shadow-[0_8px_18px_rgba(49,91,209,0.28)] hover:opacity-95 focus-visible:ring-[#315bd1]",
+      "hp-brand text-white shadow-[0_8px_18px_rgba(124,58,237,0.2)] hover:opacity-95 focus-visible:ring-[#7c3aed]",
     secondary:
       "bg-slate-100 text-slate-700 hover:bg-slate-200 focus-visible:ring-slate-300",
     outline:
       "border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 focus-visible:ring-slate-300",
     danger:
-      "bg-red-500 text-white hover:bg-red-600 focus-visible:ring-red-400",
+      "bg-purple-500 text-white hover:bg-purple-600 focus-visible:ring-purple-400",
     ghost:
       "bg-transparent text-slate-600 hover:bg-slate-100 focus-visible:ring-slate-300",
   };

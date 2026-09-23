@@ -9,6 +9,9 @@ import {
   X,
   Send,
   WalletCards,
+  CheckCircle2,
+  Clock3,
+  XCircle,
 } from "lucide-react";
 
 import Modal from "../../components/common/Modal";
@@ -128,14 +131,26 @@ const getServiceIconClasses = (
   service: Transaction["service"],
 ) => {
   if (service === "AEPS") {
-    return "bg-[#f0f2f5] text-[#172033]";
+    return "bg-[#ffe6ea] text-[#e4002b]";
   }
 
   if (service === "DMT") {
-    return "bg-[#f0f2f5] text-[#172033]";
+    return "bg-[#fff2df] text-[#c56b08]";
   }
 
-  return "bg-[#f0f2f5] text-[#172033]";
+  return "bg-[#e5f7ee] text-[#087f5b]";
+};
+
+const getStatusIcon = (status: Transaction["status"]) => {
+  if (status === "Success") return CheckCircle2;
+  if (status === "Pending") return Clock3;
+  return XCircle;
+};
+
+const getStatusClasses = (status: Transaction["status"]) => {
+  if (status === "Success") return "bg-[#e5f7ee] text-[#087f5b]";
+  if (status === "Pending") return "bg-[#fff2df] text-[#c56b08]";
+  return "bg-[#ffe6ea] text-[#c21d3d]";
 };
 
 const getAmountClasses = (
@@ -456,6 +471,9 @@ export default function Transactions() {
                   const Icon = getServiceIcon(
                     transaction.service,
                   );
+                  const StatusIcon = getStatusIcon(
+                    transaction.status,
+                  );
 
                   const isLast =
                     index ===
@@ -511,7 +529,8 @@ export default function Transactions() {
                           )}
                         </p>
 
-                        <span className="mt-1 inline-flex rounded-full bg-[#f0f2f5] px-2.5 py-1 text-[10px] font-bold text-[#596273]">
+                        <span className={`mt-1 inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold ${getStatusClasses(transaction.status)}`}>
+                          <StatusIcon className="h-3 w-3" />
                           {transaction.status}
                         </span>
 

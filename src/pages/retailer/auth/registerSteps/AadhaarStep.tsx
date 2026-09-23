@@ -46,7 +46,7 @@ const AadhaarStep = () => {
       <div className="flex items-start gap-4">
         <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#eef1ff]">
           <Fingerprint
-            className="h-7 w-7 text-[#315bd1]"
+            className="h-7 w-7 text-[#7c3aed]"
             strokeWidth={2}
           />
         </div>
@@ -70,13 +70,13 @@ const AadhaarStep = () => {
         onClick={() => setConsent((previous) => !previous)}
         className={`flex w-full items-start gap-3 rounded-xl border px-4 py-3.5 text-left transition ${
           consent
-            ? "border-[#315bd1] bg-[#f3f5ff]"
+            ? "border-[#7c3aed] bg-[#f3f5ff]"
             : "border-[#dfe1e6] bg-[#fafbfd] hover:border-[#bfc8e8]"
         }`}
       >
         {consent ? (
           <CheckCircle2
-            className="mt-0.5 h-5 w-5 shrink-0 text-[#315bd1]"
+            className="mt-0.5 h-5 w-5 shrink-0 text-[#7c3aed]"
             strokeWidth={2}
           />
         ) : (
@@ -106,13 +106,13 @@ const AadhaarStep = () => {
             onClick={() => setLinkedMobile("yes")}
             className={`flex h-[52px] items-center justify-center gap-2.5 rounded-xl border transition ${
               linkedMobile === "yes"
-                ? "border-[#315bd1] bg-[#f3f5ff] text-[#172033]"
+                ? "border-[#7c3aed] bg-[#f3f5ff] text-[#172033]"
                 : "border-[#dfe1e6] bg-[#fafbfd] text-[#172033] hover:border-[#bfc8e8]"
             }`}
           >
             {linkedMobile === "yes" ? (
               <CheckCircle2
-                className="h-4 w-4 text-[#315bd1]"
+                className="h-4 w-4 text-[#7c3aed]"
                 strokeWidth={2}
               />
             ) : (
@@ -131,13 +131,13 @@ const AadhaarStep = () => {
             onClick={() => setLinkedMobile("no")}
             className={`flex h-[52px] items-center justify-center gap-2.5 rounded-xl border transition ${
               linkedMobile === "no"
-                ? "border-[#315bd1] bg-[#f3f5ff] text-[#172033]"
+                ? "border-[#7c3aed] bg-[#f3f5ff] text-[#172033]"
                 : "border-[#dfe1e6] bg-[#fafbfd] text-[#172033] hover:border-[#bfc8e8]"
             }`}
           >
             {linkedMobile === "no" ? (
               <CheckCircle2
-                className="h-4 w-4 text-[#315bd1]"
+                className="h-4 w-4 text-[#7c3aed]"
                 strokeWidth={2}
               />
             ) : (
@@ -171,7 +171,7 @@ const AadhaarStep = () => {
             onChange={handleAadhaarChange}
             placeholder="Enter Aadhaar number"
             maxLength={14}
-            className="h-[52px] w-full rounded-xl border border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-5 text-sm font-medium tracking-wide text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-2 focus:ring-[#315bd1]/10"
+            className="h-[52px] w-full rounded-xl border border-[#dfe1e6] bg-[#fafbfd] pl-11 pr-5 text-sm font-medium tracking-wide text-[#172033] outline-none transition placeholder:text-[#a1a8b5] focus:border-[#7c3aed] focus:bg-white focus:ring-2 focus:ring-[#7c3aed]/10"
           />
         </div>
       </div>
@@ -180,7 +180,7 @@ const AadhaarStep = () => {
       <button
         type="button"
         onClick={() => aadhaarInputRef.current?.click()}
-        className="group flex w-full items-center gap-4 rounded-xl border border-[#dfe1e6] bg-[#fafbfd] px-4 py-3.5 text-left transition hover:border-[#315bd1] hover:bg-[#f7f9ff]"
+        className="group flex w-full items-center gap-4 rounded-xl border border-[#dfe1e6] bg-[#fafbfd] px-4 py-3.5 text-left transition hover:border-[#7c3aed] hover:bg-[#f7f9ff]"
       >
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#eef1ff]">
           {aadhaarFile ? (
@@ -190,7 +190,7 @@ const AadhaarStep = () => {
             />
           ) : (
             <FileText
-              className="h-5 w-5 text-[#315bd1]"
+              className="h-5 w-5 text-[#7c3aed]"
               strokeWidth={2}
             />
           )}
@@ -209,7 +209,7 @@ const AadhaarStep = () => {
         </div>
 
         <Upload
-          className="h-5 w-5 shrink-0 text-[#315bd1] transition group-hover:scale-105"
+          className="h-5 w-5 shrink-0 text-[#7c3aed] transition group-hover:scale-105"
           strokeWidth={2.3}
         />
       </button>
@@ -227,7 +227,7 @@ const AadhaarStep = () => {
       <div className="flex items-start gap-3 rounded-xl border border-[#d9e0f5] bg-[#f1f4ff] px-4 py-3.5">
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#e4e9ff]">
           <ShieldCheck
-            className="h-5 w-5 text-[#315bd1]"
+            className="h-5 w-5 text-[#7c3aed]"
             strokeWidth={2}
           />
         </div>

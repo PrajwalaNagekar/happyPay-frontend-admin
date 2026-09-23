@@ -1,10 +1,7 @@
-import { type RouteObject } from "react-router-dom";
-
+import { Navigate, type RouteObject } from "react-router-dom";
 import ProtectedRoutes from "../components/auth/ProtectedRoutes";
-
 import AppLayout from "../layout/full/AppLayout";
 import BlankLayout from "../layout/blank/BlankLayout";
-
 import RetailerLogin from "../pages/retailer/auth/RetailerLogin";
 import RetailerRegister from "../pages/retailer/auth/Register";
 import Dashboard from "../pages/Dasboard/Dashboard";
@@ -12,8 +9,10 @@ import RetailerKycPending from "../pages/retailer/auth/RetailerKYCPending";
 import RetailerKycApproved from "../pages/retailer/auth/RetailerKYCApproved";
 
 import Aeps from "../pages/retailer/aeps/Aeps";
+import AadhaarPay from "../pages/retailer/aadhaar-pay/AadhaarPay";
 import Dmt from "../pages/retailer/dmt/Dmt";
 import Cms from "../pages/retailer/cms/Cms";
+import UpiCashPoint from "../pages/retailer/upi-cash-point/UpiCashPoint";
 
 // TRANSACTIONS
 import Transactions from "../pages/history/Transactions"
@@ -24,20 +23,70 @@ import ShopInformation from "../pages/retailer/profile/ShopInformation";
 import BankDetails from "../pages/retailer/profile/BankDetails";
 import SecuritySettings from "../pages/retailer/profile/SecuritySettings";
 import HelpSupport from "../pages/retailer/profile/HelpSupport";
+import Wallet from "../pages/retailer/wallet/Wallet";
+import AdminLogin from "../pages/admin/auth/AdminLogin";
+import AdminRegister from "../pages/admin/auth/AdminRegister";
+import ForgotPassword from "../pages/admin/auth/ForgotPassword";
+import ResetPassword from "../pages/admin/auth/ResetPassword";
+import AdminProtectedRoute from "../components/admin/AdminProtectedRoute";
+import AdminLayout from "../layout/full/AdminLayout";
+import AdminDashboard from "../pages/admin/dashboard/AdminDashboard";
+import AdminProfile from "../pages/admin/profile/AdminProfile";
+import AdminSupport from "../pages/admin/support/AdminSupport";
+import AdminRetailers from "../pages/admin/retailers/AdminRetailers";
+import AdminAuditLogs from "../pages/admin/audit/AdminAuditLogs";
 
 const Router: RouteObject[] = [
-  // ADMIN
+  // ADMIN AUTH
   {
-    path: "/admin",
-    element: <ProtectedRoutes />,
+    path: "/admin/login",
+    element: <BlankLayout />,
     children: [
       {
-        element: <AppLayout />,
+        index: true,
+        element: <AdminLogin />,
+      },
+    ],
+  },
+
+  // ADMIN REGISTER UI
+  {
+    path: "/admin/register",
+    element: <BlankLayout />,
+    children: [
+      {
+        index: true,
+        element: <AdminRegister />,
+      },
+    ],
+  },
+
+  {
+    path: "/admin/forgot-password",
+    element: <BlankLayout />,
+    children: [{ index: true, element: <ForgotPassword /> }],
+  },
+
+  {
+    path: "/admin/reset-password",
+    element: <BlankLayout />,
+    children: [{ index: true, element: <ResetPassword /> }],
+  },
+
+  // ADMIN DASHBOARD
+  {
+    path: "/admin",
+    element: <AdminProtectedRoute />,
+    children: [
+      {
+        element: <AdminLayout />,
         children: [
-          {
-            index: true,
-            element: <Dashboard />,
-          },
+          { index: true, element: <Navigate to="dashboard" replace /> },
+          { path: "dashboard", element: <AdminDashboard /> },
+          { path: "retailers", element: <AdminRetailers /> },
+          { path: "profile", element: <AdminProfile /> },
+          { path: "support", element: <AdminSupport /> },
+          { path: "audit-logs", element: <AdminAuditLogs /> },
         ],
       },
     ],
@@ -62,6 +111,12 @@ const Router: RouteObject[] = [
             element: <Aeps />,
           },
 
+          // AADHAAR PAY
+          {
+            path: "aadhaar-pay",
+            element: <AadhaarPay />,
+          },
+
           // DMT
           {
             path: "dmt",
@@ -74,10 +129,21 @@ const Router: RouteObject[] = [
             element: <Cms />,
           },
 
+          // UPI CASH POINT
+          {
+            path: "upi-cash-point",
+            element: <UpiCashPoint />,
+          },
+
           // TRANSACTIONS
           {
             path: "transactions",
             element: <Transactions />,
+          },
+
+          {
+            path: "wallet",
+            element: <Wallet />,
           },
 
           // PROFILE

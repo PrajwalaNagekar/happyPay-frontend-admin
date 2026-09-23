@@ -645,57 +645,57 @@ const Dmt = () => {
       <div className="">
         <main className="mt-4">
           <div className="mx-auto w-full max-w-[760px] space-y-4">
-            <section className="min-h-[126px] overflow-hidden rounded-[16px] bg-[#172033] p-4 text-white shadow-[0_12px_28px_-18px_rgba(15,23,42,0.30)] sm:p-5">
+            <section className="min-h-[126px] overflow-hidden rounded-[16px] border border-[#f4d6dc] bg-white p-4 text-[#172033] shadow-[0_12px_28px_-18px_rgba(15,23,42,0.14)] sm:p-5">
               <div className="flex h-full flex-col gap-3 md:flex-row md:items-center md:gap-4">
                 <div className="flex min-w-0 items-center gap-4 md:w-[29%] md:shrink-0">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/15">
-                    <Send className="h-5 w-5" />
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#fdebed]">
+                    <Send className="h-5 w-5 text-[#7c3aed]" />
                   </div>
 
                   <div className="min-w-0">
-                    <h1 className="text-lg font-bold sm:text-xl">
+                    <h1 className="text-lg font-bold text-[#172033] sm:text-xl">
                       DMT
                     </h1>
 
-                    <p className="mt-0.5 text-[11px] leading-4 text-white/80 sm:text-xs">
+                    <p className="mt-0.5 text-[11px] leading-4 text-[#555b67] sm:text-xs">
                       Send money securely to any bank account
                     </p>
                   </div>
                 </div>
 
                 <div className="grid flex-1 grid-cols-1 gap-2.5 sm:grid-cols-3">
-                  <div className="rounded-xl bg-white/10 p-2.5 sm:p-3">
-                    <Wallet className="h-5 w-5" />
+                  <div className="rounded-xl bg-[#fff0f2] p-2.5 sm:p-3">
+                    <Wallet className="h-5 w-5 text-[#7c3aed]" />
 
-                    <p className="mt-1 text-[10px] text-white/75 sm:text-[11px]">
+                    <p className="mt-1 text-[10px] text-[#a65360] sm:text-[11px]">
                       Available Balance
                     </p>
 
-                    <p className="mt-0.5 text-base font-bold sm:text-lg">
+                    <p className="mt-0.5 text-base font-bold text-[#172033] sm:text-lg">
                       ₹25,000
                     </p>
                   </div>
 
-                  <div className="rounded-xl bg-white/10 p-2.5 sm:p-3">
-                    <Send className="h-5 w-5" />
+                  <div className="rounded-xl bg-[#fff0f2] p-2.5 sm:p-3">
+                    <Send className="h-5 w-5 text-[#7c3aed]" />
 
-                    <p className="mt-1 text-[10px] text-white/75 sm:text-[11px]">
+                    <p className="mt-1 text-[10px] text-[#a65360] sm:text-[11px]">
                       Transfer Type
                     </p>
 
-                    <p className="mt-0.5 text-base font-bold sm:text-lg">
+                    <p className="mt-0.5 text-base font-bold text-[#172033] sm:text-lg">
                       IMPS / NEFT
                     </p>
                   </div>
 
-                  <div className="rounded-xl bg-white/10 p-2.5 sm:p-3">
-                    <ShieldCheck className="h-5 w-5" />
+                  <div className="rounded-xl bg-[#fff0f2] p-2.5 sm:p-3">
+                    <ShieldCheck className="h-5 w-5 text-[#7c3aed]" />
 
-                    <p className="mt-1 text-[10px] text-white/75 sm:text-[11px]">
+                    <p className="mt-1 text-[10px] text-[#a65360] sm:text-[11px]">
                       Security
                     </p>
 
-                    <p className="mt-0.5 text-base font-bold sm:text-lg">
+                    <p className="mt-0.5 text-base font-bold text-[#172033] sm:text-lg">
                       OTP Protected
                     </p>
                   </div>
@@ -738,7 +738,7 @@ const Dmt = () => {
 
                   {customerMobile.length > 0 &&
                     customerMobile.length !== 10 && (
-                      <p className="mt-2 text-sm text-red-500">
+                      <p className="mt-2 text-sm text-purple-500">
                         Enter a valid 10-digit mobile number.
                       </p>
                     )}
@@ -767,7 +767,7 @@ const Dmt = () => {
 
                   {Number(transferAmount) >
                     availableBalance && (
-                      <p className="mt-2 text-sm text-red-500">
+                      <p className="mt-2 text-sm text-purple-500">
                         Amount cannot exceed available balance.
                       </p>
                     )}
@@ -794,7 +794,7 @@ const Dmt = () => {
                   type="button"
                   onClick={handleContinue}
                   disabled={!isTransferDetailsValid}
-                  className="flex min-h-[44px] items-center gap-2 rounded-xl bg-[#172033] px-5 text-sm font-bold text-white transition hover:bg-[#0f172a] disabled:cursor-not-allowed disabled:bg-[#b8bec9]"
+                  className="flex min-h-[44px] items-center gap-2 rounded-xl bg-[#7c3aed] px-5 text-sm font-bold text-white transition hover:bg-[#c90026] disabled:cursor-not-allowed disabled:bg-[#b8bec9]"
                 >
                   Continue
 
@@ -818,7 +818,7 @@ const Dmt = () => {
         <PageHeader title="OTP Verification" />
 
         <main className="mx-auto mt-3 flex max-w-[760px] flex-col items-center py-4 text-center sm:py-6">
-          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#eef1f5]">
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#eef1f5]">
             <MessageSquare className="h-9 w-9 fill-[#172033] text-[#172033]" />
           </div>
 
@@ -847,7 +847,7 @@ const Dmt = () => {
           </div>
 
           {otpError && (
-            <p className="mt-4 text-sm font-medium text-red-500">
+            <p className="mt-4 text-sm font-medium text-purple-500">
               {otpError}
             </p>
           )}
@@ -882,7 +882,7 @@ const Dmt = () => {
               otp.length !== 6 ||
               isVerifyingOtp
             }
-            className="mt-10 flex min-h-[52px] w-full max-w-[560px] items-center justify-center rounded-xl bg-[#172033] text-base font-bold text-white disabled:cursor-not-allowed disabled:bg-[#b8bec9]"
+            className="mt-10 flex min-h-[52px] w-full max-w-[560px] items-center justify-center rounded-xl bg-[#7c3aed] text-base font-bold text-white transition hover:bg-[#c90026] disabled:cursor-not-allowed disabled:bg-[#b8bec9]"
           >
             {isVerifyingOtp
               ? "VERIFYING..."
@@ -1117,7 +1117,7 @@ const Dmt = () => {
                 type="button"
                 onClick={handleAddBeneficiary}
                 disabled={!canAddBeneficiary}
-                className="flex min-h-[46px] items-center gap-2.5 rounded-xl bg-[#172033] px-5 text-sm font-bold text-white disabled:cursor-not-allowed disabled:bg-[#b8bec9]"
+                className="flex min-h-[46px] items-center gap-2.5 rounded-xl bg-[#7c3aed] px-5 text-sm font-bold text-white disabled:cursor-not-allowed disabled:bg-[#b8bec9]"
               >
                 <Plus className="h-5 w-5" />
 
@@ -1141,19 +1141,19 @@ const Dmt = () => {
 
         <main className="mx-auto mt-4 max-w-[760px]">
           {/* Customer Card */}
-          <section className="rounded-[16px] bg-[#172033] p-4 text-white shadow-[0_10px_25px_-18px_rgba(15,23,42,0.4)] sm:p-6">
+          <section className="rounded-[16px] border border-[#f6d6dc] bg-white p-4 shadow-md sm:p-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/15 text-base font-bold sm:h-14 sm:w-14">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#fde9ee] text-base font-bold text-[#7c3aed] sm:h-14 sm:w-14">
                   RK
                 </div>
 
                 <div>
-                  <h2 className="text-lg font-bold sm:text-xl">
+                  <h2 className="text-lg font-bold text-[#172033] sm:text-xl">
                     {customerName}
                   </h2>
 
-                  <p className="mt-1 text-sm text-white/75">
+                  <p className="mt-1 text-sm text-[#64748b]">
                     +91 {customerMobile}
                   </p>
                 </div>
@@ -1166,15 +1166,15 @@ const Dmt = () => {
               </div>
             </div>
 
-            <div className="my-4 h-px bg-white/20" />
+            <div className="my-4 h-px bg-[#f6d6dc]" />
 
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="text-sm text-white/70">
+              <div className="rounded-xl bg-[#fff0f3] px-4 py-3 sm:flex-1">
+                <p className="text-sm text-[#b45b6b]">
                   Available Balance
                 </p>
 
-                <p className="mt-1 text-lg font-bold">
+                <p className="mt-1 text-lg font-bold text-[#172033]">
                   ₹25000.00
                 </p>
               </div>
@@ -1182,7 +1182,7 @@ const Dmt = () => {
               <button
                 type="button"
                 onClick={handleOpenAddBeneficiary}
-                className="flex min-h-[46px] items-center justify-center gap-2 rounded-xl bg-white px-5 text-sm font-bold text-[#172033]"
+                className="flex min-h-[46px] items-center justify-center gap-2 rounded-xl bg-[#7c3aed] px-5 text-sm font-bold text-white shadow-sm transition hover:bg-[#c90026]"
               >
                 <Plus className="h-5 w-5" />
 
@@ -1243,7 +1243,7 @@ const Dmt = () => {
                         beneficiary
                       )
                     }
-                    className="flex min-h-[40px] items-center justify-center gap-2 rounded-xl bg-[#172033] px-4 text-sm font-bold text-white shadow-sm hover:bg-[#0f172a]"
+                    className="flex min-h-[40px] items-center justify-center gap-2 rounded-xl bg-[#7c3aed] px-4 text-sm font-bold text-white shadow-sm hover:bg-[#c90026]"
                   >
                     <Send className="h-5 w-5" />
 
@@ -1351,7 +1351,7 @@ const Dmt = () => {
 
             {numericSendAmount >
               availableBalance && (
-                <p className="mt-2 text-sm font-medium text-red-500">
+                <p className="mt-2 text-sm font-medium text-purple-500">
                   Amount cannot exceed available balance.
                 </p>
               )}
@@ -1371,7 +1371,7 @@ const Dmt = () => {
                   setTransferMode("IMPS")
                 }
                 className={`rounded-xl border p-4 text-center transition ${transferMode === "IMPS"
-                    ? "border-[#172033] bg-[#172033] text-white shadow-lg"
+                    ? "border-[#7c3aed] bg-[#7c3aed] text-white shadow-lg"
                     : "border-slate-200 bg-white text-[#172033]"
                   }`}
               >
@@ -1396,7 +1396,7 @@ const Dmt = () => {
                   setTransferMode("NEFT")
                 }
                 className={`rounded-xl border p-4 text-center transition ${transferMode === "NEFT"
-                    ? "border-[#172033] bg-[#172033] text-white shadow-lg"
+                    ? "border-[#7c3aed] bg-[#7c3aed] text-white shadow-lg"
                     : "border-slate-200 bg-white text-[#172033]"
                   }`}
               >
@@ -1480,7 +1480,7 @@ const Dmt = () => {
               !canTransfer ||
               isProcessingTransfer
             }
-            className="mt-6 flex min-h-[52px] w-full items-center justify-center rounded-xl bg-[#172033] text-base font-bold text-white shadow-md transition hover:bg-[#0f172a] disabled:cursor-not-allowed disabled:bg-[#b8bec9]"
+            className="mt-6 flex min-h-[52px] w-full items-center justify-center rounded-xl bg-[#7c3aed] text-base font-bold text-white shadow-md transition hover:bg-[#c90026] disabled:cursor-not-allowed disabled:bg-[#b8bec9]"
           >
             {isProcessingTransfer ? (
               <div className="flex items-center gap-3">
@@ -1523,7 +1523,7 @@ const Dmt = () => {
               <Check className="h-12 w-12 text-[#13ae6e]" />
             </div>
 
-            <h1 className="mt-5 text-2xl font-bold text-[#12a968] sm:text-3xl">
+            <h1 className="mt-5 text-2xl font-bold text-[#12a968] sm:text-2xl">
               Transfer Successful!
             </h1>
 
@@ -1659,7 +1659,7 @@ const Dmt = () => {
           <button
             type="button"
             onClick={handleAnotherTransaction}
-            className="mt-4 flex min-h-[50px] w-full items-center justify-center gap-3 rounded-xl bg-[#172033] text-base font-bold text-white shadow-md transition hover:bg-[#0f172a]"
+            className="mt-4 flex min-h-[50px] w-full items-center justify-center gap-3 rounded-xl bg-[#7c3aed] text-base font-bold text-white shadow-md transition hover:bg-[#c90026]"
           >
             <RefreshCw className="h-5 w-5" />
 

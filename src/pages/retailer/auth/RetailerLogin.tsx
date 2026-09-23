@@ -192,7 +192,7 @@ const RetailerLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#eef2f7] px-4 py-6 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 px-4 py-6 sm:px-6 lg:px-8">
       <div className="mx-auto flex min-h-[calc(100vh-48px)] w-full max-w-[1180px] items-center justify-center">
         <div className="w-full overflow-hidden rounded-[30px] border border-white bg-white shadow-[0_30px_80px_rgba(15,23,42,0.12)]">
           <div className="grid min-h-[700px] lg:grid-cols-[0.9fr_1.1fr]">
@@ -201,7 +201,7 @@ const RetailerLogin = () => {
               <div className="w-full max-w-[430px]">
                 {/* BRAND */}
                 <div className="mb-10 flex items-center gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#315bd1] shadow-[0_10px_24px_rgba(49,91,209,0.25)]">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#7c3aed] shadow-[0_10px_24px_rgba(49,91,209,0.25)]">
                     <span className="text-xl font-bold text-white">H</span>
                   </div>
 
@@ -219,12 +219,12 @@ const RetailerLogin = () => {
                 <div>
                   <div className="inline-flex items-center gap-2 rounded-full border border-[#dce4f8] bg-[#f3f6ff] px-3 py-1.5">
                     {otpSent ? (
-                      <ShieldCheck className="h-4 w-4 text-[#315bd1]" />
+                      <ShieldCheck className="h-4 w-4 text-[#7c3aed]" />
                     ) : (
-                      <Smartphone className="h-4 w-4 text-[#315bd1]" />
+                      <Smartphone className="h-4 w-4 text-[#7c3aed]" />
                     )}
 
-                    <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#315bd1]">
+                    <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#7c3aed]">
                       {otpSent ? "Mobile Verification" : "Secure Retailer Access"}
                     </span>
                   </div>
@@ -242,10 +242,10 @@ const RetailerLogin = () => {
 
                 {/* STEP INDICATOR */}
                 <div className="mt-8 flex items-center gap-2">
-                  <div className="h-1.5 w-14 rounded-full bg-[#315bd1]" />
+                  <div className="h-1.5 w-14 rounded-full bg-[#7c3aed]" />
                   <div
                     className={`h-1.5 w-14 rounded-full transition-all duration-300 ${
-                      otpSent ? "bg-[#315bd1]" : "bg-[#dce1e9]"
+                      otpSent ? "bg-[#7c3aed]" : "bg-[#dce1e9]"
                     }`}
                   />
                   <span className="ml-1 text-[11px] font-medium text-[#8992a3]">
@@ -291,7 +291,7 @@ const RetailerLogin = () => {
                       inputMode="numeric"
                       autoComplete="tel"
                       disabled={otpSent}
-                      className="h-[58px] w-full rounded-2xl border border-[#dfe3e9] bg-[#fafbfd] pl-[105px] pr-4 text-[15px] font-medium text-[#172033] outline-none transition placeholder:text-[#a1a8b5] hover:border-[#c5cad4] focus:border-[#315bd1] focus:ring-4 focus:ring-[#315bd1]/10 disabled:bg-[#f1f3f6]"
+                      className="h-[58px] w-full rounded-2xl border border-[#dfe3e9] bg-[#fafbfd] pl-[105px] pr-4 text-[15px] font-medium text-[#172033] outline-none transition placeholder:text-[#a1a8b5] hover:border-[#c5cad4] focus:border-[#7c3aed] focus:ring-4 focus:ring-[#7c3aed]/10 disabled:bg-[#f1f3f6]"
                     />
                   </div>
                 </div>
@@ -310,7 +310,7 @@ const RetailerLogin = () => {
                       <button
                         type="button"
                         onClick={handleChangeMobile}
-                        className="text-[12px] font-semibold text-[#315bd1] hover:underline"
+                        className="text-[12px] font-semibold text-[#7c3aed] hover:underline"
                       >
                         Change number
                       </button>
@@ -326,7 +326,7 @@ const RetailerLogin = () => {
                       inputMode="numeric"
                       autoComplete="one-time-code"
                       disabled={otpVerified}
-                      className={`h-[58px] w-full rounded-2xl border bg-[#fafbfd] px-4 text-center text-[19px] font-bold tracking-[0.5em] text-[#172033] outline-none transition placeholder:text-[11px] placeholder:tracking-normal focus:border-[#315bd1] focus:ring-4 focus:ring-[#315bd1]/10 ${
+                      className={`h-[58px] w-full rounded-2xl border bg-[#fafbfd] px-4 text-center text-[19px] font-bold tracking-[0.5em] text-[#172033] outline-none transition placeholder:text-[11px] placeholder:tracking-normal focus:border-[#7c3aed] focus:ring-4 focus:ring-[#7c3aed]/10 ${
                         otpVerified
                           ? "border-[#b9e8d4] bg-[#f4fcf8]"
                           : "border-[#dfe3e9]"
@@ -345,7 +345,7 @@ const RetailerLogin = () => {
                           setError("");
                           setOtpVerified(false);
                         }}
-                        className="text-[11px] font-semibold text-[#315bd1] hover:underline"
+                        className="text-[11px] font-semibold text-[#7c3aed] hover:underline"
                       >
                         Resend OTP
                       </button>
@@ -381,7 +381,7 @@ const RetailerLogin = () => {
                   className={`mt-7 flex h-[58px] w-full items-center justify-center gap-2 rounded-2xl text-[14px] font-bold text-white shadow-[0_12px_26px_rgba(49,91,209,0.22)] transition active:scale-[0.99] ${
                     otpVerified
                       ? "bg-[#08ae82] hover:bg-[#079b74]"
-                      : "bg-[#315bd1] hover:bg-[#294fb8]"
+                      : "bg-[#7c3aed] hover:bg-[#294fb8]"
                   }`}
                 >
                   {otpVerified
@@ -406,7 +406,7 @@ const RetailerLogin = () => {
                   <button
                     type="button"
                     onClick={() => navigate("/retailer/register")}
-                    className="mt-1.5 text-[13px] font-bold text-[#315bd1] hover:underline"
+                    className="mt-1.5 text-[13px] font-bold text-[#7c3aed] hover:underline"
                   >
                     Register as a Retailer
                   </button>
@@ -416,14 +416,14 @@ const RetailerLogin = () => {
                 <div className="mt-8 border-t border-[#edf0f4] pt-5">
                   <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[10px] text-[#8992a3]">
                     <span className="flex items-center gap-1.5">
-                      <ShieldCheck className="h-3.5 w-3.5 text-[#315bd1]" />
+                      <ShieldCheck className="h-3.5 w-3.5 text-[#7c3aed]" />
                       Secure OTP authentication
                     </span>
 
                     <span className="text-[#d2d5db]">•</span>
 
                     <span className="flex items-center gap-1.5">
-                      <LockKeyhole className="h-3.5 w-3.5 text-[#315bd1]" />
+                      <LockKeyhole className="h-3.5 w-3.5 text-[#7c3aed]" />
                       Protected access
                     </span>
                   </div>
@@ -436,11 +436,11 @@ const RetailerLogin = () => {
             </section>
 
             {/* RIGHT — PREMIUM BRAND PANEL */}
-            <section className="relative hidden overflow-hidden bg-[#172033] lg:flex">
-              <div className="absolute -right-32 -top-32 h-[480px] w-[480px] rounded-full bg-[#315bd1]/25 blur-[90px]" />
-              <div className="absolute -bottom-40 -left-32 h-[460px] w-[460px] rounded-full bg-[#08ae82]/10 blur-[100px]" />
-
-              <div className="absolute inset-0 opacity-[0.04] [background-image:linear-gradient(rgba(255,255,255,1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,1)_1px,transparent_1px)] [background-size:42px_42px]" />
+            <section className="relative hidden overflow-hidden bg-gradient-to-br from-[#315bd1] via-[#6366f1] to-[#7c3aed] lg:flex">
+              {/* Decorative background */}
+              <div className="absolute -right-28 -top-24 h-[350px] w-[350px] rounded-full bg-white/10 blur-[80px]" />
+              <div className="absolute -bottom-28 -left-24 h-[330px] w-[330px] rounded-full bg-white/20 blur-[90px]" />
+              <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(rgba(255,255,255,1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,1)_1px,transparent_1px)] [background-size:40px_40px]" />
 
               <div className="relative flex w-full flex-col justify-between p-10 xl:p-14">
                 <div>
@@ -468,7 +468,7 @@ const RetailerLogin = () => {
                 {/* PREMIUM FEATURE CARDS — NO ANALYTICS */}
                 <div className="mt-12 space-y-3">
                   <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.06] p-4 backdrop-blur-sm">
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#315bd1]/20">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#7c3aed]/20">
                       <ShieldCheck className="h-5 w-5 text-[#8ea8ff]" />
                     </div>
 

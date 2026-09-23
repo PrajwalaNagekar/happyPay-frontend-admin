@@ -412,7 +412,7 @@ export default function BankDetails() {
   // ============================================================
 
   return (
-    <div className="px-1 pb-6">
+    <div className="px-4 pb-6 sm:px-6">
 
       {/* ======================================================
           HIDDEN FILE INPUT
@@ -432,7 +432,7 @@ export default function BankDetails() {
             HEADER
         ==================================================== */}
 
-        <header className="flex items-center justify-between py-4">
+        <header className="mb-4 flex min-h-14 items-center justify-between rounded-2xl border border-white/80 bg-white/90 px-3 py-2 shadow-[0_8px_24px_-18px_rgba(15,23,42,0.4)] backdrop-blur-md">
 
           <button
             type="button"
@@ -451,13 +451,13 @@ export default function BankDetails() {
 
         </header>
 
-        <main className="space-y-5 pt-3">
+        <main className="space-y-6">
 
           {/* ==================================================
-              BLUE ACCOUNT CARD
+              RED ACCOUNT CARD
           ================================================== */}
 
-          <section className="rounded-2xl bg-[#315bd1] p-4 text-white shadow-md sm:p-5">
+          <section className="rounded-2xl bg-[#7c3aed] p-4 text-white shadow-md sm:p-5">
 
             <div className="flex items-center gap-4">
 
@@ -603,7 +603,7 @@ export default function BankDetails() {
                   disabled={isSaving}
                   className={`flex min-h-11 w-full items-center gap-4 rounded-2xl border bg-slate-50/80 px-5 text-left transition ${
                     openDropdown === "bank"
-                      ? "border-[#315bd1] ring-1 ring-[#315bd1]"
+                      ? "border-[#7c3aed] ring-1 ring-[#7c3aed]"
                       : "border-slate-200 hover:border-slate-400"
                   }`}
                 >
@@ -640,7 +640,7 @@ export default function BankDetails() {
                         }
                         className={`flex w-full items-center px-5 py-4 text-left text-base font-semibold transition ${
                           bankName === bank
-                            ? "bg-slate-200 text-[#315bd1]"
+                            ? "bg-slate-200 text-[#7c3aed]"
                             : "text-[#172033] hover:bg-slate-50"
                         }`}
                       >
@@ -648,7 +648,7 @@ export default function BankDetails() {
                         {bankName === bank ? (
                           <Check
                             size={18}
-                            className="mr-3 shrink-0 text-[#315bd1]"
+                            className="mr-3 shrink-0 text-[#7c3aed]"
                           />
                         ) : (
                           <span className="mr-3 w-[18px]" />
@@ -679,7 +679,7 @@ export default function BankDetails() {
                 Account Holder Name
               </label>
 
-              <div className="mt-3 flex min-h-11 items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
+              <div className="mt-3 flex min-h-11 items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#7c3aed] focus-within:ring-1 focus-within:ring-[#7c3aed]">
 
                 <User
                   size={27}
@@ -725,7 +725,7 @@ export default function BankDetails() {
                   className={`flex min-h-11 w-full items-center gap-4 rounded-2xl border bg-slate-50/80 px-5 text-left transition ${
                     openDropdown ===
                     "accountType"
-                      ? "border-[#315bd1] ring-1 ring-[#315bd1]"
+                      ? "border-[#7c3aed] ring-1 ring-[#7c3aed]"
                       : "border-slate-200 hover:border-slate-400"
                   }`}
                 >
@@ -766,7 +766,7 @@ export default function BankDetails() {
                         }
                         className={`flex w-full items-center px-5 py-4 text-left text-base font-semibold transition ${
                           accountType === type
-                            ? "bg-slate-200 text-[#315bd1]"
+                            ? "bg-slate-200 text-[#7c3aed]"
                             : "text-[#172033] hover:bg-slate-50"
                         }`}
                       >
@@ -774,7 +774,7 @@ export default function BankDetails() {
                         {accountType === type ? (
                           <Check
                             size={18}
-                            className="mr-3 shrink-0 text-[#315bd1]"
+                            className="mr-3 shrink-0 text-[#7c3aed]"
                           />
                         ) : (
                           <span className="mr-3 w-[18px]" />
@@ -805,7 +805,7 @@ export default function BankDetails() {
                 IFSC Code
               </label>
 
-              <div className="mt-3 flex min-h-11 items-center rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
+              <div className="mt-3 flex min-h-11 items-center rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#7c3aed] focus-within:ring-1 focus-within:ring-[#7c3aed]">
 
                 <input
                   id="ifsc"
@@ -822,7 +822,7 @@ export default function BankDetails() {
               {/* DYNAMIC BRANCH */}
 
               {ifsc && (
-                <div className="mt-2 rounded-xl bg-[#eef2ff] px-4 py-3 text-sm font-semibold text-[#315bd1]">
+                <div className="mt-2 rounded-xl bg-[#f8f5ff] px-4 py-3 text-sm font-semibold text-[#7c3aed]">
 
                   🏢 {currentBankInfo.branch}
                   {" • "}
@@ -846,7 +846,7 @@ export default function BankDetails() {
                 Account Number
               </label>
 
-              <div className="mt-3 flex min-h-11 items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#315bd1] focus-within:ring-1 focus-within:ring-[#315bd1]">
+              <div className="mt-3 flex min-h-11 items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50/80 px-5 transition focus-within:border-[#7c3aed] focus-within:ring-1 focus-within:ring-[#7c3aed]">
 
                 <WalletCards
                   size={27}
@@ -891,7 +891,7 @@ export default function BankDetails() {
                     : confirmAccountNumber ===
                         accountNumber
                       ? "border-emerald-400 bg-emerald-50"
-                      : "border-red-400 bg-red-50"
+                      : "border-purple-400 bg-purple-50"
                 }`}
               >
 
@@ -904,7 +904,7 @@ export default function BankDetails() {
                       : confirmAccountNumber ===
                           accountNumber
                         ? "shrink-0 text-emerald-500"
-                        : "shrink-0 text-red-400"
+                        : "shrink-0 text-purple-400"
                   }
                 />
 
@@ -937,7 +937,7 @@ export default function BankDetails() {
                 0 &&
                 confirmAccountNumber !==
                   accountNumber && (
-                  <p className="mt-2 text-sm font-semibold text-red-500">
+                  <p className="mt-2 text-sm font-semibold text-purple-500">
                     Account numbers do not match
                   </p>
                 )}
@@ -983,7 +983,7 @@ export default function BankDetails() {
                 type="button"
                 onClick={handleUpload}
                 disabled={isSaving}
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#315bd1] text-white transition hover:bg-[#274dbd] disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#7c3aed] text-white transition hover:bg-[#274dbd] disabled:cursor-not-allowed disabled:opacity-50"
                 aria-label="Upload bank proof"
               >
                 <Upload size={22} />
@@ -998,7 +998,7 @@ export default function BankDetails() {
           ================================================== */}
 
           {error && (
-            <div className="rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-sm font-semibold text-red-600">
+            <div className="rounded-2xl border border-purple-200 bg-purple-50 px-5 py-4 text-sm font-semibold text-purple-600">
               {error}
             </div>
           )}
@@ -1014,7 +1014,7 @@ export default function BankDetails() {
             className={`flex min-h-11 w-full items-center justify-center gap-3 rounded-2xl px-5 text-base font-bold text-white shadow-md transition-all ${
               isSaving
                 ? "cursor-wait bg-[#274dbd]"
-                : "bg-[#315bd1] hover:bg-[#274dbd] active:scale-[0.99]"
+                : "bg-[#7c3aed] hover:bg-[#274dbd] active:scale-[0.99]"
             }`}
           >
 

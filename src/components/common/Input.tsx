@@ -46,7 +46,7 @@ export default function Input({
         >
           {label}
           {required && (
-            <span className="ml-1 text-red-500" aria-hidden="true">
+            <span className="ml-1 text-purple-500" aria-hidden="true">
               *
             </span>
           )}
@@ -73,8 +73,8 @@ export default function Input({
             icon ? "pl-12" : ""
           } ${
             error
-              ? "border-red-400 focus:border-red-500 focus:ring-red-100"
-              : "border-slate-200 focus:border-[#315bd1] focus:ring-[#315bd1]/12"
+              ? "border-purple-400 focus:border-purple-500 focus:ring-purple-100"
+              : "border-slate-200 focus:border-[#7c3aed] focus:ring-[#7c3aed]/12"
           } ${className}`}
           {...props}
         />
@@ -84,7 +84,7 @@ export default function Input({
         <p
           id={inputId ? `${inputId}-message` : undefined}
           className={`mt-1.5 text-xs ${
-            error ? "text-red-500" : "text-slate-500"
+            error ? "text-purple-500" : "text-slate-500"
           }`}
         >
           {message}

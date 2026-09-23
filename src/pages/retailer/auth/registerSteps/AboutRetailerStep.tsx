@@ -56,9 +56,9 @@ const AboutRetailerStep = () => {
               setFullName(event.target.value)
             }
             placeholder="Enter your full name"
-            className={`h-[54px] w-full rounded-xl border bg-[#fafbfd] pl-12 pr-5 text-[14px] font-medium text-[#172033] outline-none transition-all placeholder:text-[#a1a8b5] focus:border-[#315bd1] focus:bg-white focus:ring-4 focus:ring-[#315bd1]/10 ${
+            className={`h-[54px] w-full rounded-xl border bg-[#fafbfd] pl-12 pr-5 text-[14px] font-medium text-[#172033] outline-none transition-all placeholder:text-[#a1a8b5] focus:border-[#7c3aed] focus:bg-white focus:ring-4 focus:ring-[#7c3aed]/10 ${
               fullName
-                ? "border-[#315bd1]"
+                ? "border-[#7c3aed]"
                 : "border-[#dfe3e9]"
             }`}
           />
@@ -90,7 +90,7 @@ const AboutRetailerStep = () => {
           className={`flex min-h-[150px] w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed px-5 text-center transition-all ${
             selfie
               ? "border-[#b9e8d4] bg-[#f3fcf8]"
-              : "border-[#dfe3e9] bg-[#fafbfd] hover:border-[#315bd1] hover:bg-[#f3f6ff]"
+              : "border-[#dfe3e9] bg-[#fafbfd] hover:border-[#7c3aed] hover:bg-[#f3f6ff]"
           }`}
         >
           {selfie ? (
@@ -114,7 +114,7 @@ const AboutRetailerStep = () => {
             <>
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#edf1fc]">
                 <Camera
-                  className="h-6 w-6 text-[#315bd1]"
+                  className="h-6 w-6 text-[#7c3aed]"
                   strokeWidth={2}
                 />
               </div>
@@ -222,9 +222,9 @@ const SelectField = ({
           onChange={(event) =>
             onChange(event.target.value)
           }
-          className={`h-[54px] w-full appearance-none rounded-xl border bg-[#fafbfd] pl-12 pr-11 text-[14px] font-medium text-[#172033] outline-none transition-all focus:border-[#315bd1] focus:bg-white focus:ring-4 focus:ring-[#315bd1]/10 ${
+          className={`h-[54px] w-full appearance-none rounded-xl border bg-[#fafbfd] pl-12 pr-11 text-[14px] font-medium text-[#172033] outline-none transition-all focus:border-[#7c3aed] focus:bg-white focus:ring-4 focus:ring-[#7c3aed]/10 ${
             value
-              ? "border-[#315bd1]"
+              ? "border-[#7c3aed]"
               : "border-[#dfe3e9]"
           }`}
         >
