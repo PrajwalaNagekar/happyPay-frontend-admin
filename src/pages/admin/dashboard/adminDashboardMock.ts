@@ -1,17 +1,41 @@
 import type { DashboardStats, RecentRetailer, RecentTransaction } from "../../../types/admin/dashboard";
+import { DUMMY_RETAILERS } from "../retailers/mockRetailers";
+import { DUMMY_TRANSACTIONS } from "../transactions/mockTransactions";
+
+const totalRetailers = DUMMY_RETAILERS.filter(r => r.role === "retailer").length;
+const totalDistributors = DUMMY_RETAILERS.filter(r => r.role === "distributor").length;
+const pendingKyc = DUMMY_RETAILERS.filter(r => r.kycStatus === "pending").length;
+const approvedRetailers = DUMMY_RETAILERS.filter(r => r.kycStatus === "approved").length;
+const rejectedRetailers = DUMMY_RETAILERS.filter(r => r.kycStatus === "rejected").length;
+const suspendedRetailers = DUMMY_RETAILERS.filter(r => r.status === "suspended").length;
+
+const totalAepsTransactions = DUMMY_TRANSACTIONS.filter(t => t.type.includes("AEPS") || t.type.includes("Aadhar")).length;
+const totalDmtTransactions = DUMMY_TRANSACTIONS.filter(t => t.type.includes("DMT")).length;
+const totalCmsTransactions = DUMMY_TRANSACTIONS.filter(t => t.type.includes("CMS") || t.type.includes("BBPS") || t.type.includes("UPI")).length;
+
+const getEarnings = (typeMatch: string[]) => DUMMY_TRANSACTIONS.filter(t => typeMatch.some(m => t.type.includes(m))).reduce((acc, t) => {
+  const comm = parseFloat(t.commission.replace("₹", ""));
+  return acc + (isNaN(comm) ? 0 : comm);
+}, 0);
+
+const aepsEarnings = getEarnings(["AEPS", "Aadhar"]);
+const dmtEarnings = getEarnings(["DMT"]);
+const cmsEarnings = getEarnings(["CMS", "BBPS", "UPI"]);
+const totalCommission = aepsEarnings + dmtEarnings + cmsEarnings;
 
 export const dashboardStats: DashboardStats = {
-  totalRetailers: 150,
-  pendingKyc: 20,
-  approvedRetailers: 100,
-  suspendedRetailers: 15,
-  totalAepsTransactions: 12480,
-  totalDmtTransactions: 8360,
-  totalCmsTransactions: 4920,
-  totalCommission: 284650,
+  totalRetailers,
+  totalDistributors,
+  pendingKyc,
+  approvedRetailers,
+  suspendedRetailers,
+  totalAepsTransactions,
+  totalDmtTransactions,
+  totalCmsTransactions,
+  totalCommission,
 };
 
-export const rejectedRetailers = 15;
+export { rejectedRetailers };
 
 export const kycOverview = [
   { label: "Pending KYC", value: dashboardStats.pendingKyc, color: "#e59a20" },
@@ -20,23 +44,26 @@ export const kycOverview = [
   { label: "Suspended", value: dashboardStats.suspendedRetailers, color: "#64748b" },
 ];
 
-export const recentRetailers: RecentRetailer[] = [
-  { id: "RET-10482", name: "Shree Ganesh Kirana", mobile: "98765 43210", kycStatus: "Pending", registrationDate: "22 Sep 2026" },
-  { id: "RET-10481", name: "Metro Digital Point", mobile: "98111 22004", kycStatus: "Approved", registrationDate: "21 Sep 2026" },
-  { id: "RET-10480", name: "Aarav Telecom", mobile: "98990 11772", kycStatus: "Rejected", registrationDate: "20 Sep 2026" },
-  { id: "RET-10479", name: "City Connect Services", mobile: "97654 88321", kycStatus: "Pending", registrationDate: "20 Sep 2026" },
-];
+export const recentRetailers: RecentRetailer[] = DUMMY_RETAILERS.slice(0, 5).map(r => ({
+  id: r.id,
+  name: r.shop.name || r.fullName,
+  mobile: r.mobile,
+  kycStatus: (r.kycStatus.charAt(0).toUpperCase() + r.kycStatus.slice(1)) as "Approved" | "Rejected" | "Pending",
+  registrationDate: new Date(r.createdAt).toLocaleDateString("en-GB", { day: 'numeric', month: 'short', year: 'numeric' }),
+}));
 
-export const recentTransactions: RecentTransaction[] = [
-  { id: "TXN-882104", retailer: "Metro Digital Point", service: "AEPS", amount: 2500, status: "Success", date: "22 Sep, 11:42 AM" },
-  { id: "TXN-882103", retailer: "Aarav Telecom", service: "DMT", amount: 12000, status: "Pending", date: "22 Sep, 11:28 AM" },
-  { id: "TXN-882102", retailer: "City Connect Services", service: "CMS", amount: 4850, status: "Success", date: "22 Sep, 10:55 AM" },
-  { id: "TXN-882101", retailer: "Shree Ganesh Kirana", service: "AEPS", amount: 1000, status: "Failed", date: "22 Sep, 10:41 AM" },
-];
+export const recentTransactions: RecentTransaction[] = DUMMY_TRANSACTIONS.slice(0, 5).map(t => ({
+  id: t.id,
+  retailer: t.name,
+  service: (t.type.includes("AEPS") || t.type.includes("Aadhar")) ? "AEPS" : (t.type.includes("CMS") || t.type.includes("BBPS") || t.type.includes("UPI")) ? "CMS" : "DMT",
+  amount: parseFloat(t.commission.replace("₹", "")) * 200,
+  status: t.flow === "Credit" ? "Success" : "Pending",
+  date: t.date,
+}));
 
 export const transactionTrend = [42, 58, 48, 74, 66, 91, 84, 108, 96, 122, 116, 138];
 
-export const earningsOverview = { aeps: 126400, dmt: 98250, cms: 60000, total: 284650 };
+export const earningsOverview = { aeps: aepsEarnings, dmt: dmtEarnings, cms: cmsEarnings, total: totalCommission };
 
 export const customerOverview = { total: 4820, aeps: 2940, dmt: 1880 };
 

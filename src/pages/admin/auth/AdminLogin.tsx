@@ -1,4 +1,4 @@
-import { Eye, EyeOff, LockKeyhole, Mail, Phone, ShieldCheck } from "lucide-react";
+import { Eye, EyeOff, LockKeyhole, Mail } from "lucide-react";
 import { type FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginAdmin } from "../../../services/api/admin/adminAuthApi";
@@ -7,7 +7,7 @@ import { saveAdminSession } from "../../../utils/adminAuth";
 export default function AdminLogin() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [mobile, setMobile] = useState("");
+  const [mobile] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
@@ -59,15 +59,14 @@ export default function AdminLogin() {
   return (
     <main className="hp-canvas flex min-h-screen items-center justify-center p-4 sm:p-6">
       <section className="grid w-full max-w-5xl overflow-hidden rounded-[28px] border border-white bg-white shadow-[0_24px_70px_-32px_rgba(15,23,42,0.35)] lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="hidden bg-[#172033] p-10 text-white lg:flex lg:flex-col lg:justify-between">
+        <div className="hidden bg-[#172033] p-10 lg:flex lg:flex-col lg:justify-between">
           <div>
             <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-sm font-extrabold text-[#172033]">
-                HP
+              <div className="rounded-xl bg-white p-2">
+                <img src="/logo.jpg" alt="Happy Pay Logo" className="h-10 w-auto object-contain" />
               </div>
-              <span className="text-xl font-extrabold">HappyPay</span>
             </div>
-            <p className="mt-16 max-w-sm text-4xl font-bold leading-tight">
+            <p className="mt-16 max-w-sm text-4xl font-bold leading-tight text-white">
               Control the platform with clarity.
             </p>
             <p className="mt-5 max-w-sm text-sm leading-6 text-slate-300">
@@ -79,16 +78,13 @@ export default function AdminLogin() {
 
         <div className="p-6 sm:p-10 lg:p-14">
           <div className="mb-8 flex items-center gap-3 lg:hidden">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#172033] text-sm font-extrabold text-white">
-              HP
-            </div>
-            <span className="font-extrabold text-slate-900">HappyPay</span>
+            <img src="/logo.jpg" alt="Happy Pay Logo" className="h-10 w-auto object-contain" />
           </div>
 
           <div className="mx-auto max-w-md">
             <div className="mb-8">
-              <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#eef2ff] text-[#315bd1]">
-                <ShieldCheck className="h-6 w-6" />
+              <div className="mb-5 flex items-center">
+                <img src="/logo.jpg" alt="Happy Pay Logo" className="h-12 w-auto object-contain" />
               </div>
               <h1 className="text-2xl font-bold text-slate-900">
                 Super Admin Portal
@@ -116,26 +112,6 @@ export default function AdminLogin() {
                   />
                 </div>
               </div>
-
-              <div>
-                <label htmlFor="admin-mobile" className="mb-2 block text-sm font-semibold text-slate-700">
-                  Mobile number <span className="font-normal text-slate-400">(or email)</span>
-                </label>
-                <div className="relative">
-                  <Phone className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                  <input
-                    id="admin-mobile"
-                    type="tel"
-                    value={mobile}
-                    onChange={(event) => setMobile(event.target.value.replace(/\D/g, ""))}
-                    className="min-h-12 w-full rounded-xl border border-slate-200 bg-slate-50/70 pl-11 pr-4 text-sm outline-none focus:border-[#315bd1] focus:bg-white focus:ring-4 focus:ring-[#315bd1]/10"
-                    placeholder="9876543210"
-                    maxLength={10}
-                    autoComplete="tel"
-                  />
-                </div>
-              </div>
-
               <div>
                 <label htmlFor="admin-password" className="mb-2 block text-sm font-semibold text-slate-700">
                   Password
@@ -175,16 +151,6 @@ export default function AdminLogin() {
               <button type="submit" disabled={loading} className="flex min-h-12 w-full items-center justify-center rounded-xl bg-[#315bd1] px-5 text-sm font-bold text-white transition hover:bg-[#274dbd] disabled:cursor-not-allowed disabled:opacity-60">
                 {loading ? "Signing in..." : "Sign in to Admin Portal"}
               </button>
-
-              <p className="text-center text-sm text-slate-500">
-                Need an admin account?{" "}
-                <Link
-                  to="/admin/register"
-                  className="font-semibold text-[#315bd1] hover:underline"
-                >
-                  Create one
-                </Link>
-              </p>
             </form>
           </div>
         </div>

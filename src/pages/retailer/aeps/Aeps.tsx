@@ -944,7 +944,7 @@ const Aeps = () => {
               </div>
 
               <div>
-                <h2 className="text-lg font-bold text-[#171717] sm:text-xl">
+                <h2 className="text-base font-bold text-[#171717] sm:text-lg">
                   Retailer Daily 2FA Active
                 </h2>
 
@@ -962,7 +962,7 @@ const Aeps = () => {
 
           <div className="flex h-full flex-col rounded-2xl border border-purple-100 bg-white p-4 shadow-sm sm:p-5">
             <div className="mb-3 flex items-center justify-between">
-              <h2 className="text-lg font-bold text-slate-900 sm:text-xl">
+              <h2 className="text-base font-bold text-slate-900 sm:text-lg">
                 Select Biometric Device
               </h2>
 
@@ -1018,7 +1018,7 @@ const Aeps = () => {
         {/* Retailer Mobile + Aadhaar */}
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
           <section>
-            <label className="mb-3 block text-lg font-bold text-slate-900 sm:text-xl">
+            <label className="mb-3 block text-base font-bold text-slate-900 sm:text-lg">
               Retailer Mobile Number{" "}
               <span className="text-sm font-medium text-slate-500">
                 (Autofetched)
@@ -1037,7 +1037,7 @@ const Aeps = () => {
           <section>
             <label
               htmlFor="retailer-aadhaar"
-              className="mb-3 block text-lg font-bold text-slate-900 sm:text-xl"
+              className="mb-3 block text-base font-bold text-slate-900 sm:text-lg"
             >
               Retailer Aadhaar Number
             </label>
@@ -1054,7 +1054,7 @@ const Aeps = () => {
                 onChange={handleRetailerAadhaarChange}
                 disabled={isCapturingRetailer || retailerAuthenticated}
                 placeholder="Enter 12-digit Aadhaar number"
-                className="w-full bg-transparent text-lg font-medium outline-none placeholder:text-slate-400"
+                className="w-full bg-transparent text-base font-medium outline-none placeholder:text-slate-400"
               />
             </div>
           </section>
@@ -1114,9 +1114,9 @@ const Aeps = () => {
             type="button"
             onClick={handleRetailerBiometric}
             disabled={retailerAadhaar.length !== 12}
-            className="flex min-h-[52px] w-full items-center justify-center gap-3 rounded-xl bg-purple-600 px-5 text-sm font-bold text-white shadow-md transition-all hover:-translate-y-0.5 hover:bg-purple-700 disabled:cursor-not-allowed disabled:opacity-50 sm:text-base"
+            className="flex min-h-[52px] w-full items-center justify-center gap-3 rounded-xl bg-purple-600 px-5 text-sm font-bold text-white shadow-md transition-all hover:-translate-y-0.5 hover:bg-purple-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            <Fingerprint className="h-7 w-7" />
+            <Fingerprint className="h-5 w-5" />
             PROCEED FOR BIOMETRIC AUTH
           </button>
         )}
@@ -2230,28 +2230,30 @@ const Aeps = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 px-3 py-4 sm:px-5 sm:py-6 lg:px-5">
-      <div className="mx-auto w-full max-w-3xl">
+    <div className="mx-auto w-full max-w-3xl space-y-6">
       {/* Page Header */}
-      <div className="hp-page-head mx-auto w-full max-w-3xl">
-        <button
-          type="button"
-          onClick={handleBack}
-          className="hp-back"
-          aria-label="Go back"
-        >
-          <ArrowLeft className="h-5 w-5" />
-        </button>
-
-        <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
-            Aadhaar ATM
-          </p>
-          <h1 className="text-lg font-bold tracking-tight text-slate-900 sm:text-xl">
-            {activeTab === "withdraw" ? "Withdraw Money" : "Cash Deposit"}
-          </h1>
+      <section>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={handleBack}
+            className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-slate-500 shadow-sm transition hover:bg-slate-50 hover:text-slate-900"
+            aria-label="Go back"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#7c3aed]">
+              Aadhaar ATM
+            </p>
+            <h1 className="mt-1 text-2xl font-bold tracking-tight text-slate-900">
+              {activeTab === "withdraw" ? "Withdraw Money" : "Cash Deposit"}
+            </h1>
+          </div>
         </div>
-      </div>
+      </section>
+
+      <section className="hp-card overflow-hidden rounded-2xl p-5 sm:p-7">
 
       {/* Tabs */}
       <div className="mx-auto mt-4 flex w-full max-w-3xl items-center gap-2 rounded-2xl bg-[#e3e8f2] p-1.5 shadow-sm">
@@ -2319,7 +2321,7 @@ const Aeps = () => {
       {renderBiometricModal()}
         </>
       )}
-      </div>
+      </section>
     </div>
   );
 };

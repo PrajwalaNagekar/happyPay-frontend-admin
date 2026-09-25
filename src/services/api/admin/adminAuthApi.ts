@@ -2,7 +2,6 @@ import { apiClient } from "../client";
 import type {
   AdminLoginRequest,
   AdminLoginResponse,
-  AdminRegisterRequest,
   ForgotPasswordRequest,
   ResetPasswordRequest,
 } from "../../../types/admin/auth";
@@ -15,19 +14,24 @@ interface ApiEnvelope<T> {
 
 const unwrap = <T,>(response: ApiEnvelope<T>) => response.data;
 
-export function loginAdmin(payload: AdminLoginRequest) {
-  return apiClient<ApiEnvelope<AdminLoginResponse>>("/api/admin/auth/login", {
-    method: "POST",
-    body: JSON.stringify(payload),
-  }).then(unwrap);
+export async function loginAdmin(payload: AdminLoginRequest): Promise<AdminLoginResponse> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        accessToken: "dummy_admin_token_12345",
+        admin: {
+          id: "ADM01",
+          name: "Super Admin",
+          email: payload.email || "admin@happypay.in",
+          mobile: payload.mobile || "9876543210",
+          role: "Super Admin",
+          status: "active",
+        },
+      });
+    }, 600);
+  });
 }
 
-export function registerAdmin(payload: AdminRegisterRequest) {
-  return apiClient<ApiEnvelope<{ admin: AdminLoginResponse["user"] }>>("/api/admin/auth/register", {
-    method: "POST",
-    body: JSON.stringify(payload),
-  }).then(unwrap);
-}
 
 export function forgotPassword(payload: ForgotPasswordRequest) {
   return apiClient<ApiEnvelope<{ message?: string; resetUrl?: string }>>("/api/admin/auth/forgot-password", {

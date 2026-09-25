@@ -13,6 +13,7 @@ import AadhaarPay from "../pages/retailer/aadhaar-pay/AadhaarPay";
 import Dmt from "../pages/retailer/dmt/Dmt";
 import Cms from "../pages/retailer/cms/Cms";
 import UpiCashPoint from "../pages/retailer/upi-cash-point/UpiCashPoint";
+import BBPS from "../pages/retailer/bbps/Bbps";
 
 // TRANSACTIONS
 import Transactions from "../pages/history/Transactions"
@@ -21,11 +22,11 @@ import Transactions from "../pages/history/Transactions"
 import Profile from "../pages/retailer/profile/Profile";
 import ShopInformation from "../pages/retailer/profile/ShopInformation";
 import BankDetails from "../pages/retailer/profile/BankDetails";
+import Settlements from "../pages/retailer/profile/Settlements";
 import SecuritySettings from "../pages/retailer/profile/SecuritySettings";
 import HelpSupport from "../pages/retailer/profile/HelpSupport";
 import Wallet from "../pages/retailer/wallet/Wallet";
 import AdminLogin from "../pages/admin/auth/AdminLogin";
-import AdminRegister from "../pages/admin/auth/AdminRegister";
 import ForgotPassword from "../pages/admin/auth/ForgotPassword";
 import ResetPassword from "../pages/admin/auth/ResetPassword";
 import AdminProtectedRoute from "../components/admin/AdminProtectedRoute";
@@ -34,7 +35,12 @@ import AdminDashboard from "../pages/admin/dashboard/AdminDashboard";
 import AdminProfile from "../pages/admin/profile/AdminProfile";
 import AdminSupport from "../pages/admin/support/AdminSupport";
 import AdminRetailers from "../pages/admin/retailers/AdminRetailers";
+import AdminRetailerDetails from "../pages/admin/retailers/AdminRetailerDetails";
 import AdminAuditLogs from "../pages/admin/audit/AdminAuditLogs";
+import AdminTransactions from "../pages/admin/transactions/AdminTransactions";
+import AdminCustomers from "../pages/admin/customers/AdminCustomers";
+import AdminCommissions from "../pages/admin/commissions/AdminCommissions";
+import AdminCmsConfig from "../pages/admin/cms/AdminCmsConfig";
 
 const Router: RouteObject[] = [
   // ADMIN AUTH
@@ -48,19 +54,7 @@ const Router: RouteObject[] = [
       },
     ],
   },
-
-  // ADMIN REGISTER UI
-  {
-    path: "/admin/register",
-    element: <BlankLayout />,
-    children: [
-      {
-        index: true,
-        element: <AdminRegister />,
-      },
-    ],
-  },
-
+  
   {
     path: "/admin/forgot-password",
     element: <BlankLayout />,
@@ -84,6 +78,11 @@ const Router: RouteObject[] = [
           { index: true, element: <Navigate to="dashboard" replace /> },
           { path: "dashboard", element: <AdminDashboard /> },
           { path: "retailers", element: <AdminRetailers /> },
+          { path: "retailers/:id", element: <AdminRetailerDetails /> },
+          { path: "transactions", element: <AdminTransactions /> },
+          { path: "customers", element: <AdminCustomers /> },
+          { path: "commissions", element: <AdminCommissions /> },
+          { path: "cms", element: <AdminCmsConfig /> },
           { path: "profile", element: <AdminProfile /> },
           { path: "support", element: <AdminSupport /> },
           { path: "audit-logs", element: <AdminAuditLogs /> },
@@ -134,6 +133,10 @@ const Router: RouteObject[] = [
             path: "upi-cash-point",
             element: <UpiCashPoint />,
           },
+           {
+            path: "bbps",
+            element: <BBPS />,
+          },
 
           // TRANSACTIONS
           {
@@ -162,6 +165,12 @@ const Router: RouteObject[] = [
           {
             path: "profile/bank",
             element: <BankDetails />,
+          },
+
+          // SETTLEMENTS
+          {
+            path: "profile/settlements",
+            element: <Settlements />,
           },
 
           // SECURITY SETTINGS

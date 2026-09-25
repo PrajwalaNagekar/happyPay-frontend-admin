@@ -6,6 +6,7 @@ import {
   ChevronRight,
   UserCircle,
   ShieldCheck,
+  Receipt,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -24,6 +25,12 @@ const Profile = () => {
       description: "View and manage your registered bank details",
       icon: CreditCard,
       path: "/retailer/profile/bank",
+    },
+    {
+      title: "Settlements",
+      description: "View and manage your settlements",
+      icon: Receipt,
+      path: "/retailer/profile/settlements",
     },
     {
       title: "Security Settings",

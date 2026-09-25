@@ -37,7 +37,7 @@ const AepsDeposit: React.FC<AepsDepositProps> = ({ onBack }) => {
   ) => {
     setMobile(event.target.value.replace(/\D/g, "").slice(0, 10));
   };
-
+  
   const handleAmountChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {

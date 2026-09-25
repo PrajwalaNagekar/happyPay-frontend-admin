@@ -32,8 +32,7 @@ export interface AdminLoginResponse {
 }
 
 export interface ForgotPasswordRequest {
-  email?: string;
-  mobile?: string;
+  email: string;
 }
 
 export interface ResetPasswordRequest {

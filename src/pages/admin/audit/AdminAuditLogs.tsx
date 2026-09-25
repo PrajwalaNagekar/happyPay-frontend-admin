@@ -6,10 +6,60 @@ import {
   Search,
 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getAdminAuditLogs } from "../../../services/api/admin/adminAuditApi";
 import type { AuditLog } from "../../../types/admin/audit";
-import { clearAdminSession } from "../../../utils/adminAuth";
+
+
+const dummyAuditLogs: AuditLog[] = [
+  {
+    id: "LOG001", adminId: "ADM01", userName: "Super Admin", role: "Super Admin",
+    action: "Admin Login", entity: "Auth", description: "Successful login from desktop device.",
+    createdAt: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
+    createdBy: { name: "System", role: "System" }, updatedBy: { name: "System", role: "System" },
+    ipAddress: "192.168.1.45"
+  },
+  {
+    id: "LOG002", adminId: "ADM01", userName: "Super Admin", role: "Super Admin",
+    action: "KYC Approved", entity: "Retailer", entityId: "RET-98231", description: "Approved KYC documents for Ramesh Store.",
+    createdAt: new Date(Date.now() - 1000 * 60 * 45).toISOString(),
+    createdBy: { name: "Super Admin", role: "Super Admin" }, updatedBy: { name: "Super Admin", role: "Super Admin" },
+    ipAddress: "192.168.1.45"
+  },
+  {
+    id: "LOG003", adminId: "ADM02", userName: "John Doe", role: "Manager",
+    action: "Commission Changed", entity: "Commission Config", entityId: "COMM-004", description: "Updated AePS Cash Withdraw commission to 0.40%.",
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+    createdBy: { name: "John Doe", role: "Manager" }, updatedBy: { name: "John Doe", role: "Manager" },
+    ipAddress: "10.0.0.15"
+  },
+  {
+    id: "LOG004", adminId: "ADM02", userName: "John Doe", role: "Manager",
+    action: "Retailer Suspended", entity: "Retailer", entityId: "RET-11942", description: "Suspended retailer account due to suspicious activity.",
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString(),
+    createdBy: { name: "John Doe", role: "Manager" }, updatedBy: { name: "John Doe", role: "Manager" },
+    ipAddress: "10.0.0.15"
+  },
+  {
+    id: "LOG005", adminId: "ADM01", userName: "Super Admin", role: "Super Admin",
+    action: "Limit Changed", entity: "Transaction Limits", entityId: "LIM-092", description: "Increased daily DMT limit for verified retailers to ₹2,00,000.",
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+    createdBy: { name: "Super Admin", role: "Super Admin" }, updatedBy: { name: "Super Admin", role: "Super Admin" },
+    ipAddress: "192.168.1.45"
+  },
+  {
+    id: "LOG006", adminId: "ADM03", userName: "Alice Smith", role: "Support",
+    action: "KYC Rejected", entity: "Retailer", entityId: "RET-77412", description: "Rejected PAN card upload (illegible).",
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 26).toISOString(),
+    createdBy: { name: "Alice Smith", role: "Support" }, updatedBy: { name: "Alice Smith", role: "Support" },
+    ipAddress: "172.16.0.8"
+  },
+  {
+    id: "LOG007", adminId: "ADM01", userName: "Super Admin", role: "Super Admin",
+    action: "Admin Registered", entity: "Admin", entityId: "ADM03", description: "Created new Support admin account for Alice Smith.",
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString(),
+    createdBy: { name: "Super Admin", role: "Super Admin" }, updatedBy: { name: "Super Admin", role: "Super Admin" },
+    ipAddress: "192.168.1.45"
+  },
+];
 
 const formatDate = (value?: string) =>
   value
@@ -20,8 +70,6 @@ const formatDate = (value?: string) =>
     : "-";
 
 export default function AdminAuditLogs() {
-  const navigate = useNavigate();
-
   const [logs, setLogs] = useState<AuditLog[]>([]);
   const [search, setSearch] = useState("");
   const [action, setAction] = useState("");
@@ -33,59 +81,52 @@ export default function AdminAuditLogs() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const handleRequestError = useCallback(
-    (caught: unknown) => {
-      const message =
-        caught instanceof Error
-          ? caught.message
-          : "Unable to load audit logs.";
 
-      if (
-        message
-          .toLowerCase()
-          .includes("invalid or expired access token")
-      ) {
-        clearAdminSession();
-        navigate("/admin/login", { replace: true });
-        return;
-      }
-
-      setError(message);
-    },
-    [navigate],
-  );
 
   const loadLogs = useCallback(async () => {
     setLoading(true);
     setError("");
 
-    try {
-      const response = await getAdminAuditLogs({
-        page,
-        limit: 20,
-        search,
-        action,
-        fromDate,
-        toDate,
-      });
+    setTimeout(() => {
+      let filteredLogs = [...dummyAuditLogs];
 
-      const result = response.data;
+      if (search) {
+        const query = search.toLowerCase();
+        filteredLogs = filteredLogs.filter(
+          log =>
+            log.userName.toLowerCase().includes(query) ||
+            log.action.toLowerCase().includes(query) ||
+            log.entity.toLowerCase().includes(query) ||
+            log.description.toLowerCase().includes(query)
+        );
+      }
 
-      setLogs(result.logs ?? []);
-      setTotal(result.total ?? 0);
-      setTotalPages(result.totalPages ?? 1);
-    } catch (caught) {
-      handleRequestError(caught);
-    } finally {
+      if (action) {
+        filteredLogs = filteredLogs.filter(log => log.action === action);
+      }
+
+      if (fromDate) {
+        const from = new Date(fromDate).getTime();
+        filteredLogs = filteredLogs.filter(log => new Date(log.createdAt).getTime() >= from);
+      }
+
+      if (toDate) {
+        // Set to end of the day for inclusive filtering
+        const to = new Date(toDate);
+        to.setHours(23, 59, 59, 999);
+        filteredLogs = filteredLogs.filter(log => new Date(log.createdAt).getTime() <= to.getTime());
+      }
+
+      setLogs(filteredLogs);
+      setTotal(filteredLogs.length);
+      setTotalPages(Math.ceil(filteredLogs.length / 20) || 1);
       setLoading(false);
-    }
+    }, 400);
   }, [
-    page,
     search,
     action,
     fromDate,
     toDate,
-    handleRequestError,
   ]);
 
   useEffect(() => {
@@ -263,41 +304,38 @@ export default function AdminAuditLogs() {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[1180px] text-left text-xs">
-              <thead className="border-b border-slate-100 bg-slate-50/70 text-[10px] uppercase tracking-wider text-slate-400">
+            <table className="hp-table min-w-[1180px]">
+              <thead>
                 <tr>
-                  <th className="px-5 py-3 font-bold">
+                  <th>
                     User / Role
                   </th>
-                  <th className="px-5 py-3 font-bold">
+                  <th>
                     Action
                   </th>
-                  <th className="px-5 py-3 font-bold">
+                  <th>
                     Entity
                   </th>
-                  <th className="px-5 py-3 font-bold">
+                  <th>
                     Details
                   </th>
-                  <th className="px-5 py-3 font-bold">
+                  <th>
                     Created by
                   </th>
-                  <th className="px-5 py-3 font-bold">
+                  <th>
                     Updated by
                   </th>
-                  <th className="px-5 py-3 font-bold">
+                  <th>
                     Created / Updated
-                  </th>
-                  <th className="px-5 py-3 font-bold">
-                    IP address
                   </th>
                 </tr>
               </thead>
 
-              <tbody className="divide-y divide-slate-100">
+              <tbody>
                 {logs.map((log) => (
                   <tr
                     key={log.id}
-                    className="align-top text-slate-600"
+                    className="align-top"
                   >
                     <td className="px-5 py-4">
                       <p className="font-bold text-slate-900">
@@ -355,10 +393,6 @@ export default function AdminAuditLogs() {
                       <p className="mt-1 text-[10px] text-slate-400">
                         Updated: {formatDate(log.updatedAt)}
                       </p>
-                    </td>
-
-                    <td className="px-5 py-4 font-mono text-[10px]">
-                      {log.ipAddress ?? "-"}
                     </td>
                   </tr>
                 ))}

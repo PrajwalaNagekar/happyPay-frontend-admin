@@ -7,7 +7,6 @@ import {
   Smartphone,
   Store,
   UserRound,
-  CreditCard,
   Fingerprint,
   Cake,
   FileText,
@@ -19,7 +18,7 @@ import {
 import AccountStep from "./registerSteps/AccountSteps";
 import ShopDetailsStep from "./registerSteps/ShopDetailsStep";
 import AboutRetailerStep from "./registerSteps/AboutRetailerStep";
-import PanVerificationStep from "./registerSteps/PanVerificationStep";
+// import PanVerificationStep from "./registerSteps/PanVerificationStep";
 import AadhaarStep from "./registerSteps/AadhaarStep";
 import DobStep from "./registerSteps/DobStep";
 import BusinessProofStep from "./registerSteps/BusinessProofStep";
@@ -41,11 +40,11 @@ const steps = [
     description: "Personal information",
     icon: UserRound,
   },
-  {
+  /* {
     title: "PAN Verification",
     description: "PAN verification",
     icon: CreditCard,
-  },
+  }, */
   {
     title: "Aadhaar",
     description: "Aadhaar verification",
@@ -72,7 +71,7 @@ const stepHeadings = [
   "Let's get started",
   "Your Business",
   "About You",
-  "Verify your PAN",
+  // "Verify your PAN",
   "Verify Aadhaar",
   "Date of Birth",
   "Business Proof",
@@ -83,7 +82,7 @@ const stepDescriptions = [
   "Create your HappyPay retailer account.",
   "Tell us about your shop and business.",
   "Tell us a little about yourself.",
-  "Enter your PAN details for verification.",
+  // "Enter your PAN details for verification.",
   "Verify your Aadhaar information securely.",
   "Enter your date of birth.",
   "Upload your shop and business proof.",
@@ -189,11 +188,11 @@ const RetailerRegister = () => {
           MAIN CARD
       ======================================================= */}
 
-      <div className="mx-auto flex min-h-[calc(100vh-24px)] w-full max-w-[1240px] items-center sm:min-h-[calc(100vh-40px)]">
+      <div className="mx-auto flex min-h-[calc(100vh-24px)] w-full max-w-[1080px] items-center sm:min-h-[calc(100vh-40px)]">
 
-        <div className="w-full overflow-hidden rounded-[28px] border border-white bg-white shadow-[0_25px_70px_rgba(23,32,51,0.12)]">
+        <div className="w-full overflow-hidden rounded-[24px] border border-white bg-white shadow-[0_25px_70px_rgba(23,32,51,0.12)]">
 
-          <div className="grid min-h-[720px] lg:grid-cols-[280px_minmax(0,1fr)]">
+          <div className="grid min-h-[580px] lg:grid-cols-[260px_minmax(0,1fr)]">
 
             {/* ==================================================
                 LEFT REGISTRATION PANEL
@@ -471,7 +470,7 @@ const RetailerRegister = () => {
               </div>
 
               {/* FORM CONTENT */}
-              <div className="flex flex-1 flex-col px-5 py-7 sm:px-8 lg:px-10 xl:px-12">
+              <div className="flex flex-1 flex-col px-5 py-6 sm:px-7 lg:px-9 xl:px-10">
 
                 {/* FORM HEADER */}
                 <div className="flex items-start justify-between gap-4">
@@ -576,7 +575,7 @@ const RetailerRegister = () => {
                     <AboutRetailerStep />
                   </div>
 
-                  <div
+                  {/* <div
                     className={
                       currentStep === 3
                         ? "block"
@@ -584,11 +583,11 @@ const RetailerRegister = () => {
                     }
                   >
                     <PanVerificationStep />
-                  </div>
+                  </div> */}
 
                   <div
                     className={
-                      currentStep === 4
+                      currentStep === 3
                         ? "block"
                         : "hidden"
                     }
@@ -598,7 +597,7 @@ const RetailerRegister = () => {
 
                   <div
                     className={
-                      currentStep === 5
+                      currentStep === 4
                         ? "block"
                         : "hidden"
                     }
@@ -608,7 +607,7 @@ const RetailerRegister = () => {
 
                   <div
                     className={
-                      currentStep === 6
+                      currentStep === 5
                         ? "block"
                         : "hidden"
                     }
@@ -618,7 +617,7 @@ const RetailerRegister = () => {
 
                   <div
                     className={
-                      currentStep === 7
+                      currentStep === 6
                         ? "block"
                         : "hidden"
                     }

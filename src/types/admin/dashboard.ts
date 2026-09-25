@@ -1,5 +1,6 @@
 export interface DashboardStats {
   totalRetailers: number;
+  totalDistributors: number;
   pendingKyc: number;
   approvedRetailers: number;
   suspendedRetailers: number;

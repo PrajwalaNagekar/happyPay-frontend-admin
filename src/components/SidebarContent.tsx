@@ -13,6 +13,7 @@ import {
   Banknote,
   IdCard,
   QrCode,
+  ReceiptIndianRupee,
   ChevronRight,
 } from "lucide-react";
 
@@ -49,19 +50,7 @@ const SidebarContent = ({
       {/* BRAND */}
       <div className="hp-retailer-brand flex h-[76px] shrink-0 items-center border-b border-[#f1d9dd] px-5">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#7c3aed]">
-            <span className="text-base font-bold text-white">H</span>
-          </div>
-
-          <div>
-            <h1 className="text-[15px] font-bold tracking-tight text-[#111827]">
-              HappyPay
-            </h1>
-
-            <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.16em] text-[#a05b67]">
-              Retailer Portal
-            </p>
-          </div>
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0f172a] shadow-sm p-1"><img src="/logo.jpg" alt="Happy Pay Logo" className="h-full w-full rounded-lg object-contain bg-white" /></div>
         </div>
       </div>
 
@@ -126,6 +115,13 @@ const SidebarContent = ({
             icon={<QrCode />}
             active={isActive("/retailer/upi-cash-point")}
             onClick={() => goTo("/retailer/upi-cash-point")}
+          />
+
+          <SidebarItem
+            label="BBPS"
+            icon={<ReceiptIndianRupee />}
+            active={isActive("/retailer/bbps")}
+            onClick={() => goTo("/retailer/bbps")}
           />
         </SidebarSection>
 

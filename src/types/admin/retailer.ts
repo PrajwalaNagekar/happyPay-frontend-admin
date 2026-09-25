@@ -10,7 +10,8 @@ export interface AdminRetailer {
   isMobileVerified?: boolean;
   shop?: { name?: string; address?: { addressLine?: string; city?: string; state?: string; pincode?: string } };
   kycStatus?: "pending" | "under_review" | "approved" | "rejected";
-  status?: "pending" | "active" | "rejected" | "suspended" | "blocked";
+  status?: "pending" | "approved" | "active" | "rejected" | "suspended" | "blocked";
+  role?: "distributor" | "retailer";
   kycRejectionReason?: string;
   createdAt?: string;
   updatedAt?: string;

@@ -14,6 +14,9 @@ import {
   Tv,
   CreditCard,
   QrCode,
+  ReceiptIndianRupee,
+  Clock3,
+  XCircle,
 } from "lucide-react";
 import { getWalletBalance, setWalletBalance } from "../../utils/wallet";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +26,8 @@ type ServicePath =
   | "/retailer/dmt"
   | "/retailer/cms"
   | "/retailer/aadhaar-pay"
-  | "/retailer/upi-cash-point";
+  | "/retailer/upi-cash-point"
+  | "/retailer/bbps";
 
 type PendingNavigation = ServicePath | null;
 
@@ -62,6 +66,96 @@ const getLoggedInRetailerMobile = (): string => {
   }
 
   return mobile.replace(/\D/g, "").slice(-10);
+};
+
+type Transaction = {
+  id: string;
+  service: "AEPS" | "DMT" | "CMS";
+  title: string;
+  date: string;
+  time: string;
+  amount: number;
+  type: "CREDIT" | "DEBIT";
+  status: "Success" | "Pending" | "Failed";
+};
+
+const recentTransactions: Transaction[] = [
+  {
+    id: "TXN001",
+    service: "AEPS",
+    title: "AEPS Cash Withdrawal",
+    date: "04 Sep 2026",
+    time: "10:42 AM",
+    amount: 5000,
+    type: "CREDIT",
+    status: "Success",
+  },
+  {
+    id: "TXN002",
+    service: "DMT",
+    title: "DMT Money Transfer",
+    date: "04 Sep 2026",
+    time: "09:18 AM",
+    amount: 2500,
+    type: "DEBIT",
+    status: "Success",
+  },
+  {
+    id: "TXN003",
+    service: "CMS",
+    title: "CMS Collection",
+    date: "03 Sep 2026",
+    time: "05:32 PM",
+    amount: 8200,
+    type: "CREDIT",
+    status: "Success",
+  },
+  {
+    id: "TXN004",
+    service: "AEPS",
+    title: "AEPS Balance Enquiry",
+    date: "03 Sep 2026",
+    time: "02:15 PM",
+    amount: 0,
+    type: "DEBIT",
+    status: "Success",
+  },
+];
+
+const formatAmount = (amount: number) => {
+  return new Intl.NumberFormat("en-IN", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(amount);
+};
+
+const getServiceIcon = (service: Transaction["service"]) => {
+  if (service === "AEPS") return Fingerprint;
+  if (service === "DMT") return Send;
+  return WalletCards;
+};
+
+const getServiceIconClasses = (service: Transaction["service"]) => {
+  if (service === "AEPS") return "bg-[#ffe6ea] text-[#e4002b]";
+  if (service === "DMT") return "bg-[#fff2df] text-[#c56b08]";
+  return "bg-[#e5f7ee] text-[#087f5b]";
+};
+
+const getStatusIcon = (status: Transaction["status"]) => {
+  if (status === "Success") return CheckCircle2;
+  if (status === "Pending") return Clock3;
+  return XCircle;
+};
+
+const getStatusClasses = (status: Transaction["status"]) => {
+  if (status === "Success") return "bg-[#e5f7ee] text-[#087f5b]";
+  if (status === "Pending") return "bg-[#fff2df] text-[#c56b08]";
+  return "bg-[#ffe6ea] text-[#c21d3d]";
+};
+
+const getAmountClasses = (type: Transaction["type"]) => {
+  if (type === "CREDIT") return "text-[#08a873]";
+  return "text-[#df4b43]";
 };
 
 const Dashboard = () => {
@@ -122,10 +216,10 @@ const Dashboard = () => {
 
   const banners = useMemo(
     () => [
-      "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
-      "https://images.unsplash.com/photo-1497366754035-f200968a6e72",
-      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3",
-      "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1616077168079-7e09a6a4c2f2?auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1589758438368-0ad531db3366?auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&q=80",
     ],
     [],
   );
@@ -438,6 +532,17 @@ const Dashboard = () => {
       path: "/retailer/upi-cash-point",
     },
     {
+      title: "BBPS",
+      description: "Bill Payments",
+      icon: ReceiptIndianRupee,
+      iconClass: "text-[#2563eb]",
+      bgClass: "bg-[#eef2ff]",
+      hoverClass: "hover:bg-[#eef2ff]",
+      cardClass:
+        "bg-[#f8faff] border-[#dce6ff] hover:bg-[#f0f5ff]",
+      path: "/retailer/bbps",
+    },
+    {
       title: "Mobile Recharge",
       description: "Recharge Mobile",
       icon: Smartphone,
@@ -528,56 +633,164 @@ const Dashboard = () => {
       )}
 
       <main className="px-3 pb-8 pt-4 sm:px-5 sm:pt-5">
-        <div className="mx-auto w-full max-w-6xl">
+        <div className="mx-auto w-full max-w-7xl">
 
           {/* =================================================
-              BANNER
+              HEADER
           ================================================== */}
+          
+          <div className="mb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+              <h1 className="text-3xl font-bold text-slate-800 tracking-tight">Dashboard</h1>
+              <p className="text-slate-500 text-sm mt-1">You can monitor your account details</p>
+            </div>
+          </div>
 
-          <section>
-            <div
-              id="dashboard-banners"
-              onScroll={handleBannerScroll}
-              className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth"
-              style={{ scrollbarWidth: "none" }}
-            >
-              {banners.map((banner, index) => (
+          <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_340px] gap-6">
+            
+            {/* =================================================
+                LEFT COLUMN (BANNERS + QUICK CARDS)
+            ================================================== */}
+            
+            <div className="space-y-6">
+              
+              {/* BANNER SECTION */}
+              <section>
                 <div
-                  id={`dashboard-banner-${index}`}
-                  key={`${banner}-${index}`}
-                  className="w-full shrink-0 snap-center overflow-hidden rounded-[28px] border border-white bg-white shadow-[0_20px_45px_-28px_rgba(23,32,51,0.35)]"
+                  id="dashboard-banners"
+                  onScroll={handleBannerScroll}
+                  className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth"
+                  style={{ scrollbarWidth: "none" }}
                 >
-                  <img
-                    src={banner}
-                    alt={`HappyPay banner ${index + 1}`}
-                    className="h-[128px] w-full object-cover sm:h-[148px] lg:h-[164px]"
-                  />
+                  {banners.map((banner, index) => (
+                    <div
+                      id={`dashboard-banner-${index}`}
+                      key={`${banner}-${index}`}
+                      className="w-full shrink-0 snap-center overflow-hidden rounded-[28px] border border-white bg-white shadow-[0_20px_45px_-28px_rgba(23,32,51,0.35)]"
+                    >
+                      <img
+                        src={banner}
+                        alt={`HappyPay banner ${index + 1}`}
+                        className="h-[128px] w-full object-cover sm:h-[148px] lg:h-[164px]"
+                      />
+                    </div>
+                  ))}
                 </div>
-              ))}
+
+                <div className="mt-3 flex items-center justify-center gap-1.5">
+                  {banners.map((_, index) => (
+                    <button
+                      key={index}
+                      type="button"
+                      aria-label={`Go to banner ${index + 1}`}
+                      onClick={() => goToBanner(index)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        activeBanner === index
+                          ? "w-7 bg-[#315bd1]"
+                          : "w-1.5 bg-slate-300"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </section>
+
+              {/* 2FA STATUS CARD */}
+              <section className="bg-white rounded-[24px] p-5 sm:p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ${is2FACompleted ? 'bg-[#e7f8f3] text-[#08ae82]' : 'bg-[#fff0d8] text-[#e69a22]'}`}>
+                    {is2FACompleted ? <CheckCircle2 className="h-6 w-6" /> : <ShieldCheck className="h-6 w-6" />}
+                  </div>
+                  <div>
+                    <h3 className="text-[15px] font-bold text-slate-800">
+                      {is2FACompleted ? "Daily 2FA Completed" : "Daily 2FA Pending"}
+                    </h3>
+                    <p className="text-[13px] text-slate-500 mt-0.5">
+                      {is2FACompleted 
+                        ? "Your biometric authentication for today is done."
+                        : "Complete authentication to access financial services."}
+                    </p>
+                  </div>
+                </div>
+                {!is2FACompleted && (
+                  <button
+                    type="button"
+                    onClick={() => setShow2FAModal(true)}
+                    className="flex shrink-0 items-center justify-center gap-2 rounded-xl bg-[#315bd1] px-5 py-2.5 text-sm font-bold text-white transition hover:bg-[#274dbd] shadow-[0_8px_20px_-10px_rgba(49,91,209,0.8)]"
+                  >
+                    <Fingerprint className="h-4 w-4" />
+                    Complete 2FA
+                  </button>
+                )}
+              </section>
+
+              {/* QUICK CARDS SECTION */}
+              <section className="bg-white rounded-[24px] p-5 sm:p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
+                <div className="flex items-center gap-4 mb-4">
+                  <h2 className="text-[17px] font-bold text-slate-800">Quick Services</h2>
+                  <span className="rounded-full bg-[#f3eaff] px-3 py-1.5 text-[11px] font-bold text-[#7c3aed]">
+                    {quickServices.length} Services
+                  </span>
+                </div>
+                
+                <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory" style={{ scrollbarWidth: "none" }}>
+                  {quickServices.map((service, index) => {
+                    const cardColors = [
+                      "bg-gradient-to-br from-[#7c3aed] to-[#5b21b6]", // Purple
+                      "bg-gradient-to-br from-[#2563eb] to-[#1e40af]", // Blue
+                      "bg-gradient-to-br from-[#059669] to-[#047857]", // Emerald
+                      "bg-gradient-to-br from-[#e11d48] to-[#be123c]", // Rose/Red
+                      "bg-gradient-to-br from-[#ea580c] to-[#c2410c]", // Orange
+                      "bg-gradient-to-br from-[#0891b2] to-[#0e7490]", // Cyan
+                      "bg-gradient-to-br from-[#475569] to-[#334155]", // Slate
+                      "bg-gradient-to-br from-[#ca8a04] to-[#a16207]", // Gold/Yellow
+                      "bg-gradient-to-br from-[#c026d3] to-[#a21caf]"  // Fuchsia
+                    ];
+                    const bgClass = cardColors[index % cardColors.length];
+                    
+                    return (
+                      <button
+                        key={service.title}
+                        type="button"
+                        onClick={() => {
+                          if (service.comingSoon) {
+                            handleComingSoonClick(service.title as ComingSoonService);
+                          } else if (service.path) {
+                            handleServiceClick(service.path);
+                          }
+                        }}
+                        className={`min-w-[280px] sm:min-w-[310px] h-[180px] sm:h-[190px] rounded-2xl ${bgClass} p-5 sm:p-6 text-white flex flex-col justify-between shadow-[0_15px_30px_-10px_rgba(0,0,0,0.1)] snap-start relative overflow-hidden text-left hover:scale-[1.02] transition-transform focus:outline-none focus:ring-4 focus:ring-slate-500/50`}
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -translate-y-1/2 translate-x-1/3 blur-xl"></div>
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-white opacity-10 rounded-full translate-y-1/3 -translate-x-1/3 blur-xl"></div>
+                        
+                        <div className="flex justify-between items-start relative z-10 w-full">
+                          <div className="text-2xl sm:text-[28px] font-bold tracking-tight break-words max-w-[75%] leading-tight">{service.title}</div>
+                          <span className="text-[10px] sm:text-[11px] font-medium opacity-90 mt-1 whitespace-nowrap">{service.comingSoon ? "Soon" : "Service"}</span>
+                        </div>
+                        <div className="relative z-10 w-full">
+                          <div className="font-mono text-sm sm:text-[15px] tracking-[0.2em] opacity-90 mb-2">**** **** **** {2847 + index}</div>
+                          <div className="flex justify-between items-center">
+                            <span className="text-[9px] sm:text-[10px] opacity-80 font-mono text-left">{service.description}</span>
+                            <div className="flex -space-x-2 shrink-0">
+                              <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-red-500 opacity-80 mix-blend-multiply"></div>
+                              <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-yellow-400 opacity-80 mix-blend-multiply"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </section>
+
             </div>
 
-            <div className="mt-3 flex items-center justify-center gap-1.5">
-              {banners.map((_, index) => (
-                <button
-                  key={index}
-                  type="button"
-                  aria-label={`Go to banner ${index + 1}`}
-                  onClick={() => goToBanner(index)}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    activeBanner === index
-                      ? "w-7 bg-[#315bd1]"
-                      : "w-1.5 bg-slate-300"
-                  }`}
-                />
-              ))}
-            </div>
-          </section>
-
-          {/* =================================================
-              BALANCE + ACCOUNT SNAPSHOT
-          ================================================== */}
-
-          <div className="mt-5 grid gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(240px,0.6fr)]">
+            {/* =================================================
+                RIGHT COLUMN (BALANCE + TRANSACTIONS)
+            ================================================== */}
+            
+            <div className="space-y-6">
 
             {/* =================================================
                 LIGHT PURPLE BALANCE CARD
@@ -654,124 +867,78 @@ const Dashboard = () => {
               </div>
             </section>
 
-            {/* =================================================
-                ACCOUNT SNAPSHOT
-            ================================================== */}
-
-            <section className="hp-retailer-card flex flex-col justify-center p-4 sm:p-5">
-
-              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#7c3aed]">
-                Account Snapshot
-              </p>
-
-              <div className="mt-3 grid grid-cols-2 gap-3 lg:grid-cols-1">
-
-                <div className="rounded-xl bg-[#f8f5ff] p-3 transition hover:bg-[#f3eaff]">
-                  <p className="text-xs font-medium text-[#64748b]">
-                    Today's Earnings
-                  </p>
-
-                  <p className="mt-1 text-lg font-bold text-[#0f172a]">
-                    ₹1,250.00
-                  </p>
-                </div>
-
-                <div className="rounded-xl bg-[#f8f5ff] p-3 transition hover:bg-[#f3eaff]">
-                  <p className="text-xs font-medium text-[#64748b]">
-                    Retailer ID
-                  </p>
-
-                  <p className="mt-1 text-lg font-bold text-[#0f172a]">
-                    HP100245
-                  </p>
-                </div>
-
-              </div>
-            </section>
-          </div>
-
-          {/* =================================================
-              QUICK SERVICES
-          ================================================== */}
-
-          <section className="hp-retailer-glass mt-6 rounded-[1.5rem] p-5 sm:p-6">
-
-            <div className="mb-6 flex items-end justify-between">
-
-              <div>
-                <h2 className="text-xl font-bold tracking-tight text-[#0f172a] sm:text-2xl">
-                  Quick Services
-                </h2>
-
-                <p className="mt-1.5 text-xs text-[#64748b] sm:text-sm">
-                  Access your financial services
+              {/* ACCOUNT SNAPSHOT (Optional, kept small if needed) */}
+              <section className="bg-white rounded-[1.5rem] p-5 border border-slate-100 shadow-[0_4px_20px_rgb(0,0,0,0.02)]">
+                <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#7c3aed]">
+                  Account Snapshot
                 </p>
-              </div>
+                <div className="mt-3 grid grid-cols-2 gap-3">
+                  <div className="rounded-xl bg-[#f8f5ff] p-3 transition hover:bg-[#f3eaff]">
+                    <p className="text-xs font-medium text-[#64748b]">Today's Earnings</p>
+                    <p className="mt-1 text-[15px] font-bold text-[#0f172a]">₹1,250.00</p>
+                  </div>
+                  <div className="rounded-xl bg-[#f8f5ff] p-3 transition hover:bg-[#f3eaff]">
+                    <p className="text-xs font-medium text-[#64748b]">Retailer ID</p>
+                    <p className="mt-1 text-[15px] font-bold text-[#0f172a]">HP100245</p>
+                  </div>
+                </div>
+              </section>
 
-              <span className="rounded-full bg-[#f3eaff] px-3 py-1.5 text-[11px] font-bold text-[#7c3aed] shadow-sm sm:text-xs">
-                8 Services
-              </span>
-
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-
-              {quickServices.map((service) => {
-                const Icon = service.icon;
-
-                return (
-                  <button
-                    key={service.title}
-                    type="button"
-                    title={service.description}
-                    onClick={() => {
-                      if (service.comingSoon) {
-                        handleComingSoonClick(
-                          service.title as ComingSoonService,
-                        );
-                      } else if (service.path) {
-                        handleServiceClick(
-                          service.path,
-                        );
-                      }
-                    }}
-                    className={`group relative flex min-h-[120px] min-w-0 flex-col items-center justify-center rounded-2xl border p-3 shadow-[0_8px_25px_-18px_rgba(23,32,51,0.25)] transition-all duration-300 hover:-translate-y-1.5 ${service.cardClass} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7c3aed]/50`}
+              {/* RECENT TRANSACTIONS */}
+              <section className="bg-white rounded-[1.5rem] p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-[16px] font-bold text-slate-800">Recent Transactions</h2>
+                  <button 
+                    onClick={() => navigate("/retailer/transactions")}
+                    className="text-[11px] font-semibold text-[#7c3aed] bg-[#7c3aed]/10 px-3 py-1.5 rounded-md transition hover:bg-[#7c3aed]/20"
                   >
-
-                    {/* ICON */}
-
-                    <div
-                      className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${service.bgClass} ${service.hoverClass} transition-all duration-200 group-hover:scale-110`}
-                    >
-                      <Icon
-                        className={`h-6 w-6 ${service.iconClass}`}
-                      />
-                    </div>
-
-                    {/* TITLE */}
-
-                    <h3 className="mt-2.5 text-center text-xs font-bold leading-tight text-slate-800 sm:text-sm">
-                      {service.title}
-                    </h3>
-
-                    {/* DESCRIPTION */}
-
-                    <p className="mt-1 text-center text-[10px] leading-tight text-[#8992a3] sm:text-[11px]">
-                      {service.description}
-                    </p>
-
-                    {/* TOOLTIP */}
-
-                    <span className="pointer-events-none absolute -top-2 left-1/2 z-10 w-max max-w-[150px] -translate-x-1/2 -translate-y-full rounded-lg bg-[#171717] px-2.5 py-1.5 text-[10px] font-semibold text-white opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100 after:absolute after:left-1/2 after:top-full after:-translate-x-1/2 after:border-4 after:border-transparent after:border-t-[#171717]">
-                      {service.description}
-                    </span>
-
+                    View All
                   </button>
-                );
-              })}
+                </div>
+                
+                <div className="flex flex-col gap-0.5">
+                  {recentTransactions.map((transaction, index) => {
+                    const Icon = getServiceIcon(transaction.service);
+                    const StatusIcon = getStatusIcon(transaction.status);
+                    const isLast = index === recentTransactions.length - 1;
+
+                    return (
+                      <div
+                        key={transaction.id}
+                        className={`group flex items-center gap-3 py-3 transition-colors hover:bg-slate-50/60 ${
+                          !isLast ? "border-b border-slate-100/60" : ""
+                        }`}
+                      >
+                        <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${getServiceIconClasses(transaction.service)}`}>
+                          <Icon className="h-[18px] w-[18px]" />
+                        </div>
+
+                        <div className="min-w-0 flex-1">
+                          <h3 className="truncate text-[13px] font-bold text-[#172033]">
+                            {transaction.title}
+                          </h3>
+                          <p className="mt-0.5 text-[11px] text-[#9aa0ab]">
+                            {transaction.date} • {transaction.time}
+                          </p>
+                        </div>
+
+                        <div className="shrink-0 text-right">
+                          <p className={`text-[13px] font-bold ${getAmountClasses(transaction.type)}`}>
+                            {transaction.type === "CREDIT" ? "+" : "-"} ₹{formatAmount(transaction.amount)}
+                          </p>
+                          <span className={`mt-0.5 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-bold ${getStatusClasses(transaction.status)}`}>
+                            <StatusIcon className="h-2.5 w-2.5" />
+                            {transaction.status}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </section>
 
             </div>
-          </section>
+          </div>
 
         </div>
       </main>

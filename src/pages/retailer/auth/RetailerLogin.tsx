@@ -6,7 +6,7 @@ import {
   Smartphone,
   LockKeyhole,
   Check,
-  Store,
+  Wifi,
 } from "lucide-react";
 
 const RetailerLogin = () => {
@@ -20,9 +20,6 @@ const RetailerLogin = () => {
 
   const [error, setError] = useState("");
 
-  // ============================================================
-  // MOBILE CHANGE
-  // ============================================================
 
   const handleMobileChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -194,25 +191,14 @@ const RetailerLogin = () => {
   return (
     <div className="min-h-screen bg-slate-50 px-4 py-6 sm:px-6 lg:px-8">
       <div className="mx-auto flex min-h-[calc(100vh-48px)] w-full max-w-[1180px] items-center justify-center">
-        <div className="w-full overflow-hidden rounded-[30px] border border-white bg-white shadow-[0_30px_80px_rgba(15,23,42,0.12)]">
-          <div className="grid min-h-[700px] lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="w-full overflow-hidden rounded-[24px] border border-white bg-white shadow-[0_24px_60px_rgba(15,23,42,0.12)]">
+          <div className="grid h-[560px] lg:grid-cols-[0.9fr_1.1fr]">
             {/* LEFT — PREMIUM LOGIN */}
-            <section className="flex items-center justify-center px-6 py-10 sm:px-10 lg:px-14 xl:px-20">
-              <div className="w-full max-w-[430px]">
+            <section className="flex flex-col items-center justify-center px-6 py-6 sm:px-10 lg:px-14 xl:px-20 overflow-y-auto custom-scrollbar">
+              <div className="w-full max-w-[430px] my-auto">
                 {/* BRAND */}
                 <div className="mb-10 flex items-center gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#7c3aed] shadow-[0_10px_24px_rgba(49,91,209,0.25)]">
-                    <span className="text-xl font-bold text-white">H</span>
-                  </div>
-
-                  <div>
-                    <p className="text-[20px] font-bold tracking-tight text-[#172033]">
-                      HappyPay
-                    </p>
-                    <p className="mt-0.5 text-[11px] font-medium uppercase tracking-[0.16em] text-[#8992a3]">
-                      Retailer Portal
-                    </p>
-                  </div>
+                  <img src="/logo.jpg" alt="Happy Pay Logo" className="h-12 w-auto object-contain" />
                 </div>
 
                 {/* HEADER */}
@@ -244,9 +230,8 @@ const RetailerLogin = () => {
                 <div className="mt-8 flex items-center gap-2">
                   <div className="h-1.5 w-14 rounded-full bg-[#7c3aed]" />
                   <div
-                    className={`h-1.5 w-14 rounded-full transition-all duration-300 ${
-                      otpSent ? "bg-[#7c3aed]" : "bg-[#dce1e9]"
-                    }`}
+                    className={`h-1.5 w-14 rounded-full transition-all duration-300 ${otpSent ? "bg-[#7c3aed]" : "bg-[#dce1e9]"
+                      }`}
                   />
                   <span className="ml-1 text-[11px] font-medium text-[#8992a3]">
                     Step {otpSent ? "2" : "1"} of 2
@@ -264,7 +249,8 @@ const RetailerLogin = () => {
                 )}
 
                 {/* MOBILE */}
-                <div className={error ? "mt-5" : "mt-8"}>
+                {!otpSent && (
+                  <div className={error ? "mt-5" : "mt-8"}>
                   <label
                     htmlFor="retailer-login-mobile"
                     className="mb-2.5 block text-[13px] font-semibold text-[#172033]"
@@ -295,6 +281,7 @@ const RetailerLogin = () => {
                     />
                   </div>
                 </div>
+                )}
 
                 {/* OTP */}
                 {otpSent && (
@@ -326,11 +313,10 @@ const RetailerLogin = () => {
                       inputMode="numeric"
                       autoComplete="one-time-code"
                       disabled={otpVerified}
-                      className={`h-[58px] w-full rounded-2xl border bg-[#fafbfd] px-4 text-center text-[19px] font-bold tracking-[0.5em] text-[#172033] outline-none transition placeholder:text-[11px] placeholder:tracking-normal focus:border-[#7c3aed] focus:ring-4 focus:ring-[#7c3aed]/10 ${
-                        otpVerified
-                          ? "border-[#b9e8d4] bg-[#f4fcf8]"
-                          : "border-[#dfe3e9]"
-                      }`}
+                      className={`h-[58px] w-full rounded-2xl border bg-[#fafbfd] px-4 text-center text-[19px] font-bold tracking-[0.5em] text-[#172033] outline-none transition placeholder:text-[11px] placeholder:tracking-normal focus:border-[#7c3aed] focus:ring-4 focus:ring-[#7c3aed]/10 ${otpVerified
+                        ? "border-[#b9e8d4] bg-[#f4fcf8]"
+                        : "border-[#dfe3e9]"
+                        }`}
                     />
 
                     <div className="mt-2.5 flex items-center justify-between">
@@ -378,11 +364,10 @@ const RetailerLogin = () => {
                 <button
                   type="button"
                   onClick={otpSent ? handleLogin : handleSendOtp}
-                  className={`mt-7 flex h-[58px] w-full items-center justify-center gap-2 rounded-2xl text-[14px] font-bold text-white shadow-[0_12px_26px_rgba(49,91,209,0.22)] transition active:scale-[0.99] ${
-                    otpVerified
-                      ? "bg-[#08ae82] hover:bg-[#079b74]"
-                      : "bg-[#7c3aed] hover:bg-[#294fb8]"
-                  }`}
+                  className={`mt-7 flex h-[58px] w-full items-center justify-center gap-2 rounded-2xl text-[14px] font-bold text-white shadow-[0_12px_26px_rgba(49,91,209,0.22)] transition active:scale-[0.99] ${otpVerified
+                    ? "bg-[#08ae82] hover:bg-[#079b74]"
+                    : "bg-[#7c3aed] hover:bg-[#294fb8]"
+                    }`}
                 >
                   {otpVerified
                     ? "Login to Retailer Portal"
@@ -436,93 +421,75 @@ const RetailerLogin = () => {
             </section>
 
             {/* RIGHT — PREMIUM BRAND PANEL */}
-            <section className="relative hidden overflow-hidden bg-gradient-to-br from-[#315bd1] via-[#6366f1] to-[#7c3aed] lg:flex">
-              {/* Decorative background */}
-              <div className="absolute -right-28 -top-24 h-[350px] w-[350px] rounded-full bg-white/10 blur-[80px]" />
-              <div className="absolute -bottom-28 -left-24 h-[330px] w-[330px] rounded-full bg-white/20 blur-[90px]" />
-              <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(rgba(255,255,255,1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,1)_1px,transparent_1px)] [background-size:40px_40px]" />
+            <section className="relative hidden w-full overflow-hidden bg-[#0a0514] lg:flex">
+              {/* Decorative fluid background gradients */}
+              <div className="absolute left-[10%] top-[20%] h-[500px] w-[500px] rounded-full bg-[#8b5cf6] opacity-20 blur-[120px]" />
+              <div className="absolute right-[-10%] top-[-10%] h-[400px] w-[400px] rounded-full bg-[#7c3aed] opacity-30 blur-[100px]" />
+              <div className="absolute bottom-[-10%] left-[30%] h-[600px] w-[600px] rounded-full bg-[#4c1d95] opacity-30 blur-[150px]" />
 
-              <div className="relative flex w-full flex-col justify-between p-10 xl:p-14">
-                <div>
-                  <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5">
-                    <span className="h-2 w-2 rounded-full bg-[#35c993]" />
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-white/60">
-                      Secure Retailer Platform
-                    </span>
-                  </div>
+              {/* Dynamic light streak simulating the 3D ribbon */}
+              <div className="absolute bottom-[10%] left-[-10%] h-[150px] w-[120%] -rotate-[15deg] rounded-full bg-gradient-to-r from-[#7c3aed] via-[#6d28d9] to-[#4c1d95] opacity-50 blur-[80px]" />
+              <div className="absolute bottom-[20%] right-[-10%] h-[100px] w-[80%] rotate-[25deg] rounded-full bg-gradient-to-l from-[#7c3aed] via-[#5b21b6] to-[#4c1d95] opacity-50 blur-[60px]" />
 
-                  <h2 className="mt-8 max-w-[470px] text-[40px] font-bold leading-[1.08] tracking-[-0.04em] text-white xl:text-[48px]">
-                    Your business.
-                    <br />
-                    <span className="text-[#8ea8ff]">Your payments.</span>
-                    <br />
-                    One portal.
+              <div className="relative z-10 flex w-full p-10 xl:p-14 mt-4">
+
+                {/* Left content inside the right panel */}
+                <div className="flex flex-col w-[55%] pt-4">
+                  <h2 className="text-[40px] font-medium leading-[1.15] tracking-tight text-white xl:text-[48px]">
+                    Empower your retail business
                   </h2>
 
-                  <p className="mt-5 max-w-[440px] text-[14px] leading-7 text-white/55">
-                    Access your retailer services through a secure and
-                    streamlined platform built for everyday transactions.
+                  <p className="mt-8 text-[14px] leading-relaxed text-white/50 max-w-[320px]">
+                    For those who want more from their transactions — there's HappyPay.
                   </p>
-                </div>
 
-                {/* PREMIUM FEATURE CARDS — NO ANALYTICS */}
-                <div className="mt-12 space-y-3">
-                  <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.06] p-4 backdrop-blur-sm">
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#7c3aed]/20">
-                      <ShieldCheck className="h-5 w-5 text-[#8ea8ff]" />
-                    </div>
-
-                    <div>
-                      <p className="text-[13px] font-semibold text-white">
-                        Secure retailer access
-                      </p>
-                      <p className="mt-1 text-[11px] leading-5 text-white/40">
-                        OTP-based authentication for your registered account.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.06] p-4 backdrop-blur-sm">
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#08ae82]/15">
-                      <LockKeyhole className="h-5 w-5 text-[#52d7ad]" />
-                    </div>
-
-                    <div>
-                      <p className="text-[13px] font-semibold text-white">
-                        Protected transactions
-                      </p>
-                      <p className="mt-1 text-[11px] leading-5 text-white/40">
-                        Your retailer access stays protected throughout the
-                        session.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.06] p-4 backdrop-blur-sm">
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/[0.07]">
-                      <Store className="h-5 w-5 text-white/70" />
-                    </div>
-
-                    <div>
-                      <p className="text-[13px] font-semibold text-white">
-                        Built for retailers
-                      </p>
-                      <p className="mt-1 text-[11px] leading-5 text-white/40">
-                        A clean portal for your HappyPay retailer services.
-                      </p>
-                    </div>
+                  <div className="mt-16 pb-4">
+                    <p className="text-[16px] font-semibold text-white/90">250 000+</p>
+                    <p className="text-[11px] text-white/40 mt-1">retailers trust our platform</p>
                   </div>
                 </div>
 
-                <div className="mt-10 flex items-center justify-between border-t border-white/10 pt-5">
-                  <span className="text-[10px] font-medium text-white/30">
-                    HAPPY PAY RETAILER PORTAL
-                  </span>
+                {/* Floating Cards Container */}
+                <div className="relative w-[45%] h-[320px] mt-4">
 
-                  <span className="flex items-center gap-1.5 text-[10px] text-white/35">
-                    <ShieldCheck className="h-3.5 w-3.5 text-[#35c993]" />
-                    Secure Platform
-                  </span>
+                  {/* Top Dark Card */}
+                  <div className="absolute top-[0px] right-[0%] z-20 h-[170px] w-[280px] origin-center rotate-[15deg] rounded-[20px] border border-white/10 bg-[#1e133c]/80 p-5 shadow-2xl backdrop-blur-xl">
+                    <div className="flex justify-end items-start h-full flex-col">
+                      <div className="w-full">
+                        <div className="font-mono text-[16px] tracking-[0.2em] text-white/90">5235 4200 2432 222</div>
+                        <div className="mt-3 flex items-center justify-between">
+                          <span className="font-mono text-[10px] text-white/50">12/24</span>
+                          <div className="flex -space-x-2">
+                            <div className="h-5 w-5 rounded-full bg-white/80" />
+                            <div className="h-5 w-5 rounded-full bg-white/40" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bottom Purple Theme Card */}
+                  <div className="absolute top-[170px] left-[5%] z-10 h-[280px] w-[180px] origin-center -rotate-[20deg] rounded-[20px] border border-white/20 bg-gradient-to-br from-[#c4b5fd] via-[#8b5cf6] to-[#6d28d9] p-5 shadow-[0_30px_60px_-15px_rgba(124,58,237,0.4)]">
+                    <Wifi className="h-5 w-5 rotate-90 text-white/80 absolute top-7 right-7" />
+
+                    <div className="absolute inset-0 z-0 opacity-10">
+                      <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="wave" patternUnits="userSpaceOnUse" width="40" height="20"><path d="M0 10 Q10 0 20 10 T40 10" fill="none" stroke="white" strokeWidth="2" /></pattern></defs><rect width="100%" height="100%" fill="url(#wave)" /></svg>
+                    </div>
+
+                    <div className="absolute top-[45%] left-[-20%] z-10 flex items-center rotate-90 w-[250px]">
+                      <span className="text-[26px] font-bold text-white/95 tracking-tight">HappyPay.</span>
+                      <div className="ml-8 flex items-center gap-3">
+                        <span className="text-[11px] font-semibold text-white/80">Retailer</span>
+                        <span className="font-mono text-[9px] text-white/70">12/24</span>
+                      </div>
+                    </div>
+
+                    <div className="absolute bottom-5 right-5 flex -space-x-2">
+                      <div className="h-4 w-4 rounded-full bg-white/80" />
+                      <div className="h-4 w-4 rounded-full bg-white/40" />
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </section>

@@ -15,7 +15,7 @@ const SidebarMobile = ({
   return (
     <>
       <div
-        className="fixed inset-0 z-40 bg-[#4b0b18]/35 backdrop-blur-[3px] lg:hidden"
+        className="fixed inset-0 z-40 bg-slate-900/50 lg:hidden"
         onClick={() => onOpenChange(false)}
       />
 

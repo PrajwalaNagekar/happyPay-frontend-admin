@@ -984,7 +984,7 @@ const HelpSupport = () => {
 
               <div className="flex items-start justify-between gap-5">
 
-                <h2 className="text-3xl font-bold leading-tight text-[#7c3aed] sm:text-[38px]">
+                <h2 className="text-2xl font-bold leading-tight text-[#7c3aed] sm:text-3xl">
                   {selectedTicket.id}
                 </h2>
 
@@ -998,7 +998,7 @@ const HelpSupport = () => {
                   TITLE
               ================================================== */}
 
-              <h3 className="mt-6 text-2xl font-bold leading-8 text-[#172033] sm:text-[30px] sm:leading-9">
+              <h3 className="mt-5 text-xl font-bold leading-7 text-[#172033] sm:text-2xl sm:leading-8">
                 {selectedTicket.title}
               </h3>
 
@@ -1006,7 +1006,7 @@ const HelpSupport = () => {
                   CATEGORY
               ================================================== */}
 
-              <p className="mt-3 text-base text-[#667185] sm:text-lg">
+              <p className="mt-2 text-sm text-[#667185] sm:text-base">
                 Category: {selectedTicket.category}
               </p>
 
@@ -1020,13 +1020,13 @@ const HelpSupport = () => {
                   YOUR QUERY
               ================================================== */}
 
-              <h4 className="text-xl font-bold text-[#687286]">
+              <h4 className="text-lg font-bold text-[#687286]">
                 Your Query / Issue
               </h4>
 
               <div className="mt-5 rounded-[20px] bg-[#f3f2fa] px-6 py-6 sm:px-7 sm:py-7">
 
-                <p className="text-base leading-7 text-[#687286] sm:text-lg">
+                <p className="text-sm leading-6 text-[#687286] sm:text-base">
                   {selectedTicket.issue}
                 </p>
 
@@ -1036,13 +1036,13 @@ const HelpSupport = () => {
                   SUPPORT RESPONSE
               ================================================== */}
 
-              <h4 className="mt-8 text-xl font-bold text-[#20a873]">
+              <h4 className="mt-6 text-lg font-bold text-[#20a873]">
                 Support Team Response
               </h4>
 
               <div className="mt-5 rounded-[20px] border border-[#b9e8d4] bg-[#eefbf5] px-6 py-6 sm:px-7 sm:py-7">
 
-                <p className="text-base leading-7 text-[#172033] sm:text-lg">
+                <p className="text-sm leading-6 text-[#172033] sm:text-base">
                   {selectedTicket.response}
                 </p>
 

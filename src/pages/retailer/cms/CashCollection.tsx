@@ -1,469 +1,1550 @@
-import React, { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import OtpInput from "../../../components/common/OtpInput";
+import StepIndicator from "../../../components/common/StepIndicator";
+import Input from "../../../components/common/Input";
+import Button from "../../../components/common/Button";
 import {
   ArrowLeft,
+  ArrowRight,
+  Bike,
   CheckCircle2,
-  CircleUserRound,
-  Fingerprint,
-  Loader2,
-  RefreshCw,
+  ChevronDown,
+  Copy,
+  Download,
+  FileText,
+  History,
+  Mail,
+  RotateCcw,
   Search,
+  Send,
   ShieldCheck,
+  Star,
+  WalletCards,
+  X,
 } from "lucide-react";
 
+type Screen =
+  | "home"
+  | "client-selection"
+  | "employee-verification"
+  | "employee-details"
+  | "otp"
+  | "receipt";
+
+interface Client {
+  id: string;
+  name: string;
+  code: string;
+  description: string;
+  commissionRate: number;
+  commissionDisplay: string;
+  icon: "bike" | "car" | "shield" | "bank" | "building" | "truck";
+}
+
+interface Employee {
+  code: string;
+  name: string;
+  branch: string;
+  state: string;
+  hub: string;
+  email: string;
+  mobile: string;
+}
+
+/* =========================
+   CLIENT DATA
+========================= */
+
+const clients: Client[] = [
+  {
+    id: "chola",
+    name: "Cholamandalam Finance",
+    code: "CHOLA",
+    description: "Vehicle & Asset Finance • VF, HL, LAP",
+    commissionRate: 0.04,
+    commissionDisplay: "0.04 Comm",
+    icon: "car",
+  },
+  {
+    id: "muthoot",
+    name: "Muthoot Finance",
+    code: "MUTHOOT",
+    description: "Gold Loan & Asset Finance • GL, PL, HL",
+    commissionRate: 0.04,
+    commissionDisplay: "0.04 Comm",
+    icon: "shield",
+  },
+  {
+    id: "herofin",
+    name: "Hero FinCorp",
+    code: "HEROFIN",
+    description: "Two Wheeler & SME Finance • VF, PL, SME",
+    commissionRate: 0.04,
+    commissionDisplay: "0.04 Comm",
+    icon: "bike",
+  },
+  {
+    id: "bajaj",
+    name: "Bajaj Finserv",
+    code: "BAJAJ",
+    description: "Consumer & Business Loans • PL, HL, LAP",
+    commissionRate: 0.04,
+    commissionDisplay: "0.04 Comm",
+    icon: "bank",
+  },
+  {
+    id: "lnt",
+    name: "L&T Finance Holdings",
+    code: "LTF",
+    description: "Rural & Housing Finance • HL, VF, SME",
+    commissionRate: 0.04,
+    commissionDisplay: "0.04 Comm",
+    icon: "building",
+  },
+  {
+    id: "mahindra",
+    name: "Mahindra & Mahindra Financial Services",
+    code: "MMFSL",
+    description: "Auto & Tractor Loans • VF, SME, HL",
+    commissionRate: 0.04,
+    commissionDisplay: "0.04 Comm",
+    icon: "bike",
+  },
+  {
+    id: "tvs",
+    name: "TVS Credit Services",
+    code: "TVSCREDIT",
+    description: "Two Wheeler & Used Cars • VF, PL",
+    commissionRate: 0.04,
+    commissionDisplay: "0.04 Comm",
+    icon: "truck",
+  },
+];
+
+/* =========================
+   EMPLOYEE DATA
+========================= */
+
+const employees: Employee[] = [
+  {
+    code: "EMP-8842",
+    name: "Rajesh Kumar Sharma",
+    branch: "South Extension Branch",
+    state: "Delhi NCR",
+    hub: "Delhi NCR Hub - Zone 4",
+    email: "rajesh.k@cholamandalam.com",
+    mobile: "9876543210",
+  },
+  {
+    code: "EMP-8669",
+    name: "Rajesh Kumar Sharma",
+    branch: "South Extension Branch",
+    state: "Delhi NCR",
+    hub: "Delhi NCR Hub - Zone 4",
+    email: "rajesh.k@cholamandalam.com",
+    mobile: "9876543210",
+  },
+];
+
 interface CashCollectionProps {
-  selectedCompany?: string;
+  selectedCompanyName?: string;
+  selectedCompanyShortName?: string;
+  displayCompanyName?: string;
   onBack?: () => void;
 }
 
-type TransactionStatus = "IDLE" | "PROCESSING" | "SUCCESS";
-
-const CashCollection: React.FC<CashCollectionProps> = ({
-  selectedCompany,
+const CashCollection = ({
+  selectedCompanyName,
+  selectedCompanyShortName,
+  displayCompanyName,
   onBack,
-}) => {
-  const [customerId, setCustomerId] = useState("");
-  const [mobile, setMobile] = useState("");
-  const [amount, setAmount] = useState("");
-  const [isSearching, setIsSearching] = useState(false);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [transactionStatus, setTransactionStatus] =
-    useState<TransactionStatus>("IDLE");
-  const [customerName, setCustomerName] = useState("");
+}: CashCollectionProps) => {
+  const [screen, setScreen] = useState<Screen>(
+    selectedCompanyName ? "employee-verification" : "home"
+  );
+
+  const [selectedClient, setSelectedClient] =
+    useState<Client | null>(() => {
+      if (!selectedCompanyName) {
+        return clients[2];
+      }
+
+      return (
+        clients.find(
+          (client) =>
+            (selectedCompanyName &&
+              client.name.toLowerCase() === selectedCompanyName.toLowerCase()) ||
+            (selectedCompanyShortName &&
+              client.code.toLowerCase() ===
+                selectedCompanyShortName.toLowerCase())
+        ) ?? clients[2]
+      );
+    });
+
+  const selectedDisplayName =
+    displayCompanyName || selectedClient?.name || "CMS";
+
+  const [search, setSearch] = useState("");
+
+  const [employeeCode, setEmployeeCode] = useState("");
+
+  const [verifiedEmployee, setVerifiedEmployee] =
+    useState<Employee | null>(null);
+
+  const [isVerifyingEmployee, setIsVerifyingEmployee] =
+    useState(false);
+
+  const [collectionAmount, setCollectionAmount] =
+    useState("");
+
+  const [consent, setConsent] = useState(false);
+
+  const [otp, setOtp] = useState("");
+
+  const [otpTimer, setOtpTimer] = useState(30);
+
+  const [otpSent, setOtpSent] = useState(false);
+
+  const [otpError, setOtpError] = useState("");
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [transactionId, setTransactionId] = useState("");
-  const [transactionDate, setTransactionDate] = useState<Date | null>(null);
 
-  const handleCustomerIdChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setCustomerId(event.target.value);
-  };
+  /* =========================
+     FILTER CLIENTS
+  ========================= */
 
-  const handleMobileChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setMobile(event.target.value.replace(/\D/g, "").slice(0, 10));
-  };
+  const filteredClients = useMemo(() => {
+    const value = search.toLowerCase().trim();
 
-  const handleAmountChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const value = event.target.value;
-
-    if (/^\d*\.?\d{0,2}$/.test(value)) {
-      setAmount(value);
+    if (!value) {
+      return clients;
     }
-  };
 
-  const handleSearchCustomer = () => {
-    if (!customerId.trim() && mobile.length !== 10) {
+    return clients.filter(
+      (client) =>
+        client.name.toLowerCase().includes(value) ||
+        client.code.toLowerCase().includes(value) ||
+        client.description.toLowerCase().includes(value)
+    );
+  }, [search]);
+
+  /* =========================
+     OTP TIMER
+  ========================= */
+
+  useEffect(() => {
+    if (!otpSent || otpTimer <= 0) {
       return;
     }
 
-    setIsSearching(true);
+    const timer = setInterval(() => {
+      setOtpTimer((previous) => previous - 1);
+    }, 1000);
 
-    window.setTimeout(() => {
-      setIsSearching(false);
-      setCustomerName("Customer");
+    return () => clearInterval(timer);
+  }, [otpSent, otpTimer]);
+
+  /* =========================
+     AMOUNT
+  ========================= */
+
+  const numericAmount = Number(collectionAmount || 0);
+
+  const commission =
+    numericAmount * (selectedClient?.commissionRate || 0);
+
+  /* =========================
+     CLIENT SELECTION
+  ========================= */
+
+  const handleSelectClient = (client: Client) => {
+    setSelectedClient(client);
+    setSearch("");
+    setScreen("home");
+  };
+
+  /* =========================
+     START COLLECTION
+  ========================= */
+
+  const handleStartCollection = () => {
+    if (!selectedClient) {
+      return;
+    }
+
+    setEmployeeCode("");
+    setVerifiedEmployee(null);
+    setCollectionAmount("");
+    setConsent(false);
+    setOtp("");
+    setOtpSent(false);
+    setOtpTimer(30);
+    setOtpError("");
+    setTransactionId("");
+
+    setScreen("employee-verification");
+  };
+
+  /* =========================
+     EMPLOYEE CODE
+  ========================= */
+
+  const handleEmployeeCodeChange = (value: string) => {
+    setEmployeeCode(
+      value.toUpperCase().replace(/\s/g, "")
+    );
+  };
+
+  /* =========================
+     VERIFY EMPLOYEE
+  ========================= */
+
+  const handleVerifyEmployee = () => {
+    if (!employeeCode.trim()) {
+      return;
+    }
+
+    setIsVerifyingEmployee(true);
+
+    setTimeout(() => {
+      const employee = employees.find(
+        (item) =>
+          item.code.toUpperCase() ===
+          employeeCode.toUpperCase()
+      );
+
+      setIsVerifyingEmployee(false);
+
+      if (!employee) {
+        return;
+      }
+
+      setVerifiedEmployee(employee);
+      setScreen("employee-details");
+    }, 900);
+  };
+
+  /* =========================
+     AMOUNT
+  ========================= */
+
+  const handleAmountChange = (value: string) => {
+    const cleaned = value.replace(/\D/g, "");
+    setCollectionAmount(cleaned);
+  };
+
+  /* =========================
+     PROCEED TO OTP
+  ========================= */
+
+  const handleProceedToOtp = () => {
+    if (!verifiedEmployee) {
+      return;
+    }
+
+    if (!numericAmount || numericAmount <= 0) {
+      return;
+    }
+
+    if (!consent) {
+      return;
+    }
+
+    setOtp("");
+    setOtpError("");
+    setOtpTimer(30);
+    setOtpSent(true);
+
+    setScreen("otp");
+  };
+
+  /* =========================
+     OTP INPUT
+  ========================= */
+
+  const handleOtpInput = (value: string) => {
+    setOtp(
+      value.replace(/\D/g, "").slice(0, 6)
+    );
+
+    setOtpError("");
+  };
+
+  /* =========================
+     VERIFY OTP
+  ========================= */
+
+  const handleVerifyOtp = () => {
+    if (otp.length !== 6) {
+      setOtpError("Please enter the 6-digit OTP.");
+      return;
+    }
+
+    setOtpError("");
+    setIsSubmitting(true);
+
+    setTimeout(() => {
+      setIsSubmitting(false);
+
+      if (otp !== "123456") {
+        setOtpError("Invalid OTP.");
+        return;
+      }
+
+      setTransactionId(
+        `CMS-COL-${Math.floor(
+          1000000 + Math.random() * 9000000
+        )}`
+      );
+
+      setScreen("receipt");
     }, 1200);
   };
 
-  const handleCollectCash = () => {
-    if (!customerName || Number(amount) <= 0) {
+  /* =========================
+     RESEND OTP
+  ========================= */
+
+  const handleResendOtp = () => {
+    if (otpTimer > 0) {
       return;
     }
 
-    setIsProcessing(true);
-    setTransactionStatus("PROCESSING");
-
-    window.setTimeout(() => {
-      setIsProcessing(false);
-      setTransactionId(
-        `CC${Math.floor(100000000 + Math.random() * 900000000)}`,
-      );
-      setTransactionDate(new Date());
-      setTransactionStatus("SUCCESS");
-    }, 1800);
+    setOtp("");
+    setOtpError("");
+    setOtpTimer(30);
+    setOtpSent(true);
   };
 
-  const resetForm = () => {
-    setCustomerId("");
-    setMobile("");
-    setAmount("");
-    setCustomerName("");
-    setIsSearching(false);
-    setIsProcessing(false);
-    setTransactionStatus("IDLE");
+  /* =========================
+     BACK
+  ========================= */
+
+  const handleBack = () => {
+    if (screen === "home") {
+      onBack?.();
+      return;
+    }
+
+    if (screen === "client-selection") {
+      setSearch("");
+      setScreen("home");
+      return;
+    }
+
+    if (screen === "employee-verification") {
+      setScreen("home");
+      return;
+    }
+
+    if (screen === "employee-details") {
+      setScreen("employee-verification");
+      return;
+    }
+
+    if (screen === "otp") {
+      setScreen("employee-details");
+      return;
+    }
+
+    if (screen === "receipt") {
+      return;
+    }
+  };
+
+  /* =========================
+     NEW COLLECTION
+  ========================= */
+
+  const handleNewCollection = () => {
+    const defaultClient = selectedCompanyName
+      ? clients.find(
+          (client) =>
+            client.name.toLowerCase() ===
+            selectedCompanyName.toLowerCase()
+        ) ?? clients[2]
+      : clients[2];
+
+    setSelectedClient(defaultClient);
+    setEmployeeCode("");
+    setVerifiedEmployee(null);
+    setCollectionAmount("");
+    setConsent(false);
+    setOtp("");
+    setOtpSent(false);
+    setOtpTimer(30);
+    setOtpError("");
     setTransactionId("");
-    setTransactionDate(null);
+    setSearch("");
+    setScreen("home");
   };
 
-  const isSearchValid =
-    customerId.trim().length > 0 || mobile.length === 10;
+  /* =========================
+     CLIENT ICON
+  ========================= */
 
-  return (
-    <div className="mx-auto w-full max-w-5xl space-y-6">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        {onBack && (
+  const ClientIcon = ({
+    type,
+  }: {
+    type: Client["icon"];
+  }) => {
+    if (type === "bike") {
+      return <Bike className="h-5 w-5" />;
+    }
+
+    if (type === "car") {
+      return <WalletCards className="h-5 w-5" />;
+    }
+
+    if (type === "shield") {
+      return <ShieldCheck className="h-5 w-5" />;
+    }
+
+    if (type === "bank") {
+      return <WalletCards className="h-5 w-5" />;
+    }
+
+    if (type === "building") {
+      return <FileText className="h-5 w-5" />;
+    }
+
+    return <Send className="h-5 w-5" />;
+  };
+
+  /* =========================
+     HEADER
+     
+     NOTE:
+     This header is only used for the
+     individual Cash Collection steps.
+     The CMS header/tabs are now handled
+     by Cms.tsx.
+  ========================= */
+
+  const Header = ({
+    title,
+    history = false,
+  }: {
+    title: string;
+    history?: boolean;
+  }) => {
+    return (
+      <header className="border-b border-slate-200 bg-white/95">
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-3 py-4 sm:px-5">
+          <div className="flex items-center gap-4">
+            <button
+              type="button"
+              onClick={handleBack}
+              className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-slate-100"
+            >
+              <ArrowLeft className="h-5 w-5 text-slate-900" />
+            </button>
+
+            <h1 className="text-xl font-bold text-slate-900 sm:text-3xl">
+              {title}
+            </h1>
+          </div>
+
+          {history && (
+            <button
+              type="button"
+              className="flex h-10 w-10 items-center justify-center rounded-full"
+            >
+              <History className="h-5 w-5 text-slate-900" />
+            </button>
+          )}
+        </div>
+      </header>
+    );
+  };
+
+  /* =========================
+     CLIENT CARD
+  ========================= */
+
+  const ClientCard = ({
+    client,
+    selected = false,
+    onClick,
+  }: {
+    client: Client;
+    selected?: boolean;
+    onClick: () => void;
+  }) => {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        className={`w-full rounded-2xl border-2 bg-white p-5 text-left transition ${
+          selected
+            ? "border-[#172033]"
+            : "border-slate-200 hover:border-[#172033]"
+        }`}
+      >
+        <div className="flex items-center gap-4">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#edf1fc] text-[#172033]">
+            <ClientIcon type={client.icon} />
+          </div>
+
+          <div className="min-w-0 flex-1">
+            <h3 className="text-base font-bold text-[#172033]">
+              {client.name}
+            </h3>
+
+            <p className="mt-1 text-sm text-[#555b67]">
+              {client.description}
+            </p>
+          </div>
+
+          <span className="shrink-0 rounded-lg bg-[#e5f8ef] px-3 py-2 text-xs font-bold text-[#16a36d]">
+            {client.commissionDisplay}
+          </span>
+
+          {selected && (
+            <CheckCircle2 className="h-5 w-5 shrink-0 text-[#172033]" />
+          )}
+        </div>
+      </button>
+    );
+  };
+
+  /* =========================
+     HOME
+     
+     IMPORTANT:
+     No CMS header or CMS tabs here.
+     Cms.tsx owns those.
+  ========================= */
+
+  const renderHome = () => {
+    if (!selectedClient) {
+      return null;
+    }
+
+    return (
+      <div className="">
+        <main className="mx-auto max-w-5xl px-2 py-4 sm:px-4">
+          {/* Search */}
+
           <button
             type="button"
-            onClick={onBack}
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 transition hover:bg-slate-50"
-            aria-label="Go back"
+            onClick={() => setScreen("client-selection")}
+            className="flex h-[64px] w-full items-center gap-4 rounded-2xl border-2 border-[#172033] bg-white px-5 text-left"
           >
-            <ArrowLeft className="h-4 w-4" />
+            <Search className="h-5 w-5 text-[#65748b]" />
+
+            <span className="flex-1 truncate text-lg text-[#8b95a6]">
+              Search Client / Company (e.g. Chola...)
+            </span>
+
+            <ChevronDown className="h-5 w-5 text-[#65748b]" />
           </button>
-        )}
 
-        <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#315bd1]">
-            AEPS
-          </p>
+          {/* Selected Client */}
 
-          <h1 className="mt-1 text-2xl font-bold tracking-tight text-slate-900">
-            Cash Collection
-          </h1>
-
-          <p className="mt-1 text-sm text-slate-500">
-            Collect cash from customers securely through the retailer portal.
-          </p>
-        </div>
-      </div>
-
-      {selectedCompany && (
-        <div className="rounded-xl border border-slate-200 bg-white px-4 py-3">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-            Selected Company
-          </p>
-          <p className="mt-1 text-sm font-semibold text-slate-800">
-            {selectedCompany}
-          </p>
-        </div>
-      )}
-
-      {/* Main Card */}
-      <section className="hp-card rounded-2xl p-5 sm:p-6">
-        <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
-          {/* Form */}
-          <div>
-            <div className="mb-5 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#eef2ff]">
-                <CircleUserRound className="h-5 w-5 text-[#315bd1]" />
+          <div className="mt-5 rounded-2xl border-2 border-[#f0d6d6] bg-[#fff5f5] p-5">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#fde5e5] text-[#df3c3c]">
+                <ClientIcon type={selectedClient.icon} />
               </div>
 
-              <div>
-                <h2 className="text-base font-bold text-slate-900">
-                  Customer Details
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h2 className="truncate text-base font-bold text-[#172033]">
+                    {selectedDisplayName}
+                  </h2>
+
+                  <span className="rounded-lg bg-[#e5f8ef] px-3 py-1 text-xs font-bold text-[#16a36d]">
+                    {selectedClient.commissionDisplay}
+                  </span>
+                </div>
+
+                <p className="mt-1 text-sm text-[#555b67]">
+                  {selectedClient.description} • Code:{" "}
+                  {selectedClient.code}
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() =>
+                  setScreen("client-selection")
+                }
+                className="font-bold text-[#172033]"
+              >
+                Change
+              </button>
+            </div>
+          </div>
+
+          {/* Commission */}
+
+          <div className="mt-6 flex items-start gap-4 rounded-2xl border border-[#f0d5a8] bg-[#fff8ed] p-5">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f59e0b] text-white">
+              <Star className="h-5 w-5 fill-current" />
+            </div>
+
+            <p className="text-base font-semibold leading-6 text-[#252b36]">
+              For this client, the commission you will
+              receive is, 35.0 of the transaction amount.
+            </p>
+          </div>
+
+          {/* Features */}
+
+          <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 sm:p-5">
+            <h2 className="text-xl font-bold text-[#172033]">
+              Cash Collection Features
+            </h2>
+
+            <div className="mt-6 space-y-5">
+              <Feature
+                title="Employee Code Verification"
+                text="Instant database lookup of field staff and hub location"
+              />
+
+              <Feature
+                title="Auto-populated Details"
+                text="Branch name, State, Hub zone, Email and Mobile verification"
+              />
+
+              <Feature
+                title="Instant Retailer Commission"
+                text="Earn 4% (0.04) direct credit on confirmed collections"
+              />
+
+              <Feature
+                title="Consent & OTP Security"
+                text="Two-factor verified cash handover with WhatsApp and PDF receipts"
+              />
+            </div>
+          </section>
+
+          {/* Start */}
+
+          <button
+            type="button"
+            onClick={handleStartCollection}
+            className="mt-5 flex min-h-[52px] w-full items-center justify-center gap-3 rounded-2xl bg-[#172033] text-base font-bold text-white shadow-md hover:bg-[#0f172a]"
+          >
+            <WalletCards className="h-5 w-5" />
+
+            Start {selectedClient.code} Cash Collection
+          </button>
+        </main>
+      </div>
+    );
+  };
+
+  /* =========================
+     CLIENT SELECTION
+  ========================= */
+
+  const renderClientSelection = () => {
+    return (
+      <div className="">
+        <main className="mx-auto max-w-5xl px-2 py-4 sm:px-4">
+          {/* Search */}
+
+          <div className="flex h-[64px] items-center gap-4 rounded-2xl border-2 border-[#172033] bg-white px-5">
+            <Search className="h-5 w-5 text-[#65748b]" />
+
+            <input
+              autoFocus
+              type="text"
+              value={search}
+              onChange={(event) =>
+                setSearch(event.target.value)
+              }
+              placeholder="Search Client / Company (e.g. Chola...)"
+              className="w-full bg-transparent text-lg outline-none placeholder:text-[#8b95a6]"
+            />
+
+            {search && (
+              <button
+                type="button"
+                onClick={() => setSearch("")}
+              >
+                <X className="h-5 w-5 text-[#65748b]" />
+              </button>
+            )}
+          </div>
+
+          <div className="mt-6 flex items-center justify-between">
+            <h2 className="text-xl font-bold text-[#172033]">
+              Select Client / Company Profile
+            </h2>
+
+            <button
+              type="button"
+              onClick={() => {
+                setSearch("");
+                setScreen("home");
+              }}
+              className="font-bold text-[#172033]"
+            >
+              Cancel
+            </button>
+          </div>
+
+          <div className="mt-5 space-y-4">
+            {filteredClients.map((client) => (
+              <ClientCard
+                key={client.id}
+                client={client}
+                selected={
+                  selectedClient?.id === client.id
+                }
+                onClick={() =>
+                  handleSelectClient(client)
+                }
+              />
+            ))}
+
+            {filteredClients.length === 0 && (
+              <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-slate-500">
+                No client/company found.
+              </div>
+            )}
+          </div>
+        </main>
+      </div>
+    );
+  };
+
+  /* =========================
+     EMPLOYEE VERIFICATION
+  ========================= */
+
+  const renderEmployeeVerification = () => {
+    if (!selectedClient) {
+      return null;
+    }
+
+    return (
+      <div className="">
+        <Header title="Cash Collection" />
+
+        <main className="mx-auto max-w-3xl px-2 py-4 sm:px-4">
+          {/* Commission */}
+
+          <div className="flex items-start gap-4 border-b border-[#efd39f] bg-[#fff8ed] p-5">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f59e0b] text-white">
+              <Star className="h-5 w-5 fill-current" />
+            </div>
+
+            <p className="font-semibold text-[#252b36]">
+              For this client, the commission you will receive
+              is, 35.0 of the transaction amount.
+            </p>
+          </div>
+
+          <Progress active={1} />
+
+          {/* Client */}
+
+          <section className="mt-5 rounded-2xl border border-slate-200 bg-white p-6">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#fdeaea] text-[#df3c3c]">
+                <ClientIcon type={selectedClient.icon} />
+              </div>
+
+              <div className="flex-1">
+                <h2 className="text-xl font-bold text-[#172033]">
+                  {selectedDisplayName}
                 </h2>
 
-                <p className="mt-1 text-xs text-slate-500">
-                  Search for the customer before collecting cash.
+                <p className="mt-1 text-[#555b67]">
+                  {selectedClient.description} • Client Code:{" "}
+                  {selectedClient.code}
                 </p>
               </div>
+
+              <span className="rounded-xl bg-[#e5f8ef] px-4 py-2 font-bold text-[#16a36d]">
+                0.04 Comm
+              </span>
             </div>
+          </section>
 
-            {/* Customer ID */}
-            <div>
-              <label
-                htmlFor="cash-customer-id"
-                className="text-xs font-semibold text-slate-600"
-              >
-                Customer ID
-              </label>
+          {/* Employee Code */}
 
-              <div className="mt-2 flex h-11 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 focus-within:border-[#315bd1] focus-within:bg-white">
-                <CircleUserRound className="h-4 w-4 shrink-0 text-slate-400" />
+          <div className="mt-5">
+            <Input
+              label="Enter Employee Code"
+              value={employeeCode}
+              onChange={(event) =>
+                handleEmployeeCodeChange(
+                  event.target.value
+                )
+              }
+              placeholder="EMP-8842"
+              icon={<WalletCards className="h-5 w-5" />}
+            />
+          </div>
 
-                <input
-                  id="cash-customer-id"
-                  type="text"
-                  value={customerId}
-                  onChange={handleCustomerIdChange}
-                  disabled={
-                    isSearching ||
-                    isProcessing ||
-                    transactionStatus === "SUCCESS"
-                  }
-                  placeholder="Enter customer ID"
-                  className="min-w-0 flex-1 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
-                />
-              </div>
-            </div>
+          {/* Button */}
 
-            {/* Mobile */}
-            <div className="mt-4">
-              <label
-                htmlFor="cash-customer-mobile"
-                className="text-xs font-semibold text-slate-600"
-              >
-                Customer Mobile Number
-              </label>
-
-              <div className="mt-2 flex h-11 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 focus-within:border-[#315bd1] focus-within:bg-white">
-                <span className="text-xs font-bold text-slate-400">+91</span>
-
-                <input
-                  id="cash-customer-mobile"
-                  type="text"
-                  inputMode="numeric"
-                  maxLength={10}
-                  value={mobile}
-                  onChange={handleMobileChange}
-                  disabled={
-                    isSearching ||
-                    isProcessing ||
-                    transactionStatus === "SUCCESS"
-                  }
-                  placeholder="Enter mobile number"
-                  className="min-w-0 flex-1 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
-                />
-
-                <span className="text-[10px] text-slate-400">
-                  {mobile.length}/10
-                </span>
-              </div>
-            </div>
-
-            {/* Search */}
-            {!customerName && transactionStatus !== "SUCCESS" && (
-              <button
-                type="button"
-                onClick={handleSearchCustomer}
-                disabled={!isSearchValid || isSearching}
-                className="mt-4 flex h-10 w-full items-center justify-center gap-2 rounded-xl border border-[#315bd1] bg-white text-xs font-bold text-[#315bd1] transition hover:bg-[#f4f6fd] disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                {isSearching ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    Searching Customer...
-                  </>
-                ) : (
-                  <>
-                    <Search className="h-4 w-4" />
-                    Search Customer
-                  </>
-                )}
-              </button>
+          <Button
+            type="button"
+            onClick={handleVerifyEmployee}
+            disabled={
+              !employeeCode.trim() ||
+              isVerifyingEmployee
+            }
+            loading={isVerifyingEmployee}
+            fullWidth
+            size="lg"
+            className="mt-5 min-h-[52px] rounded-2xl text-lg"
+          >
+            Proceed & Next
+            {!isVerifyingEmployee && (
+              <ArrowRight className="h-5 w-5" />
             )}
+          </Button>
+        </main>
+      </div>
+    );
+  };
 
-            {/* Customer Found */}
-            {customerName && transactionStatus !== "SUCCESS" && (
-              <div className="mt-4 rounded-xl border border-emerald-100 bg-emerald-50 p-4">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white">
-                    <CircleUserRound className="h-5 w-5 text-emerald-600" />
-                  </div>
+  /* =========================
+     EMPLOYEE DETAILS
+  ========================= */
 
-                  <div>
-                    <p className="text-sm font-bold text-slate-900">
-                      {customerName}
-                    </p>
+  const renderEmployeeDetails = () => {
+    if (!verifiedEmployee || !selectedClient) {
+      return null;
+    }
 
-                    <p className="mt-1 text-[11px] text-emerald-600">
-                      Customer verified successfully
-                    </p>
-                  </div>
+    return (
+      <div className="">
+        <Header title="Cash Collection" />
 
-                  <CheckCircle2 className="ml-auto h-5 w-5 text-emerald-500" />
+        <main className="mx-auto max-w-3xl px-2 py-4 sm:px-4">
+          {/* Commission */}
+
+          <div className="flex items-start gap-4 border-b border-[#efd39f] bg-[#fff8ed] p-5">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f59e0b] text-white">
+              <Star className="h-5 w-5 fill-current" />
+            </div>
+
+            <p className="font-semibold text-[#252b36]">
+              For this client, the commission you will receive
+              is, 35.0 of the transaction amount.
+            </p>
+          </div>
+
+          <Progress active={2} />
+
+          {/* Employee Details */}
+
+          <section className="mt-5 rounded-2xl border border-slate-200 bg-white p-6">
+            <div className="flex flex-col gap-3 border-b border-slate-200 pb-4 sm:flex-row sm:items-center sm:justify-between">
+              <h2 className="flex items-center gap-3 text-xl font-bold text-[#20a970]">
+                <ShieldCheck className="h-5 w-5" />
+                Verified Employee Details
+              </h2>
+
+              <span className="w-fit rounded-lg bg-[#edf1fc] px-3 py-2 font-bold text-[#172033]">
+                {verifiedEmployee.code}
+              </span>
+            </div>
+
+            <div className="mt-5 space-y-5">
+              <DetailRow
+                label="Employee Name"
+                value={verifiedEmployee.name}
+              />
+
+              <DetailRow
+                label="Branch Name"
+                value={verifiedEmployee.branch}
+              />
+
+              <DetailRow
+                label="State"
+                value={verifiedEmployee.state}
+              />
+
+              <DetailRow
+                label="Hub Location"
+                value={verifiedEmployee.hub}
+              />
+
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                <span className="text-lg text-[#555b67]">
+                  Email ID & Mobile
+                </span>
+
+                <div className="text-left font-semibold text-[#172033] sm:text-right">
+                  <p>{verifiedEmployee.email}</p>
+
+                  <p className="mt-1">
+                    +91 {verifiedEmployee.mobile}
+                  </p>
                 </div>
               </div>
-            )}
+            </div>
+          </section>
 
-            {/* Amount */}
-            <div className="mt-4">
-              <label
-                htmlFor="cash-collection-amount"
-                className="text-xs font-semibold text-slate-600"
-              >
-                Collection Amount
-              </label>
+          {/* Amount */}
 
-              <div className="mt-2 flex h-11 items-center rounded-xl border border-slate-200 bg-slate-50 px-3 focus-within:border-[#315bd1] focus-within:bg-white">
-                <span className="mr-2 text-sm font-bold text-slate-400">
+          <div className="mt-5">
+            <Input
+              label="Collection Amount"
+              value={collectionAmount}
+              onChange={(event) =>
+                handleAmountChange(
+                  event.target.value
+                )
+              }
+              placeholder="25000"
+              inputMode="numeric"
+              icon={
+                <span className="text-xl font-bold">
                   ₹
                 </span>
+              }
+            />
 
-                <input
-                  id="cash-collection-amount"
-                  type="text"
-                  inputMode="decimal"
-                  value={amount}
-                  onChange={handleAmountChange}
-                  disabled={
-                    !customerName ||
-                    isProcessing ||
-                    transactionStatus === "SUCCESS"
+            {numericAmount > 0 && (
+              <div className="mt-3 flex flex-col gap-1 rounded-xl bg-[#e7f8f1] px-5 py-3 sm:flex-row sm:items-center sm:justify-between">
+                <span className="font-semibold text-[#20a970]">
+                  Your Commission (0.04 Rate):
+                </span>
+
+                <span className="font-bold text-[#20a970]">
+                  +₹{commission.toFixed(2)}
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Consent */}
+
+          <label className="mt-5 flex cursor-pointer items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5">
+            <input
+              type="checkbox"
+              checked={consent}
+              onChange={(event) =>
+                setConsent(event.target.checked)
+              }
+              className="mt-1 h-5 w-5 shrink-0 accent-[#172033]"
+            />
+
+            <span className="text-base leading-6 text-[#172033] sm:text-lg">
+              I confirm that I have collected the exact
+              physical cash amount from the authorized employee
+              and agree to the terms & conditions of this
+              transaction.
+            </span>
+          </label>
+
+          {/* Actions */}
+
+          <div className="mt-5 grid gap-4 sm:grid-cols-[0.7fr_1.3fr]">
+            <button
+              type="button"
+              onClick={handleBack}
+              className="min-h-[52px] rounded-2xl border-2 border-[#b9c7e8] bg-transparent text-base font-bold text-[#172033]"
+            >
+              Back
+            </button>
+
+            <button
+              type="button"
+              onClick={handleProceedToOtp}
+              disabled={
+                numericAmount <= 0 || !consent
+              }
+              className="flex min-h-[52px] items-center justify-center gap-3 rounded-2xl bg-[#172033] text-base font-bold text-white disabled:bg-[#aab9e7]"
+            >
+              Proceed to OTP
+              <ArrowRight className="h-5 w-5" />
+            </button>
+          </div>
+        </main>
+      </div>
+    );
+  };
+
+  /* =========================
+     OTP
+  ========================= */
+
+  const renderOtp = () => {
+    if (!verifiedEmployee || !selectedClient) {
+      return null;
+    }
+
+    return (
+      <div className="">
+        <Header title="Cash Collection" />
+
+        <main className="mx-auto max-w-3xl px-2 py-4 sm:px-4">
+          {/* Commission */}
+
+          <div className="flex items-start gap-4 border-b border-[#efd39f] bg-[#fff8ed] p-5">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f59e0b] text-white">
+              <Star className="h-5 w-5 fill-current" />
+            </div>
+
+            <p className="font-semibold text-[#252b36]">
+              For this client, the commission you will receive
+              is, 35.0 of the transaction amount.
+            </p>
+          </div>
+
+          <Progress active={3} />
+
+          {/* Summary */}
+
+          <section className="mt-5 rounded-2xl border border-slate-200 bg-white p-6">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h2 className="text-xl font-bold text-[#172033]">
+                  {selectedDisplayName}
+                </h2>
+
+                <p className="mt-1 text-[#555b67]">
+                  {verifiedEmployee.name} (
+                  {verifiedEmployee.code})
+                </p>
+              </div>
+
+              <p className="text-xl font-bold text-[#20a970]">
+                ₹{numericAmount.toFixed(2)}
+              </p>
+            </div>
+          </section>
+
+          {/* OTP Message */}
+
+          <div className="mt-5 flex items-start gap-4 rounded-2xl border border-[#c7d4f5] bg-[#e9efff] p-5">
+            <ShieldCheck className="h-5 w-5 shrink-0 text-[#172033]" />
+
+            <p className="font-semibold leading-6 text-[#172033]">
+              OTP sent to authorized mobile number +91{" "}
+              {verifiedEmployee.mobile}
+            </p>
+          </div>
+
+          {/* OTP */}
+
+          <div className="mt-5">
+            <label className="mb-3 block text-base font-bold text-[#172033]">
+              Enter OTP to Finalize Request
+            </label>
+
+            <OtpInput
+              value={otp}
+              onChange={(value) => {
+                handleOtpInput(value);
+              }}
+              length={6}
+              disabled={isSubmitting}
+              error={otpError}
+            />
+          </div>
+
+          {/* Resend */}
+
+          <div className="mt-5 flex items-center justify-between">
+            <span className="text-base text-[#555b67]">
+              {otpTimer > 0
+                ? `Resend in ${otpTimer}s`
+                : "You can resend OTP"}
+            </span>
+
+            <button
+              type="button"
+              disabled={otpTimer > 0}
+              onClick={handleResendOtp}
+              className="font-bold text-[#172033] disabled:text-slate-400"
+            >
+              Resend OTP
+            </button>
+          </div>
+
+          {/* Actions */}
+
+          <div className="mt-6 grid gap-4 sm:grid-cols-[0.7fr_1.3fr]">
+            <Button
+              type="button"
+              onClick={handleBack}
+              variant="outline"
+              size="lg"
+              className="min-h-[52px] rounded-2xl border-2 text-lg"
+            >
+              Back
+            </Button>
+
+            <Button
+              type="button"
+              onClick={handleVerifyOtp}
+              disabled={otp.length !== 6 || isSubmitting}
+              loading={isSubmitting}
+              variant="primary"
+              size="lg"
+              className="min-h-[52px] rounded-2xl text-lg"
+            >
+              Confirm & Submit Payment
+            </Button>
+          </div>
+
+          {/* Demo OTP */}
+
+          <div className="mt-5 rounded-xl bg-[#fff8e6] px-4 py-3 text-center text-sm text-[#8a6500]">
+            Demo OTP: <strong>123456</strong>
+          </div>
+        </main>
+      </div>
+    );
+  };
+
+  /* =========================
+     RECEIPT
+  ========================= */
+
+  const renderReceipt = () => {
+    if (!verifiedEmployee || !selectedClient) {
+      return null;
+    }
+
+    return (
+      <div className="">
+        <div className="border-b border-slate-200 bg-white/95">
+          <div className="mx-auto flex max-w-3xl items-center justify-between px-3 py-4 sm:px-5">
+            <h1 className="text-xl font-bold text-slate-900 sm:text-3xl">
+              Payment Receipt
+            </h1>
+
+            <button
+              type="button"
+              onClick={handleNewCollection}
+              className="flex h-10 w-10 items-center justify-center"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+
+        <main className="mx-auto max-w-3xl px-2 py-4 sm:px-4">
+          {/* Success */}
+
+          <div className="flex items-start gap-4 rounded-2xl border border-[#b3e5d2] bg-[#e5f8f0] p-5">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#19b978] text-white">
+              <CheckCircle2 className="h-5 w-5" />
+            </div>
+
+            <div>
+              <h2 className="text-xl font-bold text-[#16a96e]">
+                Payment Successful
+              </h2>
+
+              <p className="mt-1 text-base font-semibold text-[#34543f]">
+                Cash Collection of ₹
+                {numericAmount.toFixed(2)} for{" "}
+                {selectedDisplayName} confirmed
+                successfully.
+              </p>
+            </div>
+          </div>
+
+          {/* Receipt Card */}
+
+          <section className="mt-5 overflow-hidden rounded-2xl border border-slate-200 bg-white">
+            <div className="p-5 text-center">
+              <div className="flex items-center justify-center gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#edf1fc] text-[#172033]">
+                  <WalletCards className="h-5 w-5" />
+                </div>
+
+                <h2 className="text-xl font-bold text-[#172033]">
+                  {selectedDisplayName}
+                </h2>
+              </div>
+
+              <p className="mt-6 text-4xl font-bold text-[#172033]">
+                ₹{numericAmount.toFixed(2)}
+              </p>
+
+              <span className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#e4f8ef] px-5 py-2 font-bold text-[#16a36d]">
+                <CheckCircle2 className="h-5 w-5" />
+                Transaction Successful
+              </span>
+            </div>
+
+            <div className="border-t border-dashed border-slate-200" />
+
+            <div className="space-y-5 p-5">
+              <ReceiptRow
+                label="Transaction ID"
+                value={transactionId}
+                copy
+              />
+
+              <ReceiptRow
+                label="Service Mode"
+                value="Cash Collection"
+              />
+
+              <ReceiptRow
+                label="Employee Code"
+                value={verifiedEmployee.code}
+              />
+
+              <ReceiptRow
+                label="Employee Name"
+                value={verifiedEmployee.name}
+              />
+
+              <ReceiptRow
+                label="Branch"
+                value={verifiedEmployee.branch}
+              />
+
+              <ReceiptRow
+                label="Hub Location"
+                value={verifiedEmployee.hub}
+              />
+
+              <ReceiptRow
+                label="Depositor Mobile"
+                value={`+91 ${verifiedEmployee.mobile}`}
+              />
+
+              <ReceiptRow
+                label="Date & Time"
+                value={new Date().toLocaleString(
+                  "en-IN",
+                  {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit",
+                    hour12: true,
                   }
-                  placeholder="Enter collection amount"
-                  className="min-w-0 flex-1 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
+                )}
+              />
+
+              <div className="border-t border-slate-200 pt-5">
+                <ReceiptRow
+                  label="Retailer Commission"
+                  value={`+ ₹${commission.toFixed(2)}`}
+                  green
                 />
               </div>
             </div>
+          </section>
 
-            {/* Device */}
-            <div className="mt-5 rounded-xl border border-[#315bd1]/15 bg-[#f4f6fd] p-4">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#315bd1]">
-                  <Fingerprint className="h-5 w-5 text-white" />
-                </div>
+          {/* New Collection */}
 
-                <div>
-                  <p className="text-sm font-bold text-slate-900">
-                    Secure Authentication
-                  </p>
+          <button
+            type="button"
+            onClick={handleNewCollection}
+            className="mt-5 flex min-h-[52px] w-full items-center justify-center gap-3 rounded-2xl bg-[#172033] text-base font-bold text-white"
+          >
+            <RotateCcw className="h-5 w-5" />
+            New Cash Collection
+          </button>
 
-                  <p className="mt-1 text-[11px] text-slate-500">
-                    Customer verification required before collection.
-                  </p>
-                </div>
-              </div>
-            </div>
+          {/* Receipt Actions */}
 
-            {/* Collect */}
-            {transactionStatus === "SUCCESS" ? (
-              <div className="mt-5 rounded-xl border border-emerald-100 bg-emerald-50 p-4">
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="h-6 w-6 text-emerald-500" />
+          <div className="mt-5 grid gap-4 sm:grid-cols-2">
+            <button
+              type="button"
+              className="flex min-h-[60px] items-center justify-center gap-3 rounded-2xl border-2 border-[#b9c7e8] bg-transparent text-base font-bold text-[#172033]"
+            >
+              <Mail className="h-5 w-5" />
+              Send Email Receipt
+            </button>
 
-                  <div>
-                    <p className="text-sm font-bold text-emerald-700">
-                      Cash Collected Successfully
-                    </p>
-
-                    <p className="mt-1 text-xs text-emerald-600">
-                      Transaction ID: {transactionId}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <button
-                type="button"
-                onClick={handleCollectCash}
-                disabled={
-                  !customerName ||
-                  Number(amount) <= 0 ||
-                  isProcessing
-                }
-                className="mt-5 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#315bd1] px-4 text-sm font-bold text-white transition hover:bg-[#274dbd] disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                {isProcessing ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    Processing Collection...
-                  </>
-                ) : (
-                  <>
-                    <CheckCircle2 className="h-4 w-4" />
-                    Collect Cash
-                  </>
-                )}
-              </button>
-            )}
-
-            {transactionStatus === "SUCCESS" && (
-              <button
-                type="button"
-                onClick={resetForm}
-                className="mt-3 flex h-10 w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-xs font-bold text-slate-600 transition hover:bg-slate-50"
-              >
-                <RefreshCw className="h-3.5 w-3.5" />
-                New Collection
-              </button>
-            )}
+            <button
+              type="button"
+              className="flex min-h-[60px] items-center justify-center gap-3 rounded-2xl border-2 border-[#b9c7e8] bg-transparent text-base font-bold text-[#172033]"
+            >
+              <Send className="h-5 w-5 text-[#20b77a]" />
+              Share WhatsApp
+            </button>
           </div>
 
-          {/* Summary */}
-          <div className="rounded-2xl bg-[#f7f8fc] p-5">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#eef2ff]">
-                <ShieldCheck className="h-5 w-5 text-[#315bd1]" />
-              </div>
+          {/* Bottom Actions */}
 
-              <div>
-                <h3 className="text-sm font-bold text-slate-900">
-                  Collection Summary
-                </h3>
+          <div className="mt-6 grid gap-5 sm:grid-cols-2">
+            <button
+              type="button"
+              onClick={() => window.print()}
+              className="flex items-center justify-center gap-3 font-bold text-[#172033]"
+            >
+              <Download className="h-5 w-5" />
+              Printable PDF
+            </button>
 
-                <p className="mt-1 text-[11px] text-slate-500">
-                  Review details before confirming.
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-5 space-y-3">
-              <div className="rounded-xl border border-slate-200 bg-white p-3">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                  Customer
-                </p>
-
-                <p className="mt-1 text-sm font-semibold text-slate-700">
-                  {customerName || "Not selected"}
-                </p>
-              </div>
-
-              <div className="rounded-xl border border-slate-200 bg-white p-3">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                  Customer ID
-                </p>
-
-                <p className="mt-1 text-sm font-semibold text-slate-700">
-                  {customerId || "Not entered"}
-                </p>
-              </div>
-
-              <div className="rounded-xl border border-slate-200 bg-white p-3">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                  Mobile Number
-                </p>
-
-                <p className="mt-1 text-sm font-semibold text-slate-700">
-                  {mobile || "Not entered"}
-                </p>
-              </div>
-
-              <div className="rounded-xl border border-slate-200 bg-white p-3">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                  Collection Amount
-                </p>
-
-                <p className="mt-1 text-lg font-bold text-[#315bd1]">
-                  ₹{amount || "0"}
-                </p>
-              </div>
-
-              {transactionStatus === "SUCCESS" && (
-                <div className="rounded-xl border border-emerald-100 bg-emerald-50 p-3">
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-600">
-                    Transaction ID
-                  </p>
-
-                  <p className="mt-1 text-sm font-bold text-emerald-700">
-                    {transactionId}
-                  </p>
-
-                  {transactionDate && (
-                    <p className="mt-1 text-[10px] text-emerald-600">
-                      {transactionDate.toLocaleString("en-IN")}
-                    </p>
-                  )}
-                </div>
-              )}
-            </div>
-
-            <div className="mt-5 rounded-xl border border-[#315bd1]/10 bg-[#eef2ff] p-3">
-              <p className="text-xs font-bold text-[#315bd1]">
-                Important
-              </p>
-
-              <p className="mt-1 text-[11px] leading-5 text-slate-600">
-                Verify the customer information and collection amount before
-                completing the transaction.
-              </p>
-            </div>
+            <button
+              type="button"
+              className="flex items-center justify-center gap-3 font-bold text-[#172033]"
+            >
+              <History className="h-5 w-5" />
+              View History
+            </button>
           </div>
-        </div>
-      </section>
+        </main>
+      </div>
+    );
+  };
+
+  /* =========================
+     SCREEN ROUTING
+  ========================= */
+
+  if (screen === "client-selection") {
+    return renderClientSelection();
+  }
+
+  if (screen === "employee-verification") {
+    return renderEmployeeVerification();
+  }
+
+  if (screen === "employee-details") {
+    return renderEmployeeDetails();
+  }
+
+  if (screen === "otp") {
+    return renderOtp();
+  }
+
+  if (screen === "receipt") {
+    return renderReceipt();
+  }
+
+  return renderHome();
+};
+
+/* =========================
+   FEATURE
+========================= */
+
+const Feature = ({
+  title,
+  text,
+}: {
+  title: string;
+  text: string;
+}) => {
+  return (
+    <div className="flex items-start gap-3">
+      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#20b77a]" />
+
+      <p className="text-base leading-6 text-[#555b67]">
+        <strong className="text-[#172033]">
+          {title}:
+        </strong>{" "}
+        {text}
+      </p>
+    </div>
+  );
+};
+
+/* =========================
+   PROGRESS
+========================= */
+
+const Progress = ({
+  active,
+}: {
+  active: 1 | 2 | 3;
+}) => {
+  const steps = [
+    { label: "Employee" },
+    { label: "Details" },
+    { label: "OTP Verification" },
+  ];
+
+  return (
+    <StepIndicator
+      steps={steps}
+      currentStep={active}
+    />
+  );
+};
+
+/* =========================
+   DETAIL ROW
+========================= */
+
+const DetailRow = ({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) => {
+  return (
+    <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+      <span className="text-lg text-[#555b67]">
+        {label}
+      </span>
+
+      <span className="text-right text-base font-bold text-[#172033]">
+        {value}
+      </span>
+    </div>
+  );
+};
+
+/* =========================
+   RECEIPT ROW
+========================= */
+
+const ReceiptRow = ({
+  label,
+  value,
+  green = false,
+  copy = false,
+}: {
+  label: string;
+  value: string;
+  green?: boolean;
+  copy?: boolean;
+}) => {
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(value);
+    } catch {
+      // Clipboard may be unavailable.
+    }
+  };
+
+  return (
+    <div className="flex items-start justify-between gap-5">
+      <span className="text-base text-[#555b67] sm:text-lg">
+        {label}
+      </span>
+
+      <div className="flex items-center gap-2 text-right">
+        <span
+          className={`text-base font-bold sm:text-lg ${
+            green
+              ? "text-[#16a36d]"
+              : "text-[#172033]"
+          }`}
+        >
+          {value}
+        </span>
+
+        {copy && (
+          <button
+            type="button"
+            onClick={handleCopy}
+            className="text-[#172033]"
+          >
+            <Copy className="h-5 w-5" />
+          </button>
+        )}
+      </div>
     </div>
   );
 };
