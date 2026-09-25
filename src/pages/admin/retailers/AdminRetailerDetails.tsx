@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { DUMMY_RETAILERS } from "./mockRetailers";
 
 type Tab = 'registration' | 'transactions' | 'retailers';
-type TxFilter = 'AEPS' | 'DMT' | 'CMS' | 'Others';
+type TxFilter = 'AEPS' | 'DMT' | 'CMS' | 'UPI Cashpoint' | 'Aadhar pay' | 'BBPS' | 'Others';
 
 export default function AdminRetailerDetails() {
   const { id } = useParams();
@@ -81,28 +81,42 @@ export default function AdminRetailerDetails() {
         </div>
 
         {activeTab === 'registration' && (
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {[
-              ["Email", selected.email],
-              ["Mobile", selected.mobile],
-              ["Shop", selected.shop?.name],
-              ["Address", `${selected.shop.address.addressLine}, ${selected.shop.address.city}, ${selected.shop.address.state}`],
-              ["PAN verification", "External verification pending"],
-              ["Aadhaar verification", selected.aadhaarVerified ? "Verified" : "External verification pending"],
-              ["KYC status", selected.kycStatus],
-              ["Account status", selected.status],
-              ["Registered", new Date(selected.createdAt).toLocaleDateString()],
-            ].map(([label, value]) => (
+              { label: "Retailer Name", value: selected.fullName },
+              { label: "Mobile Number", value: selected.mobile },
+              { label: "Email Address", value: selected.email },
+              { label: "Gender", value: "Male" },
+              { label: "DOB", value: "15/08/1988" },
+              { label: "Educational Qualification", value: "Bachelor's Degree" },
+              { label: "PAN Number", value: "ABCDE1234F", isDoc: true },
+              { label: "Aadhar Number", value: "1234-5678-9012", isDoc: true },
+              { label: "Shop Name", value: selected.shop?.name || "Dummy Shop" },
+              { label: "Shop Category", value: "Mobile & Accessories" },
+              { label: "Property Type", value: "Rented" },
+              { label: "Shop Address", value: selected.shop ? `${selected.shop.address.addressLine}, ${selected.shop.address.city}, ${selected.shop.address.state}` : "Dummy Address" },
+              { label: "Business Proof", value: "GST Registration", isDoc: true },
+              { label: "Bank Name", value: "State Bank of India" },
+              { label: "IFSC Code", value: "SBIN0001234" },
+              { label: "Account Number", value: "XXXXXXXX9012" },
+            ].map((field, idx) => (
               <div
-                key={label}
+                key={idx}
                 className="rounded-xl border border-slate-200 bg-slate-50/70 p-4"
               >
                 <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
-                  {label}
+                  {field.label}
                 </p>
-                <p className="mt-1 text-sm font-bold text-slate-800">
-                  {value || "-"}
-                </p>
+                <div className="mt-1 flex items-center justify-between gap-2">
+                  <p className="text-sm font-bold text-slate-800 break-all">
+                    {field.value || "-"}
+                  </p>
+                  {field.isDoc && (
+                    <button className="shrink-0 rounded bg-blue-100 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-[#315bd1] hover:bg-blue-200 transition-colors">
+                      Doc
+                    </button>
+                  )}
+                </div>
               </div>
             ))}
           </div>
@@ -110,8 +124,8 @@ export default function AdminRetailerDetails() {
 
         {activeTab === 'transactions' && (
           <div className="mt-6 flex flex-col gap-5">
-            <div className="flex gap-2">
-              {(['AEPS', 'DMT', 'CMS', 'Others'] as const).map(tab => (
+            <div className="flex flex-wrap gap-2">
+              {(['AEPS', 'UPI Cashpoint', 'Aadhar pay', 'BBPS', 'DMT', 'CMS', 'Others'] as const).map(tab => (
                 <button
                   key={tab}
                   onClick={() => setTxFilter(tab)}
@@ -208,6 +222,90 @@ export default function AdminRetailerDetails() {
                         <td className="font-medium">Cash Drop</td>
                         <td className="font-medium text-slate-700">₹8,500</td>
                         <td>TXN987654321</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              )}
+              {txFilter === 'UPI Cashpoint' && (
+                <table className="hp-table">
+                  <thead>
+                    <tr>
+                      <th>VPA / UPI ID</th>
+                      <th>Customer Name</th>
+                      <th>Amount</th>
+                      <th>Reference No</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {selected.status === 'pending' ? (
+                      <tr>
+                        <td colSpan={5} className="text-center py-6 text-slate-500 font-medium">No transactions found</td>
+                      </tr>
+                    ) : (
+                      <tr>
+                        <td className="font-medium text-slate-700">user@upi</td>
+                        <td>Amit Kumar</td>
+                        <td className="font-medium text-slate-700">₹2,000</td>
+                        <td>REF987654321</td>
+                        <td>2026-09-24</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              )}
+              {txFilter === 'Aadhar pay' && (
+                <table className="hp-table">
+                  <thead>
+                    <tr>
+                      <th>Aadhar</th>
+                      <th>Bank</th>
+                      <th>Amount</th>
+                      <th>Reference No</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {selected.status === 'pending' ? (
+                      <tr>
+                        <td colSpan={5} className="text-center py-6 text-slate-500 font-medium">No transactions found</td>
+                      </tr>
+                    ) : (
+                      <tr>
+                        <td className="font-medium text-slate-700">XXXX-XXXX-4321</td>
+                        <td>HDFC Bank</td>
+                        <td className="font-medium text-slate-700">₹4,500</td>
+                        <td>REF123456789</td>
+                        <td>2026-09-23</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              )}
+              {txFilter === 'BBPS' && (
+                <table className="hp-table">
+                  <thead>
+                    <tr>
+                      <th>Biller</th>
+                      <th>Category</th>
+                      <th>Customer ID</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {selected.status === 'pending' ? (
+                      <tr>
+                        <td colSpan={5} className="text-center py-6 text-slate-500 font-medium">No transactions found</td>
+                      </tr>
+                    ) : (
+                      <tr>
+                        <td className="font-medium text-slate-700">BESCOM</td>
+                        <td>Electricity</td>
+                        <td>CUST98765</td>
+                        <td className="font-medium text-slate-700">₹1,200</td>
+                        <td><span className="bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-full text-[10px] font-bold">Success</span></td>
                       </tr>
                     )}
                   </tbody>

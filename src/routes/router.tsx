@@ -41,6 +41,7 @@ import AdminTransactions from "../pages/admin/transactions/AdminTransactions";
 import AdminCustomers from "../pages/admin/customers/AdminCustomers";
 import AdminCommissions from "../pages/admin/commissions/AdminCommissions";
 import AdminCmsConfig from "../pages/admin/cms/AdminCmsConfig";
+import AdminNotifications from "../pages/admin/notifications/AdminNotifications";
 
 const Router: RouteObject[] = [
   // ADMIN AUTH
@@ -86,6 +87,7 @@ const Router: RouteObject[] = [
           { path: "profile", element: <AdminProfile /> },
           { path: "support", element: <AdminSupport /> },
           { path: "audit-logs", element: <AdminAuditLogs /> },
+          { path: "notifications", element: <AdminNotifications /> },
         ],
       },
     ],

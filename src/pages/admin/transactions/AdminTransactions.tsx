@@ -75,6 +75,7 @@ export default function AdminTransactions() {
               <thead>
                 <tr>
                   <th>Date</th>
+                  <th>Transaction ID</th>
                   <th>Retailer ID</th>
                   <th>Name</th>
                   <th>Mobile Number</th>
@@ -87,6 +88,7 @@ export default function AdminTransactions() {
                 {filteredTransactions.map((tx) => (
                   <tr key={tx.id}>
                     <td>{tx.date}</td>
+                    <td><span className="font-bold text-slate-600">{tx.id}</span></td>
                     <td><span className="font-bold text-[#315bd1]">{tx.retailerId}</span></td>
                     <td className="font-bold text-slate-800">{tx.name}</td>
                     <td>{tx.mobile}</td>
