@@ -14,7 +14,7 @@ import {
   Play,
   Search,
   ShieldCheck,
-  ReceiptText,
+
   WalletCards,
   Printer,
   RefreshCw,
@@ -326,13 +326,13 @@ const generateRRN = () => {
 
 const ProgressHeader = ({ step }: { step: Step }) => {
   const progressSteps = [
-    { label: "Biometric" },
-    { label: "Bank & Mobile" },
+    { label: "Aadhaar Auth" },
+    { label: "Bank Selection" },
     { label: "Review" },
     { label: "Service" },
   ];
 
-  const activeProgress = step === 0 ? 1 : step;
+  const activeProgress = step - 1;
 
   return (
     <StepIndicator
@@ -360,7 +360,7 @@ const Aeps = () => {
    */
 
   const [step, setStep] = useState<Step>(0);
-  const [activeTab, setActiveTab] = useState<"withdraw" | "deposit">("withdraw");
+  const [flowMode, setFlowMode] = useState<"withdraw" | "deposit" | "">("");
   const [withdrawalDevice, setWithdrawalDevice] = useState("Mantra MFS100");
   const [isDeviceDropdownOpen, setIsDeviceDropdownOpen] = useState(false);
 
@@ -641,43 +641,7 @@ const Aeps = () => {
    * ============================================================
    */
 
-  const handleServiceClick = (
-    serviceId: ServiceId
-  ) => {
-    /*
-     * Set selected service.
-     */
-    setSelectedService(serviceId);
 
-    /*
-     * A and D require amount.
-     */
-    if (
-      serviceId ===
-        "cash-withdrawal" ||
-      serviceId ===
-        "balance-withdrawal"
-    ) {
-      setWithdrawalAmount(1000);
-      setModalType("amount");
-      return;
-    }
-
-    /*
-     * B and C directly require biometric.
-     *
-     * IMPORTANT:
-     * serviceId is passed directly.
-     */
-    if (
-      serviceId === "balance-check" ||
-      serviceId === "mini-statement"
-    ) {
-      setModalType("biometric");
-
-      startBiometric(serviceId);
-    }
-  };
 
   /*
    * ============================================================
@@ -1126,17 +1090,58 @@ const Aeps = () => {
 
   /*
    * ============================================================
-   * STEP 1
+   * STEP 1: FLOW SELECTION
+   * ============================================================
+   */
+  const renderFlowSelection = () => {
+    return (
+      <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div>
+          <h2 className="text-2xl font-bold text-slate-900">Step 1: Select Transaction</h2>
+          <p className="mt-2 text-base text-slate-500">Choose whether you want to deposit or withdraw cash.</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <button
+            onClick={() => {
+              setFlowMode("withdraw");
+              setStep(2);
+            }}
+            className="flex flex-col items-center justify-center p-8 rounded-2xl border-2 border-slate-200 bg-white hover:border-[#7c3aed] hover:shadow-lg transition-all"
+          >
+            <WalletCards className="h-12 w-12 text-[#7c3aed] mb-4" />
+            <span className="text-xl font-bold text-slate-900">Cash Withdraw</span>
+          </button>
+          <button
+            onClick={() => {
+              setFlowMode("deposit");
+              setStep(2);
+            }}
+            className="flex flex-col items-center justify-center p-8 rounded-2xl border-2 border-slate-200 bg-white hover:border-[#315bd1] hover:shadow-lg transition-all"
+          >
+            <Banknote className="h-12 w-12 text-[#315bd1] mb-4" />
+            <span className="text-xl font-bold text-slate-900">Cash Deposit</span>
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  /*
+   * ============================================================
+   * STEP 2
    * CUSTOMER AADHAAR
    * ============================================================
    */
+
+
+
 
   const renderCustomerAadhaar = () => {
     return (
       <>
         <div>
           <h2 className="text-2xl font-bold text-slate-900">
-            Step 1: Aadhaar & Biometric
+            Step 2: Aadhaar & Biometric
           </h2>
 
           <p className="mt-2 text-base text-slate-500">
@@ -1230,7 +1235,7 @@ const Aeps = () => {
 
         <button
           type="button"
-          onClick={() => setStep(2)}
+          onClick={() => setStep(4)}
           disabled={!customerVerified}
             className="flex min-h-[52px] w-full max-w-3xl items-center justify-center gap-3 rounded-xl bg-purple-600 px-5 text-sm font-bold text-white shadow-md transition-all hover:-translate-y-0.5 hover:bg-purple-700 disabled:cursor-not-allowed disabled:bg-[#cbd0d6] sm:text-base"
         >
@@ -1427,7 +1432,7 @@ const Aeps = () => {
       <>
         <div>
           <h2 className="text-2xl font-bold text-slate-900">
-            Step 3: Verify Your Details
+            Step 4: Verify Your Details
           </h2>
 
           <p className="mt-2 text-base text-slate-500">
@@ -1527,7 +1532,7 @@ const Aeps = () => {
         <button
           type="button"
           onClick={() => setStep(4)}
-          className="flex min-h-[52px] w-full items-center justify-center gap-3 rounded-2xl bg-purple-600 shadow-md transition-all hover:-translate-y-0.5 hover:bg-purple-700 text-lg font-bold text-white shadow-md sm:text-xl"
+          className="mt-8 flex min-h-[52px] w-full items-center justify-center gap-3 rounded-2xl bg-purple-600 shadow-md transition-all hover:-translate-y-0.5 hover:bg-purple-700 text-lg font-bold text-white shadow-md sm:text-xl"
         >
           <ArrowRight className="h-7 w-7" />
           PROCEED TO SERVICES
@@ -1543,107 +1548,9 @@ const Aeps = () => {
    * ============================================================
    */
 
-  const services: {
-    id: ServiceId;
-    title: string;
-    description: string;
-    icon: React.ElementType;
-    iconClass: string;
-    bgClass: string;
-  }[] = [
-    {
-      id: "cash-withdrawal",
-      title: "A. Cash Withdrawal",
-      description: "Withdraw cash from A/C",
-      icon: WalletCards,
-      iconClass: "text-[#172033]",
-      bgClass: "bg-purple-50",
-    },
-    {
-      id: "balance-check",
-      title: "B. Balance Check",
-      description: "Enquire A/C balance",
-      icon: Banknote,
-      iconClass: "text-[#172033]",
-      bgClass: "bg-purple-50",
-    },
-    {
-      id: "mini-statement",
-      title: "C. Mini Statement",
-      description: "Last 5 transactions",
-      icon: ReceiptText,
-      iconClass: "text-[#172033]",
-      bgClass: "bg-purple-50",
-    },
-    {
-      id: "balance-withdrawal",
-      title: "D. Bal Check + Wdl",
-      description: "Check & withdraw",
-      icon: ArrowRight,
-      iconClass: "text-[#172033]",
-      bgClass: "bg-purple-50",
-    },
-  ];
 
-  const renderServices = () => {
-    return (
-      <>
-        <div>
-          <h2 className="text-2xl font-bold text-slate-900">
-            Step 4: Select AEPS Service
-          </h2>
 
-          <p className="mt-2 text-base text-slate-500">
-            Select the transaction you want to
-            perform.
-          </p>
-        </div>
 
-        <div className="grid w-full max-w-3xl grid-cols-1 gap-4 sm:grid-cols-2">
-          {services.map((service) => {
-            const Icon = service.icon;
-
-            const selected =
-              selectedService ===
-              service.id;
-
-            return (
-              <button
-                type="button"
-                key={service.id}
-                onClick={() =>
-                  handleServiceClick(
-                    service.id
-                  )
-                }
-                className={`rounded-2xl border-2 p-5 text-left transition ${
-                  selected
-                    ? "border-[#172033] shadow-md"
-                    : "border-[#d8d8d8]"
-                } bg-white shadow-sm hover:shadow-md transition-shadow hover:-translate-y-0.5 hover:shadow-[0_18px_38px_-24px_rgba(15,23,42,0.45)]`}
-              >
-                <div
-                  className={`flex h-12 w-12 items-center justify-center rounded-2xl ${service.bgClass}`}
-                >
-                  <Icon
-                    className={`h-8 w-8 ${service.iconClass}`}
-                  />
-                </div>
-
-                <h3 className="mt-5 text-xl font-bold text-slate-900">
-                  {service.title}
-                </h3>
-
-                <p className="mt-1 text-base text-slate-700">
-                  {service.description}
-                </p>
-              </button>
-            );
-          })}
-        </div>
-      </>
-    );
-  };
 
   /*
    * ============================================================
@@ -2247,80 +2154,34 @@ const Aeps = () => {
               Aadhaar ATM
             </p>
             <h1 className="mt-1 text-2xl font-bold tracking-tight text-slate-900">
-              {activeTab === "withdraw" ? "Withdraw Money" : "Cash Deposit"}
+              "AEPS Services"
             </h1>
           </div>
         </div>
       </section>
 
+      
       <section className="hp-card overflow-hidden rounded-2xl p-5 sm:p-7">
+        {step > 1 && flowMode === "withdraw" && (
+          <div className="mx-auto mt-4 w-full max-w-3xl rounded-2xl border border-slate-100 bg-white px-4 py-4 shadow-sm sm:px-6">
+            <ProgressHeader step={step as Step} />
+          </div>
+        )}
 
-      {/* Tabs */}
-      <div className="mx-auto mt-4 flex w-full max-w-3xl items-center gap-2 rounded-2xl bg-[#e3e8f2] p-1.5 shadow-sm">
-        <button
-          onClick={() => setActiveTab("withdraw")}
-          className={`flex-1 rounded-xl py-2.5 text-center text-sm font-bold transition-all sm:text-base ${
-            activeTab === "withdraw"
-              ? "bg-white text-slate-900 shadow-sm"
-              : "text-slate-500 hover:text-slate-700"
-          }`}
-        >
-          Withdraw
-        </button>
-        <button
-          onClick={() => setActiveTab("deposit")}
-          className={`flex-1 rounded-xl py-2.5 text-center text-sm font-bold transition-all sm:text-base ${
-            activeTab === "deposit"
-              ? "bg-white text-slate-900 shadow-sm"
-              : "text-slate-500 hover:text-slate-700"
-          }`}
-        >
-          Deposit
-        </button>
-      </div>
+        <main className="mt-5">
+          <div className="mx-auto w-full max-w-3xl space-y-5">
+            {step === 0 && renderRetailerAuth()}
+            {step === 1 && renderFlowSelection()}
+            {step === 2 && flowMode === "deposit" && <AepsDeposit />}
+            {step === 2 && flowMode === "withdraw" && renderCustomerAadhaar()}
+            {step === 3 && flowMode === "withdraw" && renderBankSelection()}
+            {step === 4 && flowMode === "withdraw" && renderReview()}
+          </div>
+        </main>
 
-      {activeTab === "deposit" ? (
-        <AepsDeposit />
-      ) : (
-        <>
-          {/* Progress */}
-          {step > 0 && (
-            <div className="mx-auto mt-4 w-full max-w-3xl rounded-2xl border border-white bg-white px-4 py-4 shadow-sm border-slate-100 sm:px-6">
-              <ProgressHeader step={step} />
-            </div>
-          )}
-
-      {/* Content */}
-      <main className="mt-5">
-        <div className="mx-auto w-full max-w-3xl space-y-5">
-          {step === 0 &&
-            renderRetailerAuth()}
-
-          {step === 1 &&
-            renderCustomerAadhaar()}
-
-          {step === 2 &&
-            renderBankSelection()}
-
-          {step === 3 &&
-            renderReview()}
-
-          {step === 4 &&
-            renderServices()}
-        </div>
-      </main>
-
-      {/* ======================================================
-          MODALS
-          ====================================================== */}
-
-      {renderAmountModal()}
-
-      {renderOtpModal()}
-
-      {renderBiometricModal()}
-        </>
-      )}
+        {renderAmountModal()}
+        {renderOtpModal()}
+        {renderBiometricModal()}
       </section>
     </div>
   );

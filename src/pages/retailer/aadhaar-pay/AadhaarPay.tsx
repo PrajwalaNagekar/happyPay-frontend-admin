@@ -6,10 +6,11 @@ import {
   Loader2,
   Printer,
   RefreshCw,
-  ShieldCheck,
-  Smartphone,
+  Landmark,
   UserCircle,
+  ChevronDown,
 } from "lucide-react";
+import { getWalletBalance, setWalletBalance } from "../../../utils/wallet";
 
 interface AadhaarPayProps {
   onBack?: () => void;
@@ -17,9 +18,20 @@ interface AadhaarPayProps {
 
 type TransactionStatus = "IDLE" | "PROCESSING" | "SUCCESS";
 
+const BANKS = [
+  "State Bank of India",
+  "HDFC Bank",
+  "ICICI Bank",
+  "Axis Bank",
+  "Punjab National Bank",
+  "Bank of Baroda",
+  "Canara Bank",
+  "Union Bank of India",
+];
+
 const AadhaarPay: React.FC<AadhaarPayProps> = ({ onBack }) => {
   const [aadhaar, setAadhaar] = useState("");
-  const [mobile, setMobile] = useState("");
+  const [bank, setBank] = useState("");
   const [amount, setAmount] = useState("");
   const [isScanning, setIsScanning] = useState(false);
   const [transactionStatus, setTransactionStatus] =
@@ -34,12 +46,6 @@ const AadhaarPay: React.FC<AadhaarPayProps> = ({ onBack }) => {
     setAadhaar(event.target.value.replace(/\D/g, "").slice(0, 12));
   };
 
-  const handleMobileChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setMobile(event.target.value.replace(/\D/g, "").slice(0, 10));
-  };
-
   const handleAmountChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
@@ -52,7 +58,7 @@ const AadhaarPay: React.FC<AadhaarPayProps> = ({ onBack }) => {
 
   const resetForm = () => {
     setAadhaar("");
-    setMobile("");
+    setBank("");
     setAmount("");
     setIsScanning(false);
     setTransactionStatus("IDLE");
@@ -62,7 +68,7 @@ const AadhaarPay: React.FC<AadhaarPayProps> = ({ onBack }) => {
   };
 
   const handleScan = () => {
-    if (aadhaar.length !== 12) {
+    if (aadhaar.length !== 12 || !bank || !amount) {
       return;
     }
 
@@ -77,6 +83,11 @@ const AadhaarPay: React.FC<AadhaarPayProps> = ({ onBack }) => {
           `TXN${Math.floor(100000000 + Math.random() * 900000000)}`,
         );
         setTransactionDate(new Date());
+        
+        // Money flow: Add amount to retailer wallet
+        const currentBalance = getWalletBalance();
+        setWalletBalance(currentBalance + Number(amount));
+
         setTransactionStatus("SUCCESS");
       }, 1800);
     }, 2200);
@@ -88,7 +99,7 @@ const AadhaarPay: React.FC<AadhaarPayProps> = ({ onBack }) => {
 
   const isFormValid =
     aadhaar.length === 12 &&
-    mobile.length === 10 &&
+    bank !== "" &&
     Number(amount) > 0;
 
   return (
@@ -114,251 +125,193 @@ const AadhaarPay: React.FC<AadhaarPayProps> = ({ onBack }) => {
             Aadhaar Pay
           </h1>
           <p className="mt-1 text-sm text-slate-500">
-            Perform Aadhaar-based banking transactions securely.
+            Accept payments directly using customer's Aadhaar and Biometrics.
           </p>
         </div>
       </div>
 
-      {/* Main Card */}
-      <section className="hp-card rounded-2xl p-5 sm:p-6">
-        <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
+      <section className="hp-card rounded-2xl p-5 sm:p-6 bg-white border border-slate-200 shadow-sm">
+        <div className="mx-auto max-w-md">
           {/* Form */}
           <div>
-            <div className="mb-5 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#eef2ff]">
-                <Fingerprint className="h-5 w-5 text-[#315bd1]" />
-              </div>
-
-              <div>
-                <h2 className="text-base font-bold text-slate-900">
-                  Customer Details
-                </h2>
-                <p className="mt-1 text-xs text-slate-500">
-                  Enter customer information before biometric authentication.
-                </p>
-              </div>
-            </div>
-
-            {/* Aadhaar */}
-            <div>
-              <label
-                htmlFor="aadhaar-number"
-                className="text-xs font-semibold text-slate-600"
-              >
-                Aadhaar Number
-              </label>
-
-              <div className="mt-2 flex h-11 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 focus-within:border-[#315bd1] focus-within:bg-white">
-                <UserCircle className="h-4 w-4 shrink-0 text-slate-400" />
-
-                <input
-                  id="aadhaar-number"
-                  type="text"
-                  inputMode="numeric"
-                  maxLength={12}
-                  value={aadhaar}
-                  onChange={handleAadhaarChange}
-                  disabled={isScanning || transactionStatus === "PROCESSING"}
-                  placeholder="Enter 12-digit Aadhaar number"
-                  className="min-w-0 flex-1 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
-                />
-
-                <span className="text-[10px] text-slate-400">
-                  {aadhaar.length}/12
-                </span>
-              </div>
-            </div>
-
-            {/* Mobile */}
-            <div className="mt-4">
-              <label
-                htmlFor="mobile-number"
-                className="text-xs font-semibold text-slate-600"
-              >
-                Customer Mobile Number
-              </label>
-
-              <div className="mt-2 flex h-11 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 focus-within:border-[#315bd1] focus-within:bg-white">
-                <Smartphone className="h-4 w-4 shrink-0 text-slate-400" />
-
-                <input
-                  id="mobile-number"
-                  type="text"
-                  inputMode="numeric"
-                  maxLength={10}
-                  value={mobile}
-                  onChange={handleMobileChange}
-                  disabled={isScanning || transactionStatus === "PROCESSING"}
-                  placeholder="Enter 10-digit mobile number"
-                  className="min-w-0 flex-1 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
-                />
-
-                <span className="text-[10px] text-slate-400">
-                  {mobile.length}/10
-                </span>
-              </div>
-            </div>
-
-            {/* Amount */}
-            <div className="mt-4">
-              <label
-                htmlFor="transaction-amount"
-                className="text-xs font-semibold text-slate-600"
-              >
-                Transaction Amount
-              </label>
-
-              <div className="mt-2 flex h-11 items-center rounded-xl border border-slate-200 bg-slate-50 px-3 focus-within:border-[#315bd1] focus-within:bg-white">
-                <span className="mr-2 text-sm font-bold text-slate-400">
-                  ₹
-                </span>
-
-                <input
-                  id="transaction-amount"
-                  type="text"
-                  inputMode="decimal"
-                  value={amount}
-                  onChange={handleAmountChange}
-                  disabled={isScanning || transactionStatus === "PROCESSING"}
-                  placeholder="Enter amount"
-                  className="min-w-0 flex-1 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
-                />
-              </div>
-            </div>
-
-            {/* Device */}
-            <div className="mt-5 rounded-xl border border-[#315bd1]/15 bg-[#f4f6fd] p-4">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#315bd1]">
-                  <Fingerprint className="h-5 w-5 text-white" />
+              <div className="mb-5 flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#eef2ff]">
+                  <Fingerprint className="h-5 w-5 text-[#315bd1]" />
                 </div>
 
                 <div>
-                  <p className="text-sm font-bold text-slate-900">
-                    Mantra MFS100
-                  </p>
-
-                  <p className="mt-1 flex items-center gap-2 text-[11px] font-medium text-emerald-600">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                    RD Service Active
+                  <h2 className="text-base font-bold text-slate-900">
+                    Payment Details
+                  </h2>
+                  <p className="mt-1 text-xs text-slate-500">
+                    Enter amount and customer information for Aadhaar Pay.
                   </p>
                 </div>
               </div>
-            </div>
 
-            {/* Action */}
-            {transactionStatus === "SUCCESS" ? (
-              <button
-                type="button"
-                onClick={() => setShowReceipt(true)}
-                className="mt-5 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#315bd1] px-4 text-sm font-bold text-white transition hover:bg-[#274dbd]"
-              >
-                <CheckCircle2 className="h-4 w-4" />
-                View Receipt
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={handleScan}
-                disabled={!isFormValid || isScanning || transactionStatus === "PROCESSING"}
-                className="mt-5 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#315bd1] px-4 text-sm font-bold text-white transition hover:bg-[#274dbd] disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                {isScanning ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    Capturing Fingerprint...
-                  </>
-                ) : transactionStatus === "PROCESSING" ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    Processing Transaction...
-                  </>
-                ) : (
-                  <>
-                    <Fingerprint className="h-4 w-4" />
-                    Start Biometric Authentication
-                  </>
-                )}
-              </button>
-            )}
-
-            {transactionStatus === "SUCCESS" && (
-              <button
-                type="button"
-                onClick={resetForm}
-                className="mt-3 flex h-10 w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-xs font-bold text-slate-600 transition hover:bg-slate-50"
-              >
-                <RefreshCw className="h-3.5 w-3.5" />
-                New Transaction
-              </button>
-            )}
-          </div>
-
-          {/* Information Panel */}
-          <div className="rounded-2xl bg-[#f7f8fc] p-5">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#eef2ff]">
-                <ShieldCheck className="h-5 w-5 text-[#315bd1]" />
-              </div>
-
+              {/* Amount */}
               <div>
-                <h3 className="text-sm font-bold text-slate-900">
-                  Secure Authentication
-                </h3>
-                <p className="mt-1 text-[11px] text-slate-500">
-                  Biometric verification is required.
-                </p>
+                <label
+                  htmlFor="transaction-amount"
+                  className="text-xs font-semibold text-slate-600"
+                >
+                  Transaction Amount
+                </label>
+
+                <div className="mt-2 flex h-11 items-center rounded-xl border border-slate-200 bg-slate-50 px-3 focus-within:border-[#315bd1] focus-within:bg-white">
+                  <span className="mr-2 text-sm font-bold text-slate-400">
+                    ₹
+                  </span>
+
+                  <input
+                    id="transaction-amount"
+                    type="text"
+                    inputMode="decimal"
+                    value={amount}
+                    onChange={handleAmountChange}
+                    disabled={isScanning || transactionStatus === "PROCESSING"}
+                    placeholder="Enter amount"
+                    className="min-w-0 flex-1 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
+                  />
+                </div>
               </div>
+
+              {/* Aadhaar */}
+              <div className="mt-4">
+                <label
+                  htmlFor="aadhaar-number"
+                  className="text-xs font-semibold text-slate-600"
+                >
+                  Customer Aadhaar Number
+                </label>
+
+                <div className="mt-2 flex h-11 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 focus-within:border-[#315bd1] focus-within:bg-white">
+                  <UserCircle className="h-4 w-4 shrink-0 text-slate-400" />
+
+                  <input
+                    id="aadhaar-number"
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={12}
+                    value={aadhaar}
+                    onChange={handleAadhaarChange}
+                    disabled={isScanning || transactionStatus === "PROCESSING"}
+                    placeholder="Enter 12-digit Aadhaar number"
+                    className="min-w-0 flex-1 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
+                  />
+
+                  <span className="text-[10px] text-slate-400">
+                    {aadhaar.length}/12
+                  </span>
+                </div>
+              </div>
+
+              {/* Bank Selection */}
+              <div className="mt-4">
+                <label
+                  htmlFor="bank-select"
+                  className="text-xs font-semibold text-slate-600"
+                >
+                  Customer Bank
+                </label>
+
+                <div className="mt-2 flex h-11 relative items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 focus-within:border-[#315bd1] focus-within:bg-white">
+                  <Landmark className="h-4 w-4 shrink-0 text-slate-400 pointer-events-none" />
+
+                  <select
+                    id="bank-select"
+                    value={bank}
+                    onChange={(e) => setBank(e.target.value)}
+                    disabled={isScanning || transactionStatus === "PROCESSING"}
+                    className="min-w-0 flex-1 appearance-none bg-transparent text-sm text-slate-700 outline-none border-none focus:ring-0 cursor-pointer pr-8"
+                  >
+                    <option value="" disabled>Select customer's bank</option>
+                    {BANKS.map((b) => (
+                      <option key={b} value={b}>{b}</option>
+                    ))}
+                  </select>
+
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <ChevronDown className="h-4 w-4 text-slate-400" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Device */}
+              <div className="mt-5 rounded-xl border border-[#315bd1]/15 bg-[#f4f6fd] p-4">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#315bd1]">
+                    <Fingerprint className="h-5 w-5 text-white" />
+                  </div>
+
+                  <div>
+                    <p className="text-sm font-bold text-slate-900">
+                      Mantra MFS100
+                    </p>
+
+                    <p className="mt-1 flex items-center gap-2 text-[11px] font-medium text-emerald-600">
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                      RD Service Active
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action */}
+              {transactionStatus === "SUCCESS" ? (
+                <button
+                  type="button"
+                  onClick={() => setShowReceipt(true)}
+                  className="mt-5 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#315bd1] px-4 text-sm font-bold text-white transition hover:bg-[#274dbd]"
+                >
+                  <CheckCircle2 className="h-4 w-4" />
+                  View Receipt
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleScan}
+                  disabled={!isFormValid || isScanning || transactionStatus === "PROCESSING"}
+                  className="mt-5 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#315bd1] px-4 text-sm font-bold text-white transition hover:bg-[#274dbd] disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {isScanning ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Capturing Fingerprint...
+                    </>
+                  ) : transactionStatus === "PROCESSING" ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Processing Transaction...
+                    </>
+                  ) : (
+                    <>
+                      <Fingerprint className="h-4 w-4" />
+                      Start Biometric Authentication
+                    </>
+                  )}
+                </button>
+              )}
+
+              {transactionStatus === "SUCCESS" && (
+                <button
+                  type="button"
+                  onClick={resetForm}
+                  className="mt-3 flex h-10 w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-xs font-bold text-slate-600 transition hover:bg-slate-50"
+                >
+                  <RefreshCw className="h-3.5 w-3.5" />
+                  New Transaction
+                </button>
+              )}
             </div>
 
-            <div className="mt-5 space-y-3">
-              <div className="rounded-xl border border-slate-200 bg-white p-3">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                  Aadhaar
-                </p>
-                <p className="mt-1 text-sm font-semibold text-slate-700">
-                  {aadhaar
-                    ? `XXXX XXXX ${aadhaar.slice(-4)}`
-                    : "Not entered"}
-                </p>
-              </div>
-
-              <div className="rounded-xl border border-slate-200 bg-white p-3">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                  Mobile
-                </p>
-                <p className="mt-1 text-sm font-semibold text-slate-700">
-                  {mobile || "Not entered"}
-                </p>
-              </div>
-
-              <div className="rounded-xl border border-slate-200 bg-white p-3">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                  Amount
-                </p>
-                <p className="mt-1 text-lg font-bold text-[#315bd1]">
-                  ₹{amount || "0"}
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-5 rounded-xl border border-[#315bd1]/10 bg-[#eef2ff] p-3">
-              <p className="text-xs font-bold text-[#315bd1]">
-                Important
-              </p>
-              <p className="mt-1 text-[11px] leading-5 text-slate-600">
-                Ensure the biometric device is connected and the RD Service
-                is active before starting authentication.
-              </p>
-            </div>
           </div>
-        </div>
       </section>
 
       {/* Receipt Modal */}
       {showReceipt && transactionStatus === "SUCCESS" && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 p-4">
-          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl animate-in zoom-in-95 duration-200">
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-emerald-600">
@@ -399,15 +352,15 @@ const AadhaarPay: React.FC<AadhaarPayProps> = ({ onBack }) => {
               </div>
 
               <div className="flex justify-between border-b border-slate-200 py-2 text-xs">
-                <span className="text-slate-500">Mobile</span>
+                <span className="text-slate-500">Bank</span>
                 <span className="font-semibold text-slate-900">
-                  {mobile}
+                  {bank}
                 </span>
               </div>
 
               <div className="flex justify-between pt-2">
                 <span className="text-sm font-bold text-slate-700">
-                  Amount
+                  Amount Credited
                 </span>
                 <span className="text-lg font-bold text-[#315bd1]">
                   ₹{amount}

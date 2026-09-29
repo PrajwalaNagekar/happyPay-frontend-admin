@@ -14,6 +14,7 @@ import Dmt from "../pages/retailer/dmt/Dmt";
 import Cms from "../pages/retailer/cms/Cms";
 import UpiCashPoint from "../pages/retailer/upi-cash-point/UpiCashPoint";
 import BBPS from "../pages/retailer/bbps/Bbps";
+import MicroAtm from "../pages/retailer/micro-atm/MicroAtm";
 
 // TRANSACTIONS
 import Transactions from "../pages/history/Transactions"
@@ -138,6 +139,12 @@ const Router: RouteObject[] = [
            {
             path: "bbps",
             element: <BBPS />,
+          },
+
+          // MICRO ATM
+          {
+            path: "micro-atm",
+            element: <MicroAtm />,
           },
 
           // TRANSACTIONS

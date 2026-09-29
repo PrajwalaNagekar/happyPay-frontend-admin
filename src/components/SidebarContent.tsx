@@ -15,6 +15,7 @@ import {
   QrCode,
   ReceiptIndianRupee,
   ChevronRight,
+  SmartphoneNfc,
 } from "lucide-react";
 
 interface SidebarContentProps {
@@ -122,6 +123,13 @@ const SidebarContent = ({
             icon={<ReceiptIndianRupee />}
             active={isActive("/retailer/bbps")}
             onClick={() => goTo("/retailer/bbps")}
+          />
+
+          <SidebarItem
+            label="Micro ATM"
+            icon={<SmartphoneNfc />}
+            active={isActive("/retailer/micro-atm")}
+            onClick={() => goTo("/retailer/micro-atm")}
           />
         </SidebarSection>
 
