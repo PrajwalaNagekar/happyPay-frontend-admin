@@ -2,19 +2,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import { Plus, Trash2, Edit, X } from "lucide-react";
-import { apiClient } from "../../../services/api/client";
-
-interface BannerFormData {
-  title: string;
-  imageUrl: string;
-  targetUrl: string;
-  position: "top" | "middle" | "bottom";
-  order: number;
-  isActive: boolean;
-}
+import { 
+  getAdminBanners, 
+  createAdminBanner, 
+  updateAdminBanner, 
+  deleteAdminBanner,
+  type Banner,
+  type BannerFormData
+} from "../../../services/api/admin/adminBannerApi";
 
 export default function AdminBanners() {
-  const [banners, setBanners] = useState<any[]>([]);
+  const [banners, setBanners] = useState<Banner[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -33,10 +31,8 @@ export default function AdminBanners() {
   const loadBanners = async () => {
     try {
       setLoading(true);
-      const res = await apiClient<any>("/api/v1/banners", { method: "GET" });
-      if (res.success) {
-        setBanners(res.data);
-      }
+      const res = await getAdminBanners();
+      setBanners(res.data);
     } catch (err) {
       setError("Failed to load banners");
     } finally {
@@ -52,7 +48,7 @@ export default function AdminBanners() {
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this banner?")) return;
     try {
-      await apiClient(`/api/v1/banners/${id}`, { method: "DELETE" });
+      await deleteAdminBanner(id);
       loadBanners();
     } catch (err) {
       alert("Failed to delete banner");
@@ -88,15 +84,9 @@ export default function AdminBanners() {
     e.preventDefault();
     try {
       if (editingId) {
-        await apiClient(`/api/v1/banners/${editingId}`, {
-          method: "PUT",
-          body: JSON.stringify(formData),
-        });
+        await updateAdminBanner(editingId, formData);
       } else {
-        await apiClient("/api/v1/banners", {
-          method: "POST",
-          body: JSON.stringify(formData),
-        });
+        await createAdminBanner(formData);
       }
       setIsModalOpen(false);
       loadBanners();

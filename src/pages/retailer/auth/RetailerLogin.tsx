@@ -9,7 +9,7 @@ import {
   LockKeyhole,
   Check,
 } from "lucide-react";
-import { apiClient } from "../../../services/api/client";
+
 
 const RetailerLogin = () => {
   const navigate = useNavigate();
@@ -122,27 +122,25 @@ const RetailerLogin = () => {
         console.error("Failed to get FCM token", e);
       }
 
-      // 2. Make the API Call to login
-      const response = await apiClient<any>("/api/v1/auth/retailer/login", {
-        method: "POST",
-        body: JSON.stringify({
-          mobile,
-          otp,
-          fcmToken: fcmToken || undefined,
-          platform: "web",
-          deviceName: navigator.userAgent
-        }),
-      });
+      // Mocking the backend call as requested
+      setTimeout(() => {
+        const dummyResponse = {
+          success: true,
+          data: {
+            accessToken: "dummy_retailer_token_12345",
+          }
+        };
 
-      if (response.success && response.data) {
-        localStorage.setItem("token", response.data.accessToken);
-        localStorage.setItem("retailerMobile", mobile);
-        localStorage.setItem("role", "retailer");
-        
-        navigate("/retailer", { replace: true });
-      } else {
-        setError(response.message || "Login failed");
-      }
+        if (dummyResponse.success && dummyResponse.data) {
+          localStorage.setItem("token", dummyResponse.data.accessToken);
+          localStorage.setItem("retailerMobile", mobile);
+          localStorage.setItem("role", "retailer");
+          
+          navigate("/retailer", { replace: true });
+        } else {
+          setError("Login failed");
+        }
+      }, 500);
     } catch (err: any) {
       setError(err.message || "An error occurred during login");
     }

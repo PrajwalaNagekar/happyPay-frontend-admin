@@ -200,6 +200,10 @@ const Dashboard = () => {
         }
       } catch (err) {
         console.error("Failed to fetch banners", err);
+        setBanners([
+          "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80",
+          "https://images.unsplash.com/photo-1616077168079-7e09a6a4c2f2?auto=format&fit=crop&q=80",
+        ]);
       }
     };
     
