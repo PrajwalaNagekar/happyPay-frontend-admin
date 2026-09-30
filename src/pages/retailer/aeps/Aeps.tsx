@@ -537,8 +537,6 @@ const Aeps = () => {
 
   const handleBankSelect = (bank: Bank) => {
     setSelectedBank(bank);
-    setShowBankSelection(false);
-    setBankSearch("");
   };
 
   /*
@@ -873,14 +871,7 @@ const Aeps = () => {
       return;
     }
 
-    /*
-     * Bank selection back.
-     */
-    if (showBankSelection) {
-      setShowBankSelection(false);
-      setBankSearch("");
-      return;
-    }
+
 
     if (step === 0) {
       navigate("/retailer");
@@ -2004,7 +1995,7 @@ const Aeps = () => {
 
     return (
       <div className="">
-        <div className="mx-auto flex w-full max-w-2xl items-center gap-3 rounded-2xl border border-white bg-white px-4 py-3 shadow-[0_14px_40px_-24px_rgba(15,23,42,0.45)] sm:px-5">
+        <div className="mx-auto flex w-full max-w-md items-center gap-3 rounded-2xl border border-white bg-white px-4 py-3 shadow-[0_14px_40px_-24px_rgba(15,23,42,0.45)] sm:px-5">
           <button
             type="button"
             onClick={
@@ -2021,7 +2012,7 @@ const Aeps = () => {
         </div>
 
         <main className="px-3 py-5 sm:px-6">
-          <div className="mx-auto w-full max-w-2xl rounded-[30px] border border-white bg-white/60 p-4 shadow-[0_25px_70px_-35px_rgba(15,23,42,0.25)] sm:p-6">
+          <div className="mx-auto w-full max-w-md rounded-[30px] border border-white bg-white p-4 shadow-[0_25px_70px_-35px_rgba(15,23,42,0.25)] sm:p-6">
             <div className="text-center">
               <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-purple-50">
                 <Check className="h-10 w-10 text-[#172033]" />

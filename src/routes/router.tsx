@@ -44,6 +44,7 @@ import AdminCustomers from "../pages/admin/customers/AdminCustomers";
 import AdminCommissions from "../pages/admin/commissions/AdminCommissions";
 import AdminCmsConfig from "../pages/admin/cms/AdminCmsConfig";
 import AdminNotifications from "../pages/admin/notifications/AdminNotifications";
+import AdminBanners from "../pages/admin/banners/AdminBanners";
 
 const Router: RouteObject[] = [
   // ADMIN AUTH
@@ -85,6 +86,7 @@ const Router: RouteObject[] = [
           { path: "transactions", element: <AdminTransactions /> },
           { path: "customers", element: <AdminCustomers /> },
           { path: "commissions", element: <AdminCommissions /> },
+          { path: "banners", element: <AdminBanners /> },
           { path: "cms", element: <AdminCmsConfig /> },
           { path: "profile", element: <AdminProfile /> },
           { path: "support", element: <AdminSupport /> },

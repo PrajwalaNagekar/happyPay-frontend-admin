@@ -12,9 +12,9 @@ import {
   FileText,
   Building2,
   ShieldCheck,
-  LockKeyhole,
 } from "lucide-react";
 
+import StepIndicator from "../../../components/common/StepIndicator";
 import AccountStep from "./registerSteps/AccountSteps";
 import ShopDetailsStep from "./registerSteps/ShopDetailsStep";
 import AboutRetailerStep from "./registerSteps/AboutRetailerStep";
@@ -107,19 +107,6 @@ const RetailerRegister = () => {
     });
   };
 
-  const goToStep = (stepIndex: number) => {
-    if (
-      stepIndex < 0 ||
-      stepIndex >= steps.length
-    ) {
-      return;
-    }
-
-    if (stepIndex <= currentStep) {
-      setCurrentStep(stepIndex);
-      scrollToTop();
-    }
-  };
 
   const nextStep = () => {
     if (currentStep < steps.length - 1) {
@@ -188,220 +175,16 @@ const RetailerRegister = () => {
           MAIN CARD
       ======================================================= */}
 
-      <div className="mx-auto flex min-h-[calc(100vh-24px)] w-full max-w-[1080px] items-center sm:min-h-[calc(100vh-40px)]">
+      <div className="mx-auto flex min-h-[calc(100vh-24px)] w-full max-w-3xl items-center sm:min-h-[calc(100vh-40px)]">
 
         <div className="w-full overflow-hidden rounded-[24px] border border-white bg-white shadow-[0_25px_70px_rgba(23,32,51,0.12)]">
 
-          <div className="grid min-h-[580px] lg:grid-cols-[260px_minmax(0,1fr)]">
-
-            {/* ==================================================
-                LEFT REGISTRATION PANEL
-            =================================================== */}
-
-            <aside className="relative hidden overflow-hidden bg-gradient-to-br from-[#7c3aed] via-[#6366f1] to-[#7c3aed] lg:flex">
-
-              {/* Decorative background */}
-              <div className="absolute -right-28 -top-24 h-[350px] w-[350px] rounded-full bg-white/10 blur-[80px]" />
-
-              <div className="absolute -bottom-28 -left-24 h-[330px] w-[330px] rounded-full bg-white/20 blur-[90px]" />
-
-              <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(rgba(255,255,255,1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,1)_1px,transparent_1px)] [background-size:40px_40px]" />
-
-              <div className="relative flex w-full flex-col p-7 xl:p-8">
-
-                {/* BRAND */}
-                <div className="flex items-center gap-3">
-
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 shadow-lg backdrop-blur-md">
-                    <span className="text-lg font-bold text-white">
-                      H
-                    </span>
-                  </div>
-
-                  <div>
-                    <p className="text-[18px] font-bold tracking-tight text-white">
-                      HappyPay
-                    </p>
-
-                    <p className="text-[9px] font-medium uppercase tracking-[0.14em] text-white/35">
-                      Retailer Portal
-                    </p>
-                  </div>
-
-                </div>
-
-                {/* INTRO */}
-                <div className="mt-9">
-
-                  <div className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.06] px-2.5 py-1.5">
-
-                    <ShieldCheck className="h-3.5 w-3.5 text-[#8fa8ff]" />
-
-                    <span className="text-[9px] font-semibold uppercase tracking-[0.1em] text-white/55">
-                      Secure Registration
-                    </span>
-
-                  </div>
-
-                  <h1 className="mt-5 text-[30px] font-bold leading-[1.1] tracking-[-0.03em] text-white xl:text-[34px]">
-                    Register your
-                    <br />
-                    <span className="text-[#8fa8ff]">
-                      HappyPay
-                    </span>
-                    <br />
-                    account.
-                  </h1>
-
-                  <p className="mt-4 max-w-[225px] text-[11px] leading-5 text-white/40">
-                    Complete the registration steps to access
-                    the HappyPay retailer platform.
-                  </p>
-
-                </div>
-
-                {/* PROGRESS */}
-                <div className="mt-8">
-
-                  <div className="flex items-center justify-between">
-
-                    <span className="text-[9px] font-bold uppercase tracking-[0.12em] text-white/35">
-                      Your progress
-                    </span>
-
-                    <span className="text-[10px] font-bold text-[#8fa8ff]">
-                      {currentStep + 1} / {steps.length}
-                    </span>
-
-                  </div>
-
-                  <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-white/20">
-
-                    <div
-                      className="h-full rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.5)] transition-all duration-500"
-                      style={{
-                        width: `${progress}%`,
-                      }}
-                    />
-
-                  </div>
-
-                </div>
-
-                {/* STEPS */}
-                <div className="mt-7 flex-1 space-y-1">
-
-                  {steps.map((step, index) => {
-                    const Icon = step.icon;
-
-                    const isActive =
-                      index === currentStep;
-
-                    const isCompleted =
-                      index < currentStep;
-
-                    const isLocked =
-                      index > currentStep;
-
-                    return (
-                      <button
-                        key={step.title}
-                        type="button"
-                        disabled={isLocked}
-                        onClick={() =>
-                          goToStep(index)
-                        }
-                        className={`flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-left transition ${
-                          isActive
-                            ? "bg-white/[0.09]"
-                            : isCompleted
-                              ? "hover:bg-white/[0.04]"
-                              : "cursor-not-allowed opacity-35"
-                        }`}
-                      >
-
-                        <div
-                          className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
-                            isActive
-                              ? "bg-white text-[#7c3aed] shadow-md"
-                              : isCompleted
-                                ? "bg-white/20 text-white backdrop-blur-sm"
-                                : "bg-white/[0.06] text-white/35"
-                          }`}
-                        >
-                          {isCompleted ? (
-                            <Check
-                              className="h-3.5 w-3.5"
-                              strokeWidth={3}
-                            />
-                          ) : (
-                            <Icon
-                              className="h-3.5 w-3.5"
-                              strokeWidth={2}
-                            />
-                          )}
-                        </div>
-
-                        <div className="min-w-0 flex-1">
-
-                          <p
-                            className={`truncate text-[10px] font-semibold ${
-                              isActive
-                                ? "text-white"
-                                : isCompleted
-                                  ? "text-white/65"
-                                  : "text-white/35"
-                            }`}
-                          >
-                            {step.title}
-                          </p>
-
-                          <p className="mt-0.5 truncate text-[8px] text-white/25">
-                            {step.description}
-                          </p>
-
-                        </div>
-
-                      </button>
-                    );
-                  })}
-
-                </div>
-
-                {/* SECURITY */}
-                <div className="border-t border-white/10 pt-4">
-
-                  <div className="flex items-center gap-2.5">
-
-                    <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/[0.06]">
-                      <LockKeyhole className="h-3.5 w-3.5 text-[#8fa8ff]" />
-                    </div>
-
-                    <div>
-                      <p className="text-[9px] font-semibold text-white/60">
-                        Secure registration
-                      </p>
-
-                      <p className="mt-0.5 text-[8px] text-white/25">
-                        Your information is protected.
-                      </p>
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
-            </aside>
-
-            {/* ==================================================
-                RIGHT FORM AREA
-            =================================================== */}
+          <div className="flex min-h-[580px] flex-col">
 
             <section className="flex min-w-0 flex-col bg-white">
 
-              {/* MOBILE HEADER */}
-              <div className="flex items-center justify-between border-b border-[#edf0f4] px-5 py-4 lg:hidden">
+              {/* HEADER */}
+              <div className="flex items-center justify-between border-b border-[#edf0f4] px-5 py-4">
 
                 <div className="flex items-center gap-2.5">
 
@@ -435,8 +218,16 @@ const RetailerRegister = () => {
 
               </div>
 
+              {/* HORIZONTAL STEPPER (DESKTOP) */}
+              <div className="hidden border-b border-[#edf0f4] px-5 pb-0 pt-6 md:block lg:px-9 xl:px-10">
+                <StepIndicator 
+                  steps={steps.map(s => ({ label: s.title }))}
+                  currentStep={currentStep + 1}
+                />
+              </div>
+
               {/* MOBILE PROGRESS */}
-              <div className="border-b border-[#edf0f4] px-5 py-4 lg:hidden">
+              <div className="border-b border-[#edf0f4] px-5 py-4 md:hidden">
 
                 <div className="flex items-center justify-between">
 
@@ -470,7 +261,7 @@ const RetailerRegister = () => {
               </div>
 
               {/* FORM CONTENT */}
-              <div className="flex flex-1 flex-col px-5 py-6 sm:px-7 lg:px-9 xl:px-10">
+              <div className="mx-auto w-full max-w-3xl flex-1 flex-col px-5 py-6 sm:px-7 lg:px-9 xl:px-10">
 
                 {/* FORM HEADER */}
                 <div className="flex items-start justify-between gap-4">
