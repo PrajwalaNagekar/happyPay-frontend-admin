@@ -46,10 +46,10 @@ export const kycOverview = [
 
 export const recentRetailers: RecentRetailer[] = DUMMY_RETAILERS.slice(0, 5).map(r => ({
   id: r.id,
-  name: r.shop.name || r.fullName,
-  mobile: r.mobile,
-  kycStatus: (r.kycStatus.charAt(0).toUpperCase() + r.kycStatus.slice(1)) as "Approved" | "Rejected" | "Pending",
-  registrationDate: new Date(r.createdAt).toLocaleDateString("en-GB", { day: 'numeric', month: 'short', year: 'numeric' }),
+  name: r.shop?.name || r.fullName || "Unknown Retailer",
+  mobile: r.mobile || "N/A",
+  kycStatus: ((r.kycStatus ? r.kycStatus.charAt(0).toUpperCase() + r.kycStatus.slice(1) : "Pending")) as "Approved" | "Rejected" | "Pending",
+  registrationDate: r.createdAt ? new Date(r.createdAt).toLocaleDateString("en-GB", { day: 'numeric', month: 'short', year: 'numeric' }) : "N/A",
 }));
 
 export const recentTransactions: RecentTransaction[] = DUMMY_TRANSACTIONS.slice(0, 5).map(t => ({

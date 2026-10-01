@@ -16,6 +16,9 @@ import UpiCashPoint from "../pages/retailer/upi-cash-point/UpiCashPoint";
 import BBPS from "../pages/retailer/bbps/Bbps";
 import MicroAtm from "../pages/retailer/micro-atm/MicroAtm";
 import DistributorDashboard from "../pages/distributor/DistributorDashboard";
+import SettlementToBank from "../pages/retailer/settlement/SettlementToBank";
+import SettlementToRetailer from "../pages/retailer/settlement/SettlementToRetailer";
+import SettlementToDistributor from "../pages/retailer/settlement/SettlementToDistributor";
 
 // TRANSACTIONS
 import Transactions from "../pages/history/Transactions"
@@ -148,6 +151,20 @@ const Router: RouteObject[] = [
           {
             path: "micro-atm",
             element: <MicroAtm />,
+          },
+
+          // SETTLEMENT SUB-ROUTES
+          {
+            path: "settlement/bank",
+            element: <SettlementToBank />,
+          },
+          {
+            path: "settlement/retailer",
+            element: <SettlementToRetailer />,
+          },
+          {
+            path: "settlement/distributor",
+            element: <SettlementToDistributor />,
           },
 
           // TRANSACTIONS

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { rdService } from "../../../utils/rdService";
 import {
   ArrowLeft,
   CheckCircle2,
@@ -40,6 +41,48 @@ const AadhaarPay: React.FC<AadhaarPayProps> = ({ onBack }) => {
   const [transactionId, setTransactionId] = useState("");
   const [transactionDate, setTransactionDate] = useState<Date | null>(null);
 
+  // Biometric States
+  const [availableDevices, setAvailableDevices] = useState<import("../../../utils/rdService").ActiveDevice[]>([]);
+  const [selectedDevicePort, setSelectedDevicePort] = useState<number | null>(null);
+  const [withdrawalDeviceName, setWithdrawalDeviceName] = useState("Scanning...");
+  const [isScanningDevices, setIsScanningDevices] = useState(true);
+  const [isDeviceDropdownOpen, setIsDeviceDropdownOpen] = useState(false);
+
+  const handleScanDevices = async () => {
+    setIsScanningDevices(true);
+    setWithdrawalDeviceName("Scanning...");
+    const devices = await rdService.scanAllDevices();
+    setAvailableDevices(devices);
+    
+    if (devices.length > 0) {
+      setSelectedDevicePort(devices[0].port);
+      setWithdrawalDeviceName(devices[0].name);
+    } else {
+      setSelectedDevicePort(null);
+      setWithdrawalDeviceName("No device found");
+    }
+    setIsScanningDevices(false);
+  };
+
+  useEffect(() => {
+    let isMounted = true;
+    rdService.scanAllDevices().then((devices) => {
+      if (!isMounted) return;
+      setAvailableDevices(devices);
+      if (devices.length > 0) {
+        setSelectedDevicePort(devices[0].port);
+        setWithdrawalDeviceName(devices[0].name);
+      } else {
+        setSelectedDevicePort(null);
+        setWithdrawalDeviceName("No device found");
+      }
+      setIsScanningDevices(false);
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   const handleAadhaarChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
@@ -67,14 +110,26 @@ const AadhaarPay: React.FC<AadhaarPayProps> = ({ onBack }) => {
     setTransactionDate(null);
   };
 
-  const handleScan = () => {
+  const handleScan = async () => {
     if (aadhaar.length !== 12 || !bank || !amount) {
+      return;
+    }
+    if (!selectedDevicePort) {
+      alert("Please connect and select a biometric device first.");
       return;
     }
 
     setIsScanning(true);
 
-    window.setTimeout(() => {
+    try {
+      const captureResult = await rdService.captureFingerprint(selectedDevicePort);
+      
+      if (!captureResult.success) {
+        setIsScanning(false);
+        alert(captureResult.message);
+        return;
+      }
+
       setIsScanning(false);
       setTransactionStatus("PROCESSING");
 
@@ -90,7 +145,10 @@ const AadhaarPay: React.FC<AadhaarPayProps> = ({ onBack }) => {
 
         setTransactionStatus("SUCCESS");
       }, 1800);
-    }, 2200);
+    } catch {
+      setIsScanning(false);
+      alert("Error interacting with RD Service");
+    }
   };
 
   const handlePrint = () => {
@@ -316,23 +374,61 @@ const AadhaarPay: React.FC<AadhaarPayProps> = ({ onBack }) => {
               </div>
 
               {/* Device */}
-              <div className="mt-5 rounded-xl border border-[#7c3aed]/15 bg-[#f4f6fd] p-4">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#7c3aed]">
-                    <Fingerprint className="h-5 w-5 text-white" />
-                  </div>
+              <div className="mt-5 relative">
+                <button
+                  type="button"
+                  onClick={() => !isScanningDevices && setIsDeviceDropdownOpen(!isDeviceDropdownOpen)}
+                  className="flex w-full items-center justify-between rounded-xl border border-[#7c3aed]/15 bg-[#f4f6fd] p-4 transition-all hover:border-[#7c3aed]/40"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#7c3aed]">
+                      <Fingerprint className={`h-5 w-5 text-white ${isScanningDevices ? 'animate-pulse' : ''}`} />
+                    </div>
 
-                  <div>
-                    <p className="text-sm font-bold text-slate-900">
-                      Mantra MFS100
-                    </p>
+                    <div className="text-left">
+                      <p className="text-sm font-bold text-slate-900">
+                        {withdrawalDeviceName}
+                      </p>
 
-                    <p className="mt-1 flex items-center gap-2 text-[11px] font-medium text-emerald-600">
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                      RD Service Active
-                    </p>
+                      <p className={`mt-1 flex items-center gap-2 text-[11px] font-medium ${availableDevices.length > 0 ? 'text-emerald-600' : 'text-red-500'}`}>
+                        <span className={`h-1.5 w-1.5 rounded-full ${availableDevices.length > 0 ? 'bg-emerald-500' : 'bg-red-500'}`} />
+                        {availableDevices.length > 0 ? "RD Service Active" : isScanningDevices ? "Searching..." : "Not Found"}
+                      </p>
+                    </div>
                   </div>
-                </div>
+                  
+                  <div className="flex items-center gap-3">
+                    <RefreshCw 
+                      className={`h-4 w-4 text-[#7c3aed] transition-transform ${isScanningDevices ? "animate-spin" : ""}`} 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleScanDevices();
+                      }}
+                    />
+                    <ChevronDown className={`h-4 w-4 text-slate-400 transition-transform ${isDeviceDropdownOpen ? "rotate-180" : ""}`} />
+                  </div>
+                </button>
+
+                {isDeviceDropdownOpen && availableDevices.length > 0 && (
+                  <div className="absolute left-0 right-0 mt-2 z-10 overflow-hidden rounded-xl border border-slate-100 bg-white shadow-lg">
+                    {availableDevices.map((device) => (
+                      <button
+                        key={device.port}
+                        type="button"
+                        onClick={() => {
+                          setSelectedDevicePort(device.port);
+                          setWithdrawalDeviceName(device.name);
+                          setIsDeviceDropdownOpen(false);
+                        }}
+                        className={`w-full border-b border-slate-50 px-3 py-3 text-left text-sm transition-colors last:border-0 hover:bg-slate-50 ${
+                          selectedDevicePort === device.port ? "bg-purple-50 font-bold text-[#7c3aed]" : "font-medium text-slate-700"
+                        }`}
+                      >
+                        {device.name} <span className="text-xs text-slate-400">(Port: {device.port})</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Action */}
@@ -349,7 +445,7 @@ const AadhaarPay: React.FC<AadhaarPayProps> = ({ onBack }) => {
                 <button
                   type="button"
                   onClick={handleScan}
-                  disabled={!isFormValid || isScanning || transactionStatus === "PROCESSING"}
+                  disabled={!isFormValid || isScanning || transactionStatus === "PROCESSING" || !selectedDevicePort}
                   className="mt-5 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#7c3aed] px-4 text-sm font-bold text-white transition hover:bg-[#6d28d9] disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {isScanning ? (
