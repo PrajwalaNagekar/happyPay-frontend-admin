@@ -116,38 +116,58 @@ const RetailerRegister = () => {
 
       return;
     }
+    // Submitting is handled by the form onSubmit!
+  };
 
-    /*
-     * ========================================================
-     * REGISTRATION COMPLETED
-     * ========================================================
-     *
-     * Existing functionality is kept exactly as it was.
-     */
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
 
-    const pendingMobile =
-      localStorage.getItem(
-        "pendingRetailerMobile",
-      );
+    // Mock ObjectIds for master data
+    formData.set("shopCategory", "64d5ec49f1b2c8b1f8e4e1a1");
+    formData.set("propertyType", "64d5ec49f1b2c8b1f8e4e1a2");
+    formData.set("educationalQualification", "64d5ec49f1b2c8b1f8e4e1a3");
+    formData.set("businessProof", "64d5ec49f1b2c8b1f8e4e1a4");
 
-    if (pendingMobile) {
-      localStorage.setItem(
-        "registeredRetailerMobile",
-        pendingMobile,
-      );
-
-      localStorage.removeItem(
-        "pendingRetailerMobile",
-      );
-
-      localStorage.removeItem(
-        "retailerMobile",
-      );
+    // Clean up formats
+    const aadhaar = formData.get("aadhaar") as string;
+    if (aadhaar) {
+      formData.set("aadhaar", aadhaar.replace(/\s/g, ""));
     }
 
-    navigate("/retailer/kyc-pending", {
-      replace: true,
-    });
+    const dob = formData.get("dob") as string;
+    if (dob && dob.includes("/")) {
+      const [dd, mm, yyyy] = dob.split("/");
+      formData.set("dob", `${yyyy}-${mm}-${dd}`);
+    }
+
+    try {
+      const res = await fetch("http://localhost:7000/api/v1/auth/retailer/register", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        const errorMsg = data.errors ? data.errors.join(", ") : (data.message || "Registration failed");
+        throw new Error(errorMsg);
+      }
+
+      const pendingMobile = localStorage.getItem("pendingRetailerMobile");
+      if (pendingMobile) {
+        localStorage.setItem("registeredRetailerMobile", pendingMobile);
+        localStorage.removeItem("pendingRetailerMobile");
+        localStorage.removeItem("retailerMobile");
+      }
+
+      navigate("/retailer/kyc-pending", { replace: true });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert("Error: " + error.message);
+      } else {
+        alert("Error: " + String(error));
+      }
+    }
   };
 
   const previousStep = () => {
@@ -334,7 +354,7 @@ const RetailerRegister = () => {
                     original step files keeps its value.
                 */}
 
-                <div className="flex-1">
+                <form id="retailer-register-form" className="flex-1" onSubmit={handleSubmit}>
 
                   <div
                     className={
@@ -365,16 +385,6 @@ const RetailerRegister = () => {
                   >
                     <AboutRetailerStep />
                   </div>
-
-                  {/* <div
-                    className={
-                      currentStep === 3
-                        ? "block"
-                        : "hidden"
-                    }
-                  >
-                    <PanVerificationStep />
-                  </div> */}
 
                   <div
                     className={
@@ -416,7 +426,7 @@ const RetailerRegister = () => {
                     <BankDetailsStep />
                   </div>
 
-                </div>
+                </form>
 
                 {/* ACTIONS */}
                 <div className="mt-7 border-t border-[#edf0f4] pt-5">
@@ -440,8 +450,9 @@ const RetailerRegister = () => {
 
                     {/* NEXT */}
                     <button
-                      type="button"
-                      onClick={nextStep}
+                      type={currentStep === steps.length - 1 ? "submit" : "button"}
+                      form={currentStep === steps.length - 1 ? "retailer-register-form" : undefined}
+                      onClick={currentStep === steps.length - 1 ? undefined : nextStep}
                       className={`flex h-11 items-center justify-center gap-2 rounded-xl px-6 text-[12px] font-bold text-white shadow-md transition ${
                         currentStep ===
                         steps.length - 1
